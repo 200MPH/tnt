@@ -1,0 +1,26 @@
+{
+    "name": "200mph/tnt-express-connect",
+    "type": "library",
+    "description": "TNT ExpressConnect web service (API) client",
+    "keywords": ["tnt","shipping"],
+    "license": "MIT",
+    "homepage": "https://github.com/200MPH/tnt-ec",
+    "authors": [
+        {
+            "name": "Wojciech Brozyna",
+            "email": "wojciech.brozyna@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "lib-libxml": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "5.5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "thm\\tnt_ec\\": "src/"
+        }
+    }
+}
