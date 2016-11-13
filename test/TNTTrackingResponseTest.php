@@ -10,7 +10,6 @@ namespace thm\tnt_ec\tests;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use thm\tnt_ec\Service\TrackingService\TrackingService;
 use thm\tnt_ec\Service\TrackingService\libs\TrackingResponse;
 use thm\tnt_ec\Service\TrackingService\libs\Consignment;
 
@@ -22,12 +21,17 @@ class TNTTrackingResponseTest extends \PHPUnit_Framework_TestCase {
      */
     private $response;
         
+    /**
+     * @var string
+     */
+    private $xml;
+    
     public function setUp()
     {
         
         parent::setUp();
         
-        $xml = '<?xml version="1.0" encoding="utf-8"?>
+        $this->xml = '<?xml version="1.0" encoding="utf-8"?>
                 <TrackResponse>
                   <Consignment access="public">
                     <ConsignmentNumber>123456782</ConsignmentNumber>
@@ -578,7 +582,7 @@ class TNTTrackingResponseTest extends \PHPUnit_Framework_TestCase {
                   </Consignment>
                 </TrackResponse>';
         
-        $this->response = new TrackingResponse($xml, null);
+        $this->response = new TrackingResponse($this->xml, null);
                 
     }
     
@@ -624,24 +628,65 @@ class TNTTrackingResponseTest extends \PHPUnit_Framework_TestCase {
     public function testIsGetAttributesArray()
     {
         
-        $cs = $this->response->getConsignments();
+        $c = new Consignment(new \SimpleXMLElement($this->xml));
         
-        foreach($cs as $c) {
-            
-            $c->setAttributes('this should not be set as array');
-            
-            $state = is_array($c->getAttributes());
-            
-            $this->assertTrue($state);
-            
-            $c->setAttributes(array('but this should be set as array'));
-            
-            $state2 = is_array($c->getAttributes());
-            
-            $this->assertTrue($state2);
-            
-        }
+        $state = is_array($c->getAttributes());
+
+        $this->assertTrue($state);
         
     }
     
+    /**
+     * getSummaryCode return CNF if not set
+     */
+    public function testGetSummaryCodeReturnsCNFCode()
+    {
+        
+        $c = new Consignment(new \SimpleXMLElement('<root></root>'));
+        
+        $this->assertEquals('CNF', $c->getSummaryCode());
+                
+    }
+    
+    /**
+     * getPieceQuantuty Returnz Integer
+     */
+    public function testGetPieceQuantityReturnsInt()
+    {
+        
+        $c = new Consignment(new \SimpleXMLElement('<root><PieceQuantity>99</PieceQuantity></root>'));
+        
+        $int1 = $c->getPieceQuantity();
+        
+        $stat1 = is_int($int1);
+        
+        $this->assertTrue($stat1);
+        
+        $this->assertEquals(99, $int1);
+        
+        $c2 = new Consignment(new \SimpleXMLElement('<root></root>'));
+        
+        $int2 = $c2->getPieceQuantity();
+        
+        $stat2 = is_int($int2);
+        
+        $this->assertTrue($stat2);
+        
+        $this->assertEquals(0, $int2);
+        
+    }
+    
+    /**
+     * getStatuses returns array
+     */
+    public function testGetStatusesIsArray()
+    {
+        
+        $c = new Consignment(new \SimpleXMLElement('<root></root>'));
+        
+        $state = is_array($c->getStatuses());
+        
+        $this->assertTrue($state);
+        
+    }
 }
