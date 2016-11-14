@@ -12,6 +12,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use thm\tnt_ec\Service\TrackingService\libs\TrackingResponse;
 use thm\tnt_ec\Service\TrackingService\libs\Consignment;
+use thm\tnt_ec\Service\TrackingService\libs\StatusData;
 
 class TNTTrackingResponseTest extends \PHPUnit_Framework_TestCase {
     
@@ -689,4 +690,81 @@ class TNTTrackingResponseTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($state);
         
     }
+    
+    /**
+     * getLocalEvenDate returns formated date
+     */
+    public function testGetLocalEventDateReturnsDate()
+    {
+        
+        $sd = new StatusData(new \SimpleXMLElement('<root><LocalEventDate>20161114</LocalEventDate></root>'));
+        
+        $this->assertEquals('20161114', $sd->getLocalEventDate());
+        
+        $this->assertEquals('2016-11-14', $sd->getLocalEventDate('Y-m-d'));
+        
+    }
+    
+    /**
+     * getLocalEvenDate returns formated time
+     */
+    public function testGetLocalEventTimeReturnsTime()
+    {
+        
+        $sd = new StatusData(new \SimpleXMLElement('<root><LocalEventTime>1011</LocalEventTime></root>'));
+        
+        $this->assertEquals('1011', $sd->getLocalEventTime());
+        
+        $this->assertEquals('10:11', $sd->getLocalEventTime('H:i'));
+        
+    }
+    
+    /**
+     * getDeliveryDate returns formated date
+     */
+    public function testGetDeliveryDateReturnsTime()
+    {
+        
+        $c = new Consignment(new \SimpleXMLElement('<root><DeliveryDate>20161114</DeliveryDate></root>'));
+        
+        $this->assertEquals('20161114', $c->getDeliveredDate());
+        
+        $this->assertEquals('2016-11-14', $c->getDeliveredDate('Y-m-d'));
+        
+    }
+    
+    /**
+     * getDeliveryTime returns formated time
+     */
+    public function testGetDeliveryTimeReturnsTime()
+    {
+        
+        $c = new Consignment(new \SimpleXMLElement('<root><DeliveryTime>1011</DeliveryTime></root>'));
+        
+        $this->assertEquals('1011', $c->getDeliveredTime());
+        
+        $this->assertEquals('10:11', $c->getDeliveredTime('H:i'));
+        
+    }
+    
+    /**
+     * getStatuses returns StatusData[] collection
+     */
+    public function testGetStatusesReturnsStatusDataCollection()
+    {
+    
+        $xml = new \SimpleXMLElement($this->xml);
+        
+        $c = new Consignment($xml->Consignment[2]);
+        
+        foreach($c->getStatuses() as $status) {
+            
+            $state = $status instanceof StatusData;
+            
+            $this->assertTrue($state);
+        
+        }
+        
+    }
+    
 }

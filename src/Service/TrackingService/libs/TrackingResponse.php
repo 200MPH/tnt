@@ -43,6 +43,8 @@ class TrackingResponse extends Response {
     private function setConsignments()
     {
         
+        $this->consignments = [];
+        
         if(is_array($this->simpleXml->Consignment) === true) {
                 
             foreach ($this->simpleXml->Consignment as $cs) {

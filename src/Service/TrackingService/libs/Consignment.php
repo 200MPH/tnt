@@ -46,6 +46,13 @@ class Consignment {
     private $xml;
     
     /**
+     * Statuses
+     * 
+     * @var StatusData[]
+     */
+    private $statuses = [];
+    
+    /**
      * Initialize object
      * 
      * @param SimpleXMLElement Reference to object
@@ -121,7 +128,7 @@ class Consignment {
         
         if(isset($this->xml->OriginDepotName) === true) {
             
-            return $this->xml->OriginDepotName;
+            return $this->xml->OriginDepotName->__toString();
             
         }
         
@@ -139,7 +146,7 @@ class Consignment {
         
         if(isset($this->xml->CustomerReference) === true) {
             
-            return $this->xml->CustomerReference;
+            return $this->xml->CustomerReference->__toString();
             
         }
         
@@ -175,7 +182,7 @@ class Consignment {
         
         if(isset($this->xml->DeliveryTown) === true) {
             
-            return $this->xml->DeliveryTown;
+            return $this->xml->DeliveryTown->__toString();
             
         }
         
@@ -229,7 +236,7 @@ class Consignment {
         
         if(isset($this->xml->DestinationCountry) === true) {
             
-            return $this->xml->DestinationCountry->CountryName;
+            return $this->xml->DestinationCountry->CountryName->__toString();
             
         }
         
@@ -265,7 +272,7 @@ class Consignment {
         
         if(isset($this->xml->OriginCountry) === true) {
             
-            return $this->xml->OriginCountry->CountryName;
+            return $this->xml->OriginCountry->CountryName->__toString();
             
         }
         
@@ -292,6 +299,154 @@ class Consignment {
     }
     
     /**
+     * Get delivery date - if delivered
+     * 
+     * @param $format [optional] Return as customized date format. Default YYYYMMDD
+     * @return string
+     */
+    public function getDeliveredDate($format = false)
+    {
+        
+        if(isset($this->xml->DeliveryDate) === true) {
+            
+            if($format === false) {
+            
+                return $this->xml->DeliveryDate;
+            
+            } else {
+                
+                $date = \DateTime::createFromFormat('Ymd', $this->xml->DeliveryDate);
+                
+                return $date->format($format);
+                
+            }
+            
+        }
+        
+        return null;
+        
+    }
+    
+    /**
+     * Get delivery time - if delivered
+     * 
+     * @param $format [optional] Return as customized time format. Default YYYYMMDD
+     * @return string
+     */
+    public function getDeliveredTime($format = false)
+    {
+        
+        if(isset($this->xml->DeliveryTime) === true) {
+            
+            if($format === false) {
+            
+                return $this->xml->DeliveryTime;
+            
+            } else {
+                
+                $date = \DateTime::createFromFormat('Hi', $this->xml->DeliveryTime);
+                
+                return $date->format($format);
+                
+            }
+            
+        }
+        
+        return null;
+        
+    }
+    
+    /**
+     * Get signatory - if delivered
+     * 
+     * @return string
+     */
+    public function getSignatory()
+    {
+        
+        if(isset($this->xml->Signatory)) {
+            
+            return $this->xml->Signatory->__toString();
+            
+        }
+        
+        return null;
+        
+    }
+    
+    /**
+     * Get payment account number
+     * 
+     * @return string
+     */
+    public function getPaymentAccountNumber()
+    {
+        
+        if(isset($this->xml->TermsOfPaymentAccount) === true) {
+            
+            return $this->xml->TermsOfPaymentAccount->Number;
+            
+        }
+        
+        return null;
+        
+    }
+    
+    /**
+     * Get payment country code
+     * 
+     * @return $string
+     */
+    public function getPaymentCountryCode()
+    {
+        
+        if(isset($this->xml->TermsOfPaymentAccount) === true) {
+            
+            return $this->xml->TermsOfPaymentAccount->CountryCode;
+            
+        }
+        
+        return null;
+        
+    }
+    
+    /**
+     * Get sender account number
+     * 
+     * @return string
+     */
+    public function getSenderAccountNumber()
+    {
+        
+        if(isset($this->xml->SenderAccount) === true) {
+            
+            return $this->xml->SenderAccount->Number->__toString();
+            
+        }
+        
+        return null;
+        
+    }
+    
+    /**
+     * Get sender account country code
+     * 
+     * @return string
+     */
+    public function getSenderAccountCountryCode()
+    {
+        
+        if(isset($this->xml->SenderAccount) === true) {
+            
+            return $this->xml->SenderAccount->CountryCode;
+            
+        }
+        
+        return null;
+        
+    }
+    
+    /**
      * Get statuses (item activity)
      * 
      * @return StatusData[]
@@ -299,7 +454,39 @@ class Consignment {
     public function getStatuses()
     {
         
-        return array();
+        if(isset($this->xml->StatusData) === true) {
+            
+            $this->setStatus();
+            
+        }
+        
+        return $this->statuses;
+        
+    }
+    
+    /**
+     * Set status
+     * 
+     * @return void
+     */
+    private function setStatus()
+    {
+        
+        $this->statuses = [];
+        
+        if(is_array($this->xml->StatusData)) {
+            
+            foreach($this->xml->StatusData as $xml) {
+                
+                $this->statuses[] = new StatusData($xml);
+                
+            }
+            
+        } else {
+            
+            $this->statuses[] = new StatusData($this->xml->StatusData);
+            
+        }
         
     }
     

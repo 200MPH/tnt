@@ -59,7 +59,7 @@ class Response {
     public function __construct($responseXml, $requestXml)
     {
         
-        $this->xml = $responseXml;
+        $this->responseXml = $responseXml;
         
         $this->requestXml = $requestXml;
         
@@ -191,7 +191,7 @@ class Response {
             
         } else {
             
-            $this->simpleXml = new \SimpleXMLElement($this->responseXml);
+            $this->simpleXml = $doc;
             
         }
         
