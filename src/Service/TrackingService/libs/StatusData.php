@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Consignment Status Data entity
+ * TNT Consignment Status Data entity
  *
  * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
  */

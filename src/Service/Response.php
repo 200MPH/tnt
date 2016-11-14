@@ -92,6 +92,19 @@ class Response {
     }
     
     /**
+     * Get response as array
+     * 
+     * @return array
+     */
+    public function getResponseAsArray()
+    {
+        
+        /** @todo Finish it */
+        return array();
+        
+    }
+    
+    /**
      * Has error
      * 
      * @return bool
