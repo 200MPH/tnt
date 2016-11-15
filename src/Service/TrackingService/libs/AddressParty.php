@@ -12,6 +12,12 @@ use SimpleXMLElement;
 
 class AddressParty {
     
+    /* Address types */
+    const T_SENDER      = 'Sender';
+    const T_COLLECTION  = 'Collection';
+    const T_RECEIVER    = 'Receiver';
+    const T_DELIVERY    = 'Delivery';
+    
     /**
      * @var SimpleXMLElement
      */

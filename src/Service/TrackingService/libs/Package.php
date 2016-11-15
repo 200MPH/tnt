@@ -39,7 +39,7 @@ class Package {
         
         if(isset($this->xml->NumberOfPieces) === true) {
             
-            return (int)$this->xml->NumberOfPiecesp;
+            return (int)$this->xml->NumberOfPieces;
             
         }
         
@@ -115,7 +115,7 @@ class Package {
             
         }
         
-        return null;
+        return 0.00;
         
     }
     

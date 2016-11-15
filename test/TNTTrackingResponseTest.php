@@ -13,7 +13,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use thm\tnt_ec\Service\TrackingService\libs\TrackingResponse;
 use thm\tnt_ec\Service\TrackingService\libs\Consignment;
 use thm\tnt_ec\Service\TrackingService\libs\StatusData;
-use thm\tnt_ec\Service\TrackingService\libs\AddressParty;
 
 class TNTTrackingResponseTest extends \PHPUnit_Framework_TestCase {
     
@@ -72,13 +71,13 @@ class TNTTrackingResponseTest extends \PHPUnit_Framework_TestCase {
                       </DepotName>
                     </StatusData>
                   </Consignment>
-                  <Consignment access="public">
+                  <Consignment access="full">
                   <Addresses> 
                     <Address addressParty="Sender" > 
                         <Name><![CDATA[TEST CON]]></Name> 
-                        <AddressLine><![CDATA[TEST 1 ]]></AddressLine> 
-                        <AddressLine><![CDATA[TEST 2 ]]></AddressLine> 
-                        <AddressLine><![CDATA[TEST 3 ]]></AddressLine> 
+                        <AddressLine><![CDATA[TEST 1]]></AddressLine> 
+                        <AddressLine><![CDATA[TEST 2]]></AddressLine> 
+                        <AddressLine><![CDATA[TEST 3]]></AddressLine> 
                         <City><![CDATA[AMSTERDAM]]></City> 
                         <Province><![CDATA[NOORD-HOLLAND]]></Province> 
                         <Postcode><![CDATA[1100 AA]]></Postcode> 
@@ -153,55 +152,59 @@ class TNTTrackingResponseTest extends \PHPUnit_Framework_TestCase {
                     <DueDate format="YYYYMMDD" >20060508</DueDate> 
                     <Service><![CDATA[12:00 Express]]></Service> 
                    </ShipmentSummary>
+                   <SenderAccount> 
+                    <Number><![CDATA[1835699]]></Number> 
+                    <CountryCode>NL</CountryCode> 
+                   </SenderAccount>
+                   <TermsOfPaymentAccount> 
+                    <Number>18356</Number> 
+                    <CountryCode>GB</CountryCode> 
+                   </TermsOfPaymentAccount>
+                   <POD><![CDATA[
+                    https://images.tnt.com/archive?get&contRep=P1&docId=pusqjgdnfjcesp4ziyrrt2ak1io
+                    a5&pVersion=0045&accessMode=r&authId=ExpressConnect&expiration=20090527174219
+                    &secKey=MIIB0QYJKoZIhvcNAQcCoIIBwjCCAb4CAQExDjAMBggqhkiG9w0CBQUAMAsGCSqGSIb3D
+                    QEHATGCAZowggGWAgEBMIGVMIGNMRMwEQYDVQQGEwpBdGhlcnN0b25lMRMwEQYDVQQHEwpBdGhlcn
+                    N0b25lMRcwFQYDVQQKEw5UTlQgQ2xpZW50IERldjEOMAwGA1UECxMFbXlUTlQxFjAUBgNVBAMTDVB
+                    PRCBJbWFnZSBLZXkxIDAeBgkqhkiG9w0BCQEWEXJhai5qdWxoYUB0bnQuY29tAgMJ+W8wDAYIKoZI
+                    hvcNAgUFAKBZMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTA5MDUyN
+                    zE0NDIxOVowHwYJKoZIhvcNAQkEMRIEEJZAg8K0v3tK7T9yFHDj0aQwDQYJKoZIhvcNAQEBBQAEgY
+                    AINUnB1h2uMBA6rOzv6+v+XoiS+zNgrlmMkMRIgWv1ILNlwNCXR3FTkzv/S1lxrW18wRPY/GXvSd4
+                    vX7+pUAyO/KfOO1WoPyKxD3Qudp8dG3LjG6+FOmIHp3qGzuAOgnCMD8VwNlQgPrdi/2Ihh8sH6ERv
+                    YxlR/QNY8MD+eU3vDw==]]>  
+                   </POD> 
                     <ConsignmentNumber>123456782</ConsignmentNumber>
                     <OriginDepot>ZMU</OriginDepot>
-                    <OriginDepotName>
-                      <![CDATA[Munich]]>
-                    </OriginDepotName>
-                    <CustomerReference>
-                      <![CDATA[TESTSENDUNG]]>
-                    </CustomerReference>
+                    <OriginDepotName><![CDATA[Munich]]></OriginDepotName>
+                    <CustomerReference><![CDATA[TESTSENDUNG]]></CustomerReference>
                     <CollectionDate format="YYYYMMDD">20161024</CollectionDate>
-                    <DeliveryTown>
-                      <![CDATA[HALLBERGMOOS]]>
-                    </DeliveryTown>
+                    <DeliveryTown><![CDATA[HALLBERGMOOS]]></DeliveryTown>
                     <SummaryCode>EXC</SummaryCode>
                     <DestinationCountry>
                       <CountryCode>DE</CountryCode>
-                      <CountryName>
-                        <![CDATA[Germany]]>
-                      </CountryName>
+                      <CountryName><![CDATA[Germany]]></CountryName>
                     </DestinationCountry>
                     <OriginCountry>
                       <CountryCode>DE</CountryCode>
-                      <CountryName>
-                        <![CDATA[Germany]]>
-                      </CountryName>
+                      <CountryName><![CDATA[Germany]]></CountryName>
                     </OriginCountry>
                     <PieceQuantity>99</PieceQuantity>
+                    <Signatory><![CDATA[Wojtek]]></Signatory>
                     <StatusData>
                       <StatusCode>AA</StatusCode>
-                      <StatusDescription>
-                        <![CDATA[Duplicate Or Non-existent Consignment Record In System]]>
-                      </StatusDescription>
+                      <StatusDescription><![CDATA[Duplicate Or Non-existent Consignment Record In System]]></StatusDescription>
                       <LocalEventDate format="YYYYMMDD">20161024</LocalEventDate>
                       <LocalEventTime format="HHMM">1252</LocalEventTime>
                       <Depot>ZMU</Depot>
-                      <DepotName>
-                        <![CDATA[Munich]]>
-                      </DepotName>
+                      <DepotName><![CDATA[Munich]]></DepotName>
                     </StatusData>
                     <StatusData>
                       <StatusCode>CI</StatusCode>
-                      <StatusDescription>
-                        <![CDATA[Shipment Received At Origin Depot.]]>
-                      </StatusDescription>
+                      <StatusDescription><![CDATA[Shipment Received At Origin Depot.]]></StatusDescription>
                       <LocalEventDate format="YYYYMMDD">20161024</LocalEventDate>
                       <LocalEventTime format="HHMM">0952</LocalEventTime>
                       <Depot>ZMU</Depot>
-                      <DepotName>
-                        <![CDATA[Munich]]>
-                      </DepotName>
+                      <DepotName><![CDATA[Munich]]></DepotName>
                     </StatusData>
                   </Consignment>
                 </TrackResponse>';
@@ -243,20 +246,6 @@ class TNTTrackingResponseTest extends \PHPUnit_Framework_TestCase {
         }
         
         $this->assertTrue(true);
-        
-    }
-    
-    /**
-     * getAttributes() is always array
-     */
-    public function testIsGetAttributesArray()
-    {
-        
-        $c = new Consignment(new \SimpleXMLElement($this->xml));
-        
-        $state = is_array($c->getAttributes());
-
-        $this->assertTrue($state);
         
     }
     
@@ -389,33 +378,53 @@ class TNTTrackingResponseTest extends \PHPUnit_Framework_TestCase {
         }
         
     }
-        
-    /**
-     * AddressParty return values
+    
+    /*
+     * Test all functions output. 
      */
-    public function testAddressPartyReturnValues()
+    public function testOutput()
     {
         
-        $xml = '<Address> 
-                    <Name><![CDATA[TEST CON]]></Name> 
-                    <AddressLine><![CDATA[TEST 1]]></AddressLine> 
-                    <AddressLine><![CDATA[TEST 2]]></AddressLine> 
-                    <AddressLine><![CDATA[TEST 3]]></AddressLine> 
-                    <City><![CDATA[AMSTERDAM]]></City> 
-                    <Province><![CDATA[NOORD-HOLLAND]]></Province> 
-                    <Postcode><![CDATA[1100 AA]]></Postcode> 
-                    <Country> 
-                    <CountryCode>NL</CountryCode> 
-                    <CountryName><![CDATA[Netherlands]]></CountryName> 
-                    </Country> 
-                    <PhoneNumber><![CDATA[020 511111]]></PhoneNumber> 
-                    <ContactName><![CDATA[OTTE]]></ContactName> 
-                    <ContactPhoneNumber><![CDATA[020 111111]]></ContactPhoneNumber> 
-                    <AccountNumber><![CDATA[000180454]]></AccountNumber> 
-                    <VATNumber><![CDATA[FB834343432432]]></VATNumber> 
-                </Address>';
+        $consignments = new \SimpleXMLElement($this->xml);
         
-        $address = new AddressParty(new \SimpleXMLElement($xml));
+        $tmpCon = $consignments->Consignment[1];
+        
+        $consignment = new Consignment($tmpCon);
+        
+        $this->assertEquals('full', $consignment->getAccessType());
+        $this->assertEquals('123456782', $consignment->getConsignmentNumber());
+        $this->assertEquals('ZMU', $consignment->getOriginDepotCode());
+        $this->assertEquals('Munich', $consignment->getOriginDepotName());
+        $this->assertEquals('TESTSENDUNG', $consignment->getCustomerReference());
+        $this->assertEquals('20161024', $consignment->getCollectionDate());
+        $this->assertEquals('HALLBERGMOOS', $consignment->getDeliveryTown());
+        $this->assertEquals('EXC', $consignment->getSummaryCode());
+        $this->assertEquals('DE', $consignment->getDestinationCountryCode());
+        $this->assertEquals('Germany', $consignment->getDestinationCountryName());
+        $this->assertEquals('DE', $consignment->getOriginCountryCode());
+        $this->assertEquals('Germany', $consignment->getOriginCountryName());
+        $this->assertEquals(99, $consignment->getPieceQuantity());
+        $this->assertEquals('Wojtek', $consignment->getSignatory());
+        $this->assertEquals('18356', $consignment->getPaymentAccountNumber());
+        $this->assertEquals('GB', $consignment->getPaymentCountryCode());
+        $this->assertEquals('1835699', $consignment->getSenderAccountNumber());
+        $this->assertEquals('NL', $consignment->getSenderAccountCountryCode());
+               
+        /* Test status */
+        
+        $statuses = $consignment->getStatuses();
+        $status = $statuses[0];
+        
+        $this->assertEquals('AA', $status->getStatusCode());
+        $this->assertEquals('Duplicate Or Non-existent Consignment Record In System', $status->getStatusDescription());
+        $this->assertEquals('20161024', $status->getLocalEventDate());
+        $this->assertEquals('1252', $status->getLocalEventTime());
+        $this->assertEquals('ZMU', $status->getDepotCode());
+        $this->assertEquals('Munich', $status->getDepotName());
+        
+        /* Test address party */
+        
+        $address = $consignment->getAddressParty();
         
         $this->assertEquals('TEST CON', $address->getName());
         $this->assertEquals('TEST 1', $address->getAddressLine());
@@ -433,15 +442,32 @@ class TNTTrackingResponseTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('000180454', $address->getAccountNumber());
         $this->assertEquals('FB834343432432', $address->getVatNumber());
         
-    }
- 
-    /*
-     * Test all functions output. 
-     */
-    public function testOutput()
-    {
+        /* Test Package Summary */
         
+        $ps = $consignment->getPackageSummary();
         
+        $this->assertEquals(1, $ps->getNumberOfPieces());
+        $this->assertEquals(6.700, $ps->getWeight());
+        $this->assertEquals('CARTON', $ps->getPackageDescription());
+        $this->assertEquals('TURBO CHARGER', $ps->getGoodsDescription());
+        $this->assertEquals(200.50, $ps->getInvoiceAmount());
+        $this->assertEquals('EUR', $ps->getInvoiceCurrency());
+        
+        /* Test shipment summary */
+        
+        $ss = $consignment->getShipmentSummary();
+        
+        $this->assertEquals('Sender', $ss->getTermsOfPayment());
+        $this->assertEquals('20060508', $ss->getDueDate());
+        $this->assertEquals('12:00 Express', $ss->getService());
+             
+        /**
+         * Test POD
+         */
+        
+        $pod = $consignment->getPod();
+        
+        $this->assertFalse(empty($pod));
         
     }
     

@@ -65,20 +65,22 @@ class Consignment {
     }
     
     /**
-     * Get attributes
+     * Get access type
      * 
-     * @return array
+     * @return string
      */
-    public function getAttributes()
+    public function getAccessType()
     {
-       
-        if(is_array($this->xml->attributes) === true) {
+        
+        $attributes = $this->xml->attributes();
+        
+        if(isset($attributes['access'])) {
             
-            return $this->xml->attributes;
+            return $attributes['access']->__toString();
             
         }
         
-        return array();
+        return 'public';
         
     }
     
@@ -439,6 +441,104 @@ class Consignment {
         if(isset($this->xml->SenderAccount) === true) {
             
             return $this->xml->SenderAccount->CountryCode;
+            
+        }
+        
+        return null;
+        
+    }
+    
+    /**
+     * Get address party
+     * 
+     * @param string $type Address type: Sender, Collection, Receiver, Delivery
+     * @return AddressParty
+     */
+    public function getAddressParty($type = 'Sender')
+    {
+        
+        if(isset($this->xml->Addresses) === true) {
+            
+            foreach($this->xml->Addresses->Address as $address) {
+                
+                $attribute = $address->attributes();
+               
+                if(isset($attribute['addressParty']) == ucfirst($type)) {
+                    
+                    return new AddressParty($address);
+                    
+                }
+                
+            }
+            
+        }
+        
+        // return empty object
+        return new AddressParty(new \SimpleXMLElement('<root></root>'));
+        
+    }
+    
+    /**
+     * Get package summary
+     * 
+     * @return Package
+     */
+    public function getPackageSummary()
+    {
+        
+        if(isset($this->xml->PackageSummary) === true) {
+            
+            return new Package($this->xml->PackageSummary);
+            
+        }
+        
+        // return empty object
+        return new Package(new \SimpleXMLElement('<root></root>'));
+        
+    }
+    
+    /**
+     * Get shipment summary
+     * 
+     * @return ShipmentSummary
+     */
+    public function getShipmentSummary()
+    {
+        
+        if(isset($this->xml->ShipmentSummary) === true) {
+            
+            return new ShipmentSummary($this->xml->ShipmentSummary);
+            
+        }
+        
+        // return empty object
+        return new ShipmentSummary(new \SimpleXMLElement('<root></root>'));
+        
+    }
+    
+    /**
+     * Get POD image.
+     * 
+     * @param bool $fileContent [optional] If TRUE will download and return file content
+     * @return string URL to the image or file content if $fileContent = TRUE. 
+     */
+    public function getPod($fileContent = false)
+    {
+        
+        if(isset($this->xml->POD) === true) {
+            
+            // clean up string
+            $url = str_replace(array("\n", ' '), '', $this->xml->POD->__toString());
+            
+            if($fileContent === true) {
+                
+                return file_get_contents($url);
+                
+            } else {
+                
+                return $url;
+                
+            }
             
         }
         

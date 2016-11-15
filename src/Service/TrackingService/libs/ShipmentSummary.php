@@ -6,7 +6,7 @@
  * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
  */
 
-namesapce \thm\tnt_ec\Service\TrackingService\libs;
+namespace thm\tnt_ec\Service\TrackingService\libs;
 
 use SimpleXMLElement;
 
