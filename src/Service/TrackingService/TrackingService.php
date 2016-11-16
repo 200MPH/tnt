@@ -66,14 +66,14 @@ class TrackingService extends AbstractService {
      * @param array $consignments
      * @return TrackingResponse
      */
-    public function searchByConsignment($consignments)
+    public function searchByConsignment(array $consignments)
     {
         
         $this->xml->flush();
         
         $this->startDocument();
             
-            foreach((array)$consignments as $consignment) {
+            foreach($consignments as $consignment) {
 
                 $this->xml->writeElement('ConsignmentNumber', $consignment);
 
@@ -91,14 +91,14 @@ class TrackingService extends AbstractService {
      * @param array $references
      * @return TrackingResponse
      */
-    public function searchByCustomerReference($references)
+    public function searchByCustomerReference(array $references)
     {
         
         $this->xml->flush();
         
         $this->startDocument();
             
-            foreach((array)$references as $reference) {
+            foreach($references as $reference) {
 
                 $this->xml->writeElement('CustomerReference', $reference);
 

@@ -39,12 +39,6 @@ class TNTTest extends \PHPUnit_Framework_TestCase {
     public function testSearchByConsignmentReturnTrackingResponse()
     {
         
-        $response = $this->ts->searchByConsignment('12345');
-        
-        $state = $response instanceof TrackingResponse;
-    
-        $this->assertTrue($state);
-        
         $response = $this->ts->searchByConsignment(array('12345'));
         
         $state = $response instanceof TrackingResponse;
