@@ -35,7 +35,7 @@ class XMLTools {
             
             if($i === 0) {
                 
-                // add first document to merge array.
+                // add first document to the merge string.
                 $merged = $documents[$i];
                 
             }
@@ -54,13 +54,13 @@ class XMLTools {
                 
                 $parent->documentElement->appendChild($importedNode);
                 
-                $merged = $parent->saveXML();
-                
             }
+            
+            $merged = $parent->saveXML();
             
         }
         
-        // dont know why, but setting up parent property like below
+        // I dont know why, but setting up parent property like below
         // does not remove new line character from document
         // so I used str_replace instead
         // $parent->preserveWhiteSpace = false;
