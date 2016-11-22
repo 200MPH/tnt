@@ -193,7 +193,7 @@ class Consignment {
     }
     
     /**
-     * Get summary code
+     * Get summary code - status code
      * 
      * @return string
      */
@@ -332,7 +332,7 @@ class Consignment {
     /**
      * Get delivery time - if delivered
      * 
-     * @param $format [optional] Return as customized time format. Default YYYYMMDD
+     * @param $format [optional] Return as customized time format. Default HHMM
      * @return string
      */
     public function getDeliveredTime($format = false)
