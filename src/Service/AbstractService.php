@@ -196,18 +196,18 @@ abstract class AbstractService {
     protected function sendRequest()
     {
         
-        $headers[] = "Content-type: text/xml";
+        $headers[] = "Content-type: application/x-www-form-urlencoded";
         $headers[] = "Authorization: Basic " . base64_encode("$this->userId:$this->password");
         
         $context = stream_context_create(array(
                 'http' => array(
-                'header' => $headers,
-                'method' => 'POST',
-                'content' => $this->getXmlContent()
-            ),
+                    'header' => $headers,
+                    'method' => 'POST',
+                    'content' => $this->buildHttpPostData()
+                )
         ));
-
-        $output = @file_get_contents($this->url, false, $context);
+        
+        $output = file_get_contents($this->url, false, $context);
         
         // $http_response_header comes from PHP engine, 
         // it's not a part of this code
@@ -218,4 +218,18 @@ abstract class AbstractService {
         
     }
  
+    /**
+     * Build HTTP Post data
+     * 
+     * @return string
+     */
+    private function buildHttpPostData()
+    {
+        
+        $post = http_build_query(array('xml_in' => $this->getXmlContent()));
+        
+        return $post;
+        
+    }
+    
 }

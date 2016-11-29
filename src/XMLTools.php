@@ -21,6 +21,9 @@ class XMLTools {
     static public function mergeXml(array $documents)
     {
         
+        // if only one element in array return it without merging
+        if(count($documents) === 1) { return $documents[0]; }
+        
         $merged = null;
         
         // always merge firts elements of array with the others

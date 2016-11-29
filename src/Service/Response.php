@@ -200,7 +200,7 @@ class Response {
         if($doc === false) {
             
             $this->hasError = true;
-            $this->errors[] = "Response XML document not valid or empty";
+            $this->errors[] = "Response XML document is not valid or empty";
             
         } else {
             

@@ -574,18 +574,10 @@ class Consignment {
         
         $this->statuses = [];
         
-        if(is_array($this->xml->StatusData)) {
-            
-            foreach($this->xml->StatusData as $xml) {
+        foreach($this->xml->StatusData as $xml) {
                 
-                $this->statuses[] = new StatusData($xml);
+            $this->statuses[] = new StatusData($xml);
                 
-            }
-            
-        } else {
-            
-            $this->statuses[] = new StatusData($this->xml->StatusData);
-            
         }
         
     }

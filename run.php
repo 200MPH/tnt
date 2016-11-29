@@ -7,22 +7,20 @@ use thm\tnt_ec\TNTException;
 
 try {
 
-    $ts = new TrackingService('abc', '123');
+    $ts = new TrackingService('ISL-TNT-EC', 'CorvetteC7');
     
-    $ts->setLevelOfDetails()
-       ->setComplete()
-       ->setDestinationAddress()
-       ->setOriginAddress()
-       ->setPackage()
-       ->setShipment()
-       ->setPod();
+    $response = $ts->searchByConsignment(array('37115206'));
     
-    $response1 = $ts->searchByDate('111111', '222222', 3);
-    //$response2 = $ts->searchByConsignment(array('1234567890'));
-    
-    print_r($response1->getErrors());
-    //print_r($response2->getRequestXml());
-    
+    foreach($response->getConsignments() as $csg) {
+        
+        foreach($csg->getStatuses() as $status) {
+            
+            print_r($status);
+            
+        }
+        
+    }
+        
 } catch(TNTException $e) {
     
     print($e->getMessage());

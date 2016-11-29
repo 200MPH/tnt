@@ -350,8 +350,6 @@ class TrackingService extends AbstractService {
             
         }
         
-        $this->xml->writeElement('ContinuationKey', '');
-        
         return false;
         
     }
