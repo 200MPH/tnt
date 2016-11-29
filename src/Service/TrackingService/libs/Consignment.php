@@ -87,7 +87,7 @@ class Consignment {
     /**
      * Get consignment number
      * 
-     * @return string
+     * @return int
      */
     public function getConsignmentNumber()
     {
@@ -95,6 +95,24 @@ class Consignment {
         if(isset($this->xml->ConsignmentNumber) === true) {
             
             return $this->xml->ConsignmentNumber;
+            
+        }
+        
+        return null;
+        
+    }
+    
+    /**
+     * Get alternative consignment number
+     * 
+     * @return int
+     */
+    public function getAlternativeConsignmentNumber()
+    {
+        
+        if(isset($this->xml->AlternativeConsignmentNumber) === true) {
+            
+            return $this->xml->AlternativeConsignmentNumber;
             
         }
         

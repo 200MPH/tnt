@@ -178,7 +178,7 @@ class Response {
             if(isset($this->simpleXml->Error) === true) {
                 
                 $this->hasError = true;
-                $this->errors[] = $this->simpleXml->Error->Message;
+                $this->errors[] = $this->simpleXml->Error->Message->__toString();
                 
             }
             

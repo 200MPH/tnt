@@ -225,7 +225,7 @@ class TrackingService extends AbstractService {
         $this->xml->writeAttribute('version', AbstractService::VERSION);
         $this->xml->startElement("SearchCriteria");
         $this->setMarketTypeAttributes();
-            
+                    
     }
     
     /**

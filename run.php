@@ -9,18 +9,19 @@ try {
 
     $ts = new TrackingService('ISL-TNT-EC', 'CorvetteC7');
     
-    $response = $ts->searchByConsignment(array('37115206'));
+    $ts->setLevelOfDetails()->setComplete()->setPod();
     
+    $response = $ts->searchByConsignment(array('37114476'));
+    print_r($response->getRequestXml());
+    print_r($response->getResponseXml());
     foreach($response->getConsignments() as $csg) {
         
-        foreach($csg->getStatuses() as $status) {
-            
-            print_r($status);
-            
-        }
+        print_r($csg);
         
     }
         
+    print_r($response->getErrors());
+    
 } catch(TNTException $e) {
     
     print($e->getMessage());
