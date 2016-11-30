@@ -12,6 +12,7 @@ use thm\tnt_ec\Service\AbstractService;
 use thm\tnt_ec\Service\TrackingService\libs\TrackingResponse;
 use thm\tnt_ec\Service\TrackingService\libs\LevelOfDetails;
 use thm\tnt_ec\TNTException;
+use thm\tnt_ec\XMLTools;
 
 class TrackingService extends AbstractService {
     
@@ -61,19 +62,26 @@ class TrackingService extends AbstractService {
     private $lod;
     
     /**
+     * Origin output
+     * 
+     * @var array
+     */
+    private $outputs;
+    
+    /**
      * Search by consignment numbers (TNT reference)
      * 
      * @param array $consignments
      * @return TrackingResponse
      */
-    public function searchByConsignment($consignments)
+    public function searchByConsignment(array $consignments)
     {
         
         $this->xml->flush();
         
         $this->startDocument();
             
-            foreach((array)$consignments as $consignment) {
+            foreach($consignments as $consignment) {
 
                 $this->xml->writeElement('ConsignmentNumber', $consignment);
 
@@ -91,14 +99,14 @@ class TrackingService extends AbstractService {
      * @param array $references
      * @return TrackingResponse
      */
-    public function searchByCustomerReference($references)
+    public function searchByCustomerReference(array $references)
     {
         
         $this->xml->flush();
         
         $this->startDocument();
             
-            foreach((array)$references as $reference) {
+            foreach($references as $reference) {
 
                 $this->xml->writeElement('CustomerReference', $reference);
 
@@ -217,7 +225,7 @@ class TrackingService extends AbstractService {
         $this->xml->writeAttribute('version', AbstractService::VERSION);
         $this->xml->startElement("SearchCriteria");
         $this->setMarketTypeAttributes();
-            
+                    
     }
     
     /**
@@ -233,6 +241,44 @@ class TrackingService extends AbstractService {
         $this->xml->endElement();
         
         parent::endDocument();
+        
+    }
+    
+    /**
+     * Send request
+     * 
+     * @return string Returns TNT Response string as XML
+     */
+    protected function sendRequest()
+    {
+        
+        $this->setResponse();
+        
+        return XMLTools::mergeXml($this->outputs);
+        
+    }
+    
+    /**
+     * Send request.
+     * Note, parent method return string, this one an array.
+     * 
+     * @return array Returns TNT Responses string as XML
+     */
+    protected function setResponse()
+    {
+        
+        // Tracking service might contain <ContinuationKey> element
+        // which works like a pagination
+        // We have to loop request until this key exists in the response
+        $response = parent::sendRequest();
+           
+        $this->outputs[] = $response;
+        
+        if($this->continueRequest($response) === true) {
+
+            $this->setResponse();
+
+        } 
         
     }
     
@@ -276,6 +322,35 @@ class TrackingService extends AbstractService {
             $this->xml->writeAttribute('originCountry', $this->originCountryCode);
                         
         }
+        
+    }
+ 
+    /**
+     * Contiunue requesting TNT for more consignment - pagination
+     * 
+     * @param string $output XML output
+     * @return bool True if requesting must be continued, otherwise false.
+     */
+    private function continueRequest($output)
+    {
+        
+        if(empty($output) === true) {
+            
+            return false;
+            
+        }
+        
+        $xml = new \SimpleXMLElement($output);
+            
+        if(isset($xml->ContinuationKey) === true) {
+                
+            $this->xml->writeElement('ContinuationKey', $xml->ContinuationKey);
+
+            return true;
+            
+        }
+        
+        return false;
         
     }
     

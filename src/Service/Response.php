@@ -59,7 +59,7 @@ class Response {
     public function __construct($responseXml, $requestXml)
     {
         
-        $this->xml = $responseXml;
+        $this->responseXml = $responseXml;
         
         $this->requestXml = $requestXml;
         
@@ -88,6 +88,19 @@ class Response {
     {
         
         return $this->requestXml;
+        
+    }
+    
+    /**
+     * Get response as array
+     * 
+     * @return array
+     */
+    public function getResponseAsArray()
+    {
+        
+        /** @todo Finish it */
+        return array();
         
     }
     
@@ -165,7 +178,7 @@ class Response {
             if(isset($this->simpleXml->Error) === true) {
                 
                 $this->hasError = true;
-                $this->errors[] = $this->simpleXml->Error->Message;
+                $this->errors[] = $this->simpleXml->Error->Message->__toString();
                 
             }
             
@@ -187,11 +200,11 @@ class Response {
         if($doc === false) {
             
             $this->hasError = true;
-            $this->errors[] = "Response XML document not valid or empty";
+            $this->errors[] = "Response XML document is not valid or empty";
             
         } else {
             
-            $this->simpleXml = new \SimpleXMLElement($this->responseXml);
+            $this->simpleXml = $doc;
             
         }
         

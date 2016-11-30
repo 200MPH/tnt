@@ -13,7 +13,7 @@ use Exception;
 class TNTException extends Exception {
     
     /* Username is empty */
-    const USERNAME_EMPTY = 'Username cannot be empty when creating service onbject';
+    const USERNAME_EMPTY = 'Username cannot be empty when creating service object';
     
     /* Password is empty */
     const PASS_EMPTY = 'Password cannot be empty when creating service object';
