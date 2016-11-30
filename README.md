@@ -31,3 +31,7 @@ foreach($response->getConsignments() as $consignment) {
 }
 
 ```
+Here is full TNT documentation
+https://express.tnt.com/expresswebservices-website/docs/ExpressConnect_Tracking_V3_1.pdf
+
+More examples in "examples" folder.
