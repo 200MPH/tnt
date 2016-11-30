@@ -1,5 +1,4 @@
-# tnt
-TNT ExpressConnect PHP client
+# TNT ExpressConnect
 
 This client is still under development therfore support tracking facility for now.
 
