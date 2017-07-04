@@ -2,7 +2,7 @@
     "name": "200mph/tnt-express-connect",
     "type": "library",
     "description": "TNT ExpressConnect web service (API) client",
-    "keywords": ["tnt","shipping"],
+    "keywords": ["tnt express", "tnt tracking", "tnt","shipping"],
     "license": "MIT",
     "homepage": "https://github.com/200MPH/tnt-ec",
     "authors": [
