@@ -94,7 +94,7 @@ class Consignment {
         
         if(isset($this->xml->ConsignmentNumber) === true) {
             
-            return $this->xml->ConsignmentNumber;
+            return $this->xml->ConsignmentNumber->__toString();;
             
         }
         
@@ -112,7 +112,7 @@ class Consignment {
         
         if(isset($this->xml->AlternativeConsignmentNumber) === true) {
             
-            return $this->xml->AlternativeConsignmentNumber;
+            return $this->xml->AlternativeConsignmentNumber->__toString();;
             
         }
         
