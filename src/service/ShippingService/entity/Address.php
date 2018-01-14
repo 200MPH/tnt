@@ -5,7 +5,7 @@
  * 
  * Note that this class may looks very similar to other address class
  * but functions referrer to another XML elements therefore it cannot be extended.
- * Or just partially extended.
+ * Also some address elements maybe different then in other service. 
  *
  * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
  * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
@@ -13,48 +13,72 @@
 
 namespace thm\tnt_ec\service\ShippingService\entity;
 
-use SimpleXMLElement;
-
-class AddressParty {
-    
-    /* Address types */
-    const T_SENDER      = 'Sender';
-    const T_COLLECTION  = 'Collection';
-    const T_RECEIVER    = 'Receiver';
-    const T_DELIVERY    = 'Delivery';
+class Address extends AbstractXml {
     
     /**
-     * @var SimpleXMLElement
+     * @var string
      */
-    protected $xml;
+    private $company;
     
     /**
-     * Initialize object
-     * 
-     * @param SimpleXMLElement $xml
+     * @var array
      */
-    public function __construct(SimpleXMLElement $xml)
-    {
-        
-        $this->xml = $xml;
-        
-    }
+    private $address = [];
     
     /**
-     * Get name
+     * @var string
+     */
+    private $city;
+    
+    /**
+     * @var string
+     */
+    private $province;
+    
+    /**
+     * @var string
+     */
+    private $postcode;
+    
+    /**
+     * @var string
+     */
+    private $country;
+    
+    /**
+     * @var string
+     */
+    private $vat;
+    
+    /**
+     * @var string
+     */
+    private $contactName;
+    
+    /**
+     * @var string
+     */
+    private $contactDialCode;
+    
+    /**
+     * @var string
+     */
+    private $contactPhone;
+    
+    /**
+     * @var string
+     */
+    private $email;
+    
+    /**
+     * Get company name
      * 
      * @return string
      */
-    public function getName()
+    public function getCompanyName()
     {
         
-        if(isset($this->xml->Name) === true) {
-            
-            return $this->xml->Name->__toString();
-            
-        }
-        
-        return null;
+        return $this->company;
         
     }
     
@@ -62,7 +86,7 @@ class AddressParty {
      * Get address line
      * 
      * @param int $lineNo Line number between 1-3. Default is 1.
-     * If range is out of scope function will return null value.
+     * If range is out of scope function will return null.
      * 
      * @return string
      */
@@ -72,9 +96,9 @@ class AddressParty {
         // array starts from 0
         $index = $lineNo - 1;
         
-        if(isset($this->xml->AddressLine[$index]) === true) {
+        if(isset($this->address[$index]) === true) {
             
-            return $this->xml->AddressLine[$index]->__toString();
+            return $this->address[$index];
             
         }
         
@@ -90,13 +114,7 @@ class AddressParty {
     public function getCity()
     {
         
-        if(isset($this->xml->City) === true) {
-            
-            return $this->xml->City->__toString();
-            
-        }
-     
-        return null;
+        return $this->city;
         
     }
     
@@ -108,13 +126,7 @@ class AddressParty {
     public function getProvince()
     {
         
-        if(isset($this->xml->Province) === true) {
-            
-            return $this->xml->Province->__toString();
-            
-        }
-     
-        return null;
+        return $this->province;
         
     }
     
@@ -126,67 +138,31 @@ class AddressParty {
     public function getPostcode()
     {
         
-        if(isset($this->xml->Postcode) === true) {
-            
-            return $this->xml->Postcode->__toString();
-            
-        }
-     
-        return null;
+        return $this->postcode;
         
     }
     
     /**
      * Get country code
      * 
-     * @return string
+     * @return string Country code ISO2
      */
     public function getCountryCode()
     {
         
-        if(isset($this->xml->Country) === true) {
-            
-            return $this->xml->Country->CountryCode;
-            
-        }
-     
-        return null;
+        return $this->country;
         
     }
     
     /**
-     * Get country name
+     * Get VAT number
      * 
      * @return string
      */
-    public function getCountryName()
+    public function getVat()
     {
         
-        if(isset($this->xml->Country->CountryName) === true) {
-            
-            return $this->xml->Country->CountryName->__toString();
-            
-        }
-     
-        return null;
-        
-    }
-    
-    /**
-     * Get phone number
-     * 
-     * @return string
-     */
-    public function getPhoneNumber()
-    {
-        
-        if(isset($this->xml->PhoneNumber) === true) {
-            
-            return $this->xml->PhoneNumber->__toString();
-            
-        }
-     
-        return null;
+        return $this->vat;
         
     }
     
@@ -198,13 +174,19 @@ class AddressParty {
     public function getContactName()
     {
         
-        if(isset($this->xml->ContactName) === true) {
-            
-            return $this->xml->ContactName->__toString();
-            
-        }
-     
-        return null;
+        return $this->contactName;
+        
+    }
+    
+    /**
+     * Get contact dial code
+     * 
+     * @return string
+     */
+    public function getContactDialCode()
+    {
+        
+        return $this->contactDialCode;
         
     }
     
@@ -216,52 +198,245 @@ class AddressParty {
     public function getContactPhoneNumber()
     {
         
-        if(isset($this->xml->ContactPhoneNumber) === true) {
-            
-            return $this->xml->ContactPhoneNumber->__toString();
-            
-        }
-     
-        return null;
+        return $this->contactPhone;
         
     }
     
     /**
-     * Get account number.
-     * Please not this might be populated only for SENDER address.
+     * Get contact email address
      * 
      * @return string
      */
-    public function getAccountNumber()
+    public function getContactEmail()
     {
         
-        if(isset($this->xml->AccountNumber) === true) {
-            
-            return $this->xml->AccountNumber->__toString();
-            
-        }
-     
-        return null;
+        return $this->email;
         
     }
-    
+ 
     /**
-     * Get VAT number.
-     * Please not this might be populated only for SENDER address.
+     * Set company name
      * 
-     * @return string
+     * @param string $company
+     * @return Address
      */
-    public function getVatNumber()
+    public function setCompanyName($company) 
     {
         
-        if(isset($this->xml->VATNumber) === true) {
-            
-            return $this->xml->VATNumber->__toString();
-            
+        if(empty($company) === false) {
+        
+            $this->company = $company;
+            $this->xml->writeElement('COMPANYNAME', $company);
+        
         }
-     
-        return null;
+        
+        return $this;
         
     }
+
+    /**
+     * Add address line.
+     * Each call to this function will add new address line.
+     * Maximum 3 lines.
+     * 
+     * @param string $address
+     * @return Address
+     */
+    public function setAddressLine($address) 
+    {
+    
+        if(empty($address) === false && count($this->address) < 3) {
+            
+            $this->address[] = $address;
+            $lineNo = key($this->address) + 1;
+            $this->xml->writeElement("STREETADDRESS" . $lineNo, $address);
+            
+        }
+        
+        return $this;
+        
+    }
+
+    /**
+     * Set city
+     * 
+     * @param string $city
+     * @return Address
+     */
+    public function setCity($city) 
+    {
+        
+        if(empty($city) === false) {
+            
+            $this->city = $city;
+            $this->xml->writeElement('CITY', $city);
+            
+        }
+        
+        return $this;
+        
+    }
+
+    /**
+     * Set province
+     * 
+     * @param string $province
+     * @return Address
+     */
+    public function setProvince($province) 
+    {
+        
+        if(empty($province) === false) {
+            
+            $this->province = $province;
+            $this->xml->writeElement('PROVINCE', $province);
+            
+        }
+        
+        return $this;
+        
+    }
+
+    /**
+     * Set postcode
+     * 
+     * @param string $postcode
+     * @return Address
+     */
+    public function setPostcode($postcode) 
+    {
+        
+        if(empty($postcode) === false) {
+            
+            $this->postcode = $postcode;
+            $this->xml->writeElement('POSTCODE', $postcode);
+            
+        }
+        
+        return $this;
+        
+    }
+
+    /**
+     * Set country
+     * 
+     * @param string $country
+     * @return Address
+     */
+    public function setCountry($country) 
+    {
+        
+        if(empty($country) === false) {
+            
+            $this->country = $country;
+            $this->xml->writeElement('COUNTRY', $country);
+            
+        }
+        
+        return $this;
+        
+    }
+
+    /**
+     * Set VAT number
+     * 
+     * @param string $vat
+     * @return Address
+     */
+    public function setVat($vat) 
+    {
+        
+        if(empty($vat) === false) {
+            
+            $this->vat = $vat;
+            $this->xml->writeElement('VAT',$vat);
+            
+        }
+        
+        return $this;
+        
+    }
+
+    /**
+     * Set contact name
+     * 
+     * @param string $contactName
+     * @return Address
+     */
+    public function setContactName($contactName) 
+    {
+    
+        if(empty($contactName) === false) {
+            
+            $this->contactName = $contactName;
+            $this->xml->writeElement('CONTACTNAME', $contactName);
+            
+        }
+        
+        return $this;
+        
+    }
+
+    /**
+     * Set contact dial code
+     * 
+     * @param string $contactDialCode
+     * @return Address
+     */
+    public function setContactDialCode($contactDialCode) 
+    {
+        
+        if(empty($contactDialCode) === false) {
+            
+            $this->contactDialCode = $contactDialCode;
+            $this->xml->writeElement('CONTACTDIALCODE', $contactDialCode);
+            
+        }
+        
+        return $this;
+        
+    }
+
+    /**
+     * Set contact phone
+     * 
+     * @param string $contactPhone
+     * @return Address
+     */
+    public function setContactPhone($contactPhone) 
+    {
+        
+        if(empty($contactPhone) === false) {
+            
+            $this->contactPhone = $contactPhone;
+            $this->xml->writeElement('CONTACTTELEPHONE', $contactPhone);
+            
+        }
+        
+        return $this;
+        
+    }
+
+    /**
+     * Set contact email
+     * 
+     * @param string $email
+     * @return Address
+     */
+    public function setContactEmail($email) 
+    {
+        
+        if(empty($email) === false) {
+            
+            $this->email = $email;
+            $this->xml->writeElement('CONTACTEMAIL', $email);
+            
+        }
+        
+        return $this;
+        
+    }
+
+
     
 }
