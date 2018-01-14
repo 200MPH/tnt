@@ -215,6 +215,12 @@ abstract class AbstractService {
         // http://php.net/manual/en/reserved.variables.httpresponseheader.php
         Response::$headers = $http_response_header;
         
+        if(empty($output) === true) {
+            
+            $output = new \SimpleXMLElement('<root>No response from TNT service!</root>');
+            
+        }
+        
         return $output;
         
     }
