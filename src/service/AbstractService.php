@@ -217,7 +217,7 @@ abstract class AbstractService {
         
         if(empty($output) === true) {
             
-            $output = new \SimpleXMLElement('<root>No response from TNT service!</root>');
+            $output = new \SimpleXMLElement('<root>Response error!</root>');
             
         }
         
