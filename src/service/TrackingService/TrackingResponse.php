@@ -10,7 +10,7 @@
 namespace thm\tnt_ec\Service\TrackingService;
 
 use thm\tnt_ec\service\Response;
-use thm\tnt_ec\service\entity\Consignment;
+use thm\tnt_ec\service\TrackingService\entity\Consignment;
 
 class TrackingResponse extends Response {
     

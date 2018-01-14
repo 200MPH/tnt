@@ -8,7 +8,7 @@
 
 namespace thm\tnt_ec\service\TrackingService\helpers;
 
-use thm\tnt_ec\Service\TrackingService;
+use thm\tnt_ec\service\TrackingService\TrackingService;
 
 class LevelOfDetails {
     

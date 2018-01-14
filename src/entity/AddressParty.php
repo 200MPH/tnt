@@ -7,7 +7,7 @@
  * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 
-namespace thm\tnt_ec\entity;
+namespace thm\tnt_ec\service\entity;
 
 use SimpleXMLElement;
 
@@ -65,6 +65,7 @@ class AddressParty {
     public function getAddressLine($lineNo = 1)
     {
         
+        // array starts from 0
         $index = $lineNo - 1;
         
         if(isset($this->xml->AddressLine[$index]) === true) {

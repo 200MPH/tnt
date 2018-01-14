@@ -9,11 +9,13 @@
  * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 
-namespace thm\tnt_ec\service\entity;
+namespace thm\tnt_ec\service\TrackingService\entity;
 
 use SimpleXMLElement;
-use thm\tnt_ec\entity\AddressParty;
-use thm\tnt_ec\entity\Package;
+use thm\tnt_ec\service\entity\AddressParty;
+use thm\tnt_ec\service\TrackingService\entity\Package;
+use thm\tnt_ec\service\TrackingService\entity\ShipmentSummary;
+use thm\tnt_ec\service\TrackingService\entity\StatusData;
 
 class Consignment {
     

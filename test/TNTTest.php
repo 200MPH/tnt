@@ -10,8 +10,8 @@ namespace thm\tnt_ec\tests;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use thm\tnt_ec\Service\TrackingService\TrackingService;
-use thm\tnt_ec\Service\TrackingService\libs\TrackingResponse;
+use thm\tnt_ec\service\TrackingService\TrackingService;
+use thm\tnt_ec\Service\TrackingService\TrackingResponse;
 
 class TNTTest extends \PHPUnit_Framework_TestCase {
     

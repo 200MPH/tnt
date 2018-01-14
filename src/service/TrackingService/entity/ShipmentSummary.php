@@ -7,7 +7,7 @@
  * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 
-namespace thm\tnt_ec\entity;
+namespace thm\tnt_ec\service\TrackingService\entity;
 
 use SimpleXMLElement;
 
