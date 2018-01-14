@@ -12,7 +12,7 @@
 namespace thm\tnt_ec\service\TrackingService\entity;
 
 use SimpleXMLElement;
-use thm\tnt_ec\entity\AddressParty;
+use thm\tnt_ec\service\TrackingService\entity\AddressParty;
 use thm\tnt_ec\service\TrackingService\entity\Package;
 use thm\tnt_ec\service\TrackingService\entity\ShipmentSummary;
 use thm\tnt_ec\service\TrackingService\entity\StatusData;
