@@ -4,9 +4,10 @@
  * Abstract Service
  *
  * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
+ * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 
-namespace thm\tnt_ec\Service;
+namespace thm\tnt_ec\service;
 
 use XMLWriter;
 use thm\tnt_ec\Service\Response;
@@ -44,14 +45,7 @@ abstract class AbstractService {
      * @var string
      */
     protected $originCountryCode = 'GB';
-    
-    /**
-     * Web service URL
-     * 
-     * @var string
-     */
-    private $url = 'https://express.tnt.com/expressconnect/track.do';
-    
+            
     /**
      * User ID
      * 
@@ -65,6 +59,13 @@ abstract class AbstractService {
      * @var string
      */
     private $password;
+    
+    /**
+     * Get TNT service URL
+     * 
+     * @var string
+     */
+    abstract public function getServiceUrl();
     
     /**
      * Initialize service
@@ -207,7 +208,7 @@ abstract class AbstractService {
                 )
         ));
         
-        $output = file_get_contents($this->url, false, $context);
+        $output = file_get_contents($this->getServiceUrl(), false, $context);
         
         // $http_response_header comes from PHP engine, 
         // it's not a part of this code

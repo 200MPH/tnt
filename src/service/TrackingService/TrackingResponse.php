@@ -4,11 +4,13 @@
  * Tracking Response
  *
  * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
+ * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 
-namespace thm\tnt_ec\Service\TrackingService\libs;
+namespace thm\tnt_ec\Service\TrackingService;
 
-use thm\tnt_ec\Service\Response;
+use thm\tnt_ec\service\Response;
+use thm\tnt_ec\service\entity\Consignment;
 
 class TrackingResponse extends Response {
     
@@ -18,7 +20,7 @@ class TrackingResponse extends Response {
     private $consignments = [];
     
     /**
-     * Get consignments collection
+     * Get consignment collection
      * 
      * @return Consignment[]
      */
