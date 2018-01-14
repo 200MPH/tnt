@@ -214,13 +214,7 @@ abstract class AbstractService {
         // it's not a part of this code
         // http://php.net/manual/en/reserved.variables.httpresponseheader.php
         Response::$headers = $http_response_header;
-        
-        if(empty($output) === true) {
-            
-            $output = new \SimpleXMLElement('<root>Response error!</root>');
-            
-        }
-        
+                
         return $output;
         
     }

@@ -36,7 +36,7 @@ class XMLTools {
             
             // skip empty documents
             if(empty($documents[$i]) === true) { continue; }
-            
+                        
             if($i === 0) {
                 
                 // add first document to the merge string.
