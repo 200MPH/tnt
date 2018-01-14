@@ -178,6 +178,24 @@ abstract class AbstractService {
     }
     
     /**
+     * Set XML content.
+     * This is useful when you want to send your own prepared XML document.
+     * 
+     * @param string $xml
+     * @return bool
+     */
+    public function setXmlContent($xml)
+    {
+        
+        $this->xml->flush();
+        
+        $this->xml = new \XMLWriter();
+        
+        return $this->xml->writeRaw($xml);
+        
+    }
+    
+    /**
      * Get XML content
      * 
      * @return string
