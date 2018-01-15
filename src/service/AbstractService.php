@@ -48,14 +48,14 @@ abstract class AbstractService {
      * 
      * @var string
      */
-    private $userId;
+    protected $userId;
     
     /**
      * Password
      * 
      * @var string
      */
-    private $password;
+    protected $password;
     
     /**
      * Get TNT service URL

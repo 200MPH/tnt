@@ -220,13 +220,12 @@ class Consignment extends AbstractXml {
     /**
      * Set receiver address
      * 
-     * @param Address $receiver
-     * @return Consignment
+     * @return Address
      */
-    public function setReceiver(Address $receiver)
+    public function setReceiver()
     {
         
-        $this->receiver = $receiver;
+        $this->receiver = new Address;
 
         return $this;
         
@@ -234,14 +233,13 @@ class Consignment extends AbstractXml {
     
     /**
      * Set receiver address as delivery address.
-     * NOTE setReceiver() method must be called before this one.
-     * 
+     *  
      * @return Consignment
      */
     public function setReceiverAsDelivery()
     {
-        
-        $this->delivery = $this->receiver;
+             
+        $this->delivery =& $this->receiver;
         
         return $this;
         
