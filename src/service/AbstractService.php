@@ -15,9 +15,6 @@ use thm\tnt_ec\TNTException;
 
 abstract class AbstractService {
     
-    /* Version */
-    const VERSION = 3.1;
-    
     /**
      * XML Request
      * 

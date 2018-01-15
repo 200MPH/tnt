@@ -16,6 +16,9 @@ use thm\tnt_ec\XMLTools;
 
 class TrackingService extends AbstractService {
     
+    /* Version */
+    const VERSION = 3.1;
+    
     /* Service URL */
     const URL = 'https://express.tnt.com/expressconnect/track.do';
     
@@ -236,7 +239,7 @@ class TrackingService extends AbstractService {
         
         $this->xml->startElement("TrackRequest");
         $this->xml->writeAttribute('locale', $this->locale);
-        $this->xml->writeAttribute('version', AbstractService::VERSION);
+        $this->xml->writeAttribute('version', self::VERSION);
         $this->xml->startElement("SearchCriteria");
         $this->setMarketTypeAttributes();
                     
