@@ -41,7 +41,7 @@ abstract class AbstractXml {
     }
     
     /**
-     * Get entire address as XML
+     * Get entire XML as a string
      * 
      * @return string
      */

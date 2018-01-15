@@ -117,14 +117,50 @@ class Consignment extends AbstractXml {
     private $serviceOptions = [];
     
     /**
-     * Add package
+     * Get entire XML as a string
+     * 
+     * @return string
+     */
+    public function getAsXml()
+    {
+        
+        if(empty($this->packages) === false) {
+            
+            $xml = new \XMLWriter();
+            $xml->openMemory();
+            $xml->setIndent(true);
+            $xml->writeRaw( parent::getAsXml() );
+            
+            foreach($this->packages as $package) {
+                
+                $xml->startElement('PACKAGE');
+                    $xml->writeRaw( $package->getAsXml() );
+                $xml->endElement();
+                
+            }
+            
+            return $xml->outputMemory(false);
+            
+        } else {
+            
+            return parent::getAsXml();
+            
+        }
+        
+    }
+    
+    /**
+     * Add package.
+     * TNT allows for maximum 50 packages per consignment.
      * 
      * @return Package
      */
     public function addPackage()
     {
         
-        $package;
+        $this->packages[] = new Package();
+        
+        return end($this->packages);
         
     }
     

@@ -47,6 +47,39 @@ class Package extends AbstractXml {
     private $articles = [];
     
     /**
+     * Get entire XML as a string
+     * 
+     * @return string
+     */
+    public function getAsXml()
+    {
+        
+        if(empty($this->articles) === false) {
+            
+            $xml = new \XMLWriter();
+            $xml->openMemory();
+            $xml->setIndent(true);
+            $xml->writeRaw( parent::getAsXml() );
+            
+            foreach($this->articles as $article) {
+                
+                $xml->startElement('ARTICLE');
+                    $xml->writeRaw( $article->getAsXml() );
+                $xml->endElement();
+                
+            }
+            
+            return $xml->outputMemory(false);
+            
+        } else {
+            
+            return parent::getAsXml();
+            
+        }
+        
+    }
+    
+    /**
      * Add article.
      * Optional. This is required for customs only.
      * 
@@ -55,7 +88,9 @@ class Package extends AbstractXml {
     public function addArticle()
     {
         
+        $this->articles[] = new Article();
         
+        return end($this->articles);
         
     }
     
