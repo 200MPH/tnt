@@ -36,7 +36,7 @@ class ShippingService extends AbstractService {
     /**
      * @var Consignment[]
      */
-    private $consignment = [];
+    private $consignments = [];
     
     /**
      * User defined XML content - custom
@@ -131,9 +131,9 @@ class ShippingService extends AbstractService {
         
         $con = new Consignment();
         $con->setAccount($this->account, $this->accountCountryCode);
-        $this->consignment[] = $con;
+        $this->consignments[] = $con;
         
-        return end($this->consignment);
+        return end($this->consignments);
         
     }
     
@@ -291,9 +291,9 @@ class ShippingService extends AbstractService {
     private function buildConsignmentSection()
     {
         
-        if(empty($this->consignment) === false) {
+        if(empty($this->consignments) === false) {
         
-            foreach($this->consignment as $consignment) {
+            foreach($this->consignments as $consignment) {
 
                 $this->xml->startElement('CONSIGNMENT');
                     $this->xml->writeRaw( $consignment->getAsXml() );
@@ -317,7 +317,7 @@ class ShippingService extends AbstractService {
             
             $conRefs = [];
             
-            foreach($this->consignment as $consignment) {
+            foreach($this->consignments as $consignment) {
                 
                 $conRefs[] = $consignment->getConReference();
                 

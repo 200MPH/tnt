@@ -183,7 +183,7 @@ class Package extends AbstractXml {
     {
         
         $this->weight = $weight;
-        $this->xml->writeElement($weight);
+        $this->xml->writeElement('WEIGHT', $weight);
         
         return $this;
         

@@ -239,14 +239,18 @@ class Consignment extends AbstractXml {
     }
 
     /**
-     * Set receiver address
+     * Set receiver address - NOT DELIVERY ADDRESS
      * 
      * @return Address
      */
     public function setReceiver()
     {
         
-        $this->receiver = new Address;
+        if(!$this->receiver instanceof Address) {
+            
+            $this->receiver = new Address();
+            
+        }
 
         return $this->receiver;
         
@@ -269,15 +273,18 @@ class Consignment extends AbstractXml {
     /**
      * Set delivery address
      * 
-     * @param Address $delivery
-     * @return Consignment
+     * @return Address
      */
-    public function setDelivery(Address $delivery)
+    public function setDelivery()
     {
         
-        $this->delivery = $delivery;
+        if(!$this->delivery instanceof Address) {
+            
+            $this->delivery = new Address();
+            
+        }
         
-        return $this;
+        return $this->delivery;
         
     }
 
@@ -414,7 +421,7 @@ class Consignment extends AbstractXml {
         $this->goodsValue = $goodsValue;
         $this->xml->writeElement('GOODSVALUE', $goodsValue);
         
-        return $goodsValue;
+        return $this;
         
     }
 
@@ -430,7 +437,7 @@ class Consignment extends AbstractXml {
         $this->insuranceValue = $insuranceValue;
         $this->xml->writeElement('INSURANCEVALUE', $insuranceValue);
         
-        return $insuranceValue;
+        return $this;
         
     }
 

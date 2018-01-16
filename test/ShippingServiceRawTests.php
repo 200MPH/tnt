@@ -30,4 +30,45 @@ $shipping->setCollection()->useSenderAddress()
                           ->setAltCollectionTime('12:00', '14:00')
                           ->setCollectInstruction('Collection instructions');
 
+$c1 = $shipping->addConsignment()->setConReference('CON 123')
+                           ->setCustomerRef('Custome ref')
+                           ->setContype('N')
+                           ->setPaymentind('S')
+                           ->setItems(1)
+                           ->setTotalWeight(7)
+                           ->setTotalVolume(0.02)
+                           ->setCurrency('GBP')
+                           ->setGoodsValue(100.00)
+                           ->setInsuranceValue(100.00)
+                           ->setInsuranceCurrency('GBP')
+                           ->setService('15N')
+                           ->addOption('PR')
+                           ->setDescription('Computer parts')
+                           ->setDeliveryInstructions('To reception please');
+
+$c1->addPackage()->setItems(1)
+                 ->setDescription('Computer parts - mtb')
+                 ->setHeight(0.20)
+                 ->setLength(0.30)
+                 ->setWidth(0.15)
+                 ->setWeight(7);
+
+$c1->setReceiver()->setCompanyName('RCV Company Name')
+                  ->setAddressLine('RCV Address line 1')
+                  ->setAddressLine('RCV Address line 2')
+                  ->setAddressLine('RCV Address line 3')
+                  ->setAddressLine('RCV Should be exxluded')
+                  ->setCity('RCV City')
+                  ->setProvince('RCV Province')
+                  ->setPostcode('RCV Post code')
+                  ->setCountry('RCV Country')
+                  ->setVat('RCV VAT')
+                  ->setContactName('RCV Contact name')
+                  ->setContactDialCode('RCV Dial code')
+                  ->setContactPhone('RCV Contact phone')
+                  ->setContactEmail('RCV Email');
+
+$c1->setReceiverAsDelivery();
+
+//print_r($shipping);
 print_r($shipping->getXmlContent());

@@ -31,21 +31,4 @@ $colOut = $shipping->setCollection()->useSenderAddress()
                           ->setCollectInstruction('Collection instructions')
                           ->getAsXml();
 
-$shipping->setCollection()->setAddress()
-                          ->setCompanyName('COL Company Test')
-                          ->setAddressLine('COL Address line 1')
-                          ->setAddressLine('COL Address line 2')
-                          ->setAddressLine('COL Address line 3')
-                          ->setAddressLine('COL Should be excluded')
-                          ->setCity('COL City')
-                          ->setProvince('COL Province')
-                          ->setPostcode('COL Post code')
-                          ->setCountry('COL Country')
-                          ->setVat('COL VAT')
-                          ->setContactName('COL Contact name')
-                          ->setContactDialCode('COL Dial code')
-                          ->setContactPhone('COL Contact phone')
-                          ->setContactEmail('COL Email');
-
 print_r($colOut);
-print_r($shipping->setCollection()->getAsXml());
