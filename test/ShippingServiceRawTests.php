@@ -7,3 +7,26 @@ use thm\tnt_ec\service\ShippingService\ShippingService;
 
 $shipping = new ShippingService('123', '123');
 
+$shipping->setSender()->setCompanyName('Company Test')
+                      ->setAddressLine('Address line 1')
+                      ->setAddressLine('Address line 2')
+                      ->setAddressLine('Address line 3')
+                      ->setAddressLine('Should be exxluded')
+                      ->setCity('City')
+                      ->setProvince('Province')
+                      ->setPostcode('Post code')
+                      ->setCountry('Country')
+                      ->setAccountNumber('Account number')
+                      ->setVat('VAT')
+                      ->setContactName('Contact name')
+                      ->setContactDialCode('Dial code')
+                      ->setContactPhone('Contact phone')
+                      ->setContactEmail('Email');
+
+$shipping->setCollection()->useSenderAddress()
+                          ->setShipDate('16/01/2018')
+                          ->setPrefCollectTime('10:00', '12:00')
+                          ->setAltCollectionTime('12:00', '14:00')
+                          ->setCollectInstruction('Collection instructions');
+
+print_r($shipping->getXmlContent());

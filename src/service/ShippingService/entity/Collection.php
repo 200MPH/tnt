@@ -49,9 +49,9 @@ class Collection extends AbstractXml {
     /**
      * Constructor
      * 
-     * @param Addres & $senderAddress
+     * @param Address & $senderAddress
      */
-    public function __construct(Addres & $senderAddress)
+    public function __construct(Address & $senderAddress)
     {
         
         parent::__construct();

@@ -50,6 +50,27 @@ class ShippingService extends AbstractService {
     private $activity = false;
     
     /**
+     * @var string
+     */
+    private $appid;
+    
+    /**
+     * Initialize service
+     * 
+     * @param string $userId
+     * @param string $password
+     * @param string $appid [optional]
+     * @throw TNTException
+     */
+    public function __construct($userId, $password, $appid = '')
+    {
+        
+        parent::__construct($userId, $password);
+        $this->appid = $appid;
+        
+    }
+    
+    /**
      * Get shipping service URL
      * @return string
      */
@@ -153,7 +174,7 @@ class ShippingService extends AbstractService {
      * 
      * @return string
      */
-    protected function getXmlContent()
+    public function getXmlContent()
     {
         
         if($this->userXml === true) {
@@ -189,7 +210,7 @@ class ShippingService extends AbstractService {
         $this->xml->startElement('LOGIN');
             $this->xml->writeElement('COMAPNY', $this->userId);
             $this->xml->writeElement('PASSWORD', $this->password);
-            $this->xml->writeElement('APPID', 0);
+            $this->xml->writeElement('APPID', $this->appid);
             $this->xml->writeElement('APPVERSION', self::VERSION);
         $this->xml->endElement();
         $this->xml->startElement('CONSIGNMENTBATCH');
