@@ -14,4 +14,4 @@ $a->book('123')
   ->printLabel('123')
   ->printManifest('123');
 
-$a->getXmlContent();
+print_r($a->getXmlContent(false));

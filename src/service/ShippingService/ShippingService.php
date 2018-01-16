@@ -287,7 +287,7 @@ class ShippingService extends AbstractService {
                      ->printLabel($conRefs)
                      ->printManifest($conRefs);
             
-            $this->xml->writeRaw( $activity->getXmlContent() );
+            $this->xml->writeRaw( $activity->getXmlContent(false) );
             
         }
         

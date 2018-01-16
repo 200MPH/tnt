@@ -184,24 +184,27 @@ class Activity extends AbstractService {
     /**
      * Get XML content
      * 
+     * @param bool $xmlHeaderIncluded Include XML header (document start). Default TRUE
      * @return string
      */
-    public function getXmlContent()
+    public function getXmlContent($xmlHeaderIncluded = true)
     {
         
-        $this->startDocument();
-        $this->xml->startElement('ACTIVITY');
+        if($xmlHeaderIncluded === true) { $this->startDocument(); }
         
+        $this->xml->startElement('ACTIVITY');
         $this->mergeActivities('ACTIVITY');
         
         if(isset($this->xmls['PRINT']) === true) {
             
+            $this->xml->startElement('PRINT');
             $this->mergeActivities('PRINT');
+            $this->xml->endElement();
             
         }
         
         $this->xml->endElement();
-        $this->endDocument();
+        if($xmlHeaderIncluded === true) { $this->endDocument(); }
         
         return parent::getXmlContent();
         
@@ -219,6 +222,9 @@ class Activity extends AbstractService {
     {
            
         $xml = new XMLWriter();
+        $xml->openMemory();
+        $xml->setIndent(true);
+        
         $xml->startElement($element);
         
         if(is_array($consignment) === true) {
