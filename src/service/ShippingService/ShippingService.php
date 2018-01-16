@@ -240,11 +240,15 @@ class ShippingService extends AbstractService {
     private function buildSenderSection()
     {
         
-        $this->xml->startElement('SENDER');
-            $this->xml->writeRaw( $this->sender->getAsXml() );
-            $this->buildCollectionSection();
-            $this->xml->writeElement('ACCOUNT', $this->account); 
-        $this->xml->endElement();
+        if($this->sender instanceof Address) {
+        
+            $this->xml->startElement('SENDER');
+                $this->xml->writeRaw( $this->sender->getAsXml() );
+                $this->buildCollectionSection();
+                $this->xml->writeElement('ACCOUNT', $this->account); 
+            $this->xml->endElement();
+        
+        }
         
     }
     
@@ -256,11 +260,15 @@ class ShippingService extends AbstractService {
     private function buildCollectionSection()
     {
         
-        $this->xml->startElement('COLLECTION');
-        $this->xml->startElement('COLLECTIONADDRESS');
-            $this->xml->writeRaw( $this->collection->getAsXml() );
-        $this->xml->endElement();
-        $this->xml->endElement();
+        if($this->collection instanceof Collection) {
+        
+            $this->xml->startElement('COLLECTION');
+            $this->xml->startElement('COLLECTIONADDRESS');
+                $this->xml->writeRaw( $this->collection->getAsXml() );
+            $this->xml->endElement();
+            $this->xml->endElement();
+        
+        }
         
     }
     
@@ -272,12 +280,16 @@ class ShippingService extends AbstractService {
     private function buildConsignmentSection()
     {
         
-        foreach($this->consignment as $consignment) {
-            
-            $this->xml->startElement('CONSIGNMENT');
-                $this->xml->writeRaw( $consignment->getAsXml() );
-            $this->xml->endElement();
-            
+        if(empty($this->consignment) === false) {
+        
+            foreach($this->consignment as $consignment) {
+
+                $this->xml->startElement('CONSIGNMENT');
+                    $this->xml->writeRaw( $consignment->getAsXml() );
+                $this->xml->endElement();
+
+            }
+        
         }
         
     }

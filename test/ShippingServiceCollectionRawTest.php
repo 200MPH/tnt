@@ -24,10 +24,13 @@ $shipping->setAccountCountryCode('GB')
                       ->setContactPhone('Contact phone')
                       ->setContactEmail('Email');
 
-$shipping->setCollection()->useSenderAddress()
+$shipOut = $shipping->getXmlContent();
+
+$colOut = $shipping->setCollection()->useSenderAddress()
                           ->setShipDate('16/01/2018')
                           ->setPrefCollectTime('10:00', '12:00')
                           ->setAltCollectionTime('12:00', '14:00')
-                          ->setCollectInstruction('Collection instructions');
+                          ->setCollectInstruction('Collection instructions')->getAsXml();
 
-print_r($shipping->getXmlContent());
+print_r($shipOut);
+print_r($colOut);
