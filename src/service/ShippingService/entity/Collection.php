@@ -60,32 +60,34 @@ class Collection extends AbstractXml {
     }
     
     /**
+     * Get entire XML as a string
+     * 
+     * @return string
+     */
+    public function getAsXml()
+    {
+        
+        // merge collection XML document with collection address XML document
+        $xml = new \XMLWriter();
+        $xml->openMemory();
+        $xml->setIndent(true);
+        $xml->writeRaw( $this->collection->getAsXml() );
+        $xml->writeRaw( parent::getAsXml() );
+                
+        //re-assign object
+        $this->xml = $xml;
+        
+        return parent::getAsXml();
+        
+    }
+    
+    /**
      * Get ship date.
      *  
      * @return string Date in format DD/MM/YYYY - TNT specified
      */
     public function getShipDate()
     {
-        
-        /**
-         * @todo
-         * Add below to the method description:
-         * "If not previously set then will return current date if current hour <= 14:00,
-         * otherwise next working day."
-         * 
-         * if(empty($this->shipDate) === true) {
-            
-            if((int)date('H') < 14 ) {
-                
-                return date('d/m/Y');
-                
-            } else {
-              
-                return date('d/m/Y', strtotime("+{$this->calcDays()} day"));
-                
-            }
-            
-        }*/
         
         return $this->shipDate;
         
@@ -251,30 +253,6 @@ class Collection extends AbstractXml {
         
         $this->collection = $this->sender;
         return $this;
-        
-    }
-    
-    /**
-     * Calculate remain days to the next working day.
-     * If Friday return 3, Sat return 2, Sun return 1
-     * 
-     * @return int
-     */
-    private function calcDays()
-    {
-        
-        $weekDay = date('N');
-        
-        switch($weekDay) {
-            
-            case 5: // Friday
-                return 3;
-            case 6: // Saturday
-                return 2;
-            default:
-                return 1;
-                
-        }  
         
     }
     

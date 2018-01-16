@@ -13,7 +13,7 @@ $shipping->setAccountCountryCode('GB')
                       ->setAddressLine('Address line 1')
                       ->setAddressLine('Address line 2')
                       ->setAddressLine('Address line 3')
-                      ->setAddressLine('Should be exxluded')
+                      ->setAddressLine('Should be excluded')
                       ->setCity('City')
                       ->setProvince('Province')
                       ->setPostcode('Post code')
@@ -24,13 +24,28 @@ $shipping->setAccountCountryCode('GB')
                       ->setContactPhone('Contact phone')
                       ->setContactEmail('Email');
 
-$shipOut = $shipping->getXmlContent();
-
 $colOut = $shipping->setCollection()->useSenderAddress()
                           ->setShipDate('16/01/2018')
                           ->setPrefCollectTime('10:00', '12:00')
                           ->setAltCollectionTime('12:00', '14:00')
-                          ->setCollectInstruction('Collection instructions')->getAsXml();
+                          ->setCollectInstruction('Collection instructions')
+                          ->getAsXml();
 
-print_r($shipOut);
+$shipping->setCollection()->setAddress()
+                          ->setCompanyName('COL Company Test')
+                          ->setAddressLine('COL Address line 1')
+                          ->setAddressLine('COL Address line 2')
+                          ->setAddressLine('COL Address line 3')
+                          ->setAddressLine('COL Should be excluded')
+                          ->setCity('COL City')
+                          ->setProvince('COL Province')
+                          ->setPostcode('COL Post code')
+                          ->setCountry('COL Country')
+                          ->setVat('COL VAT')
+                          ->setContactName('COL Contact name')
+                          ->setContactDialCode('COL Dial code')
+                          ->setContactPhone('COL Contact phone')
+                          ->setContactEmail('COL Email');
+
 print_r($colOut);
+print_r($shipping->setCollection()->getAsXml());

@@ -89,7 +89,11 @@ class ShippingService extends AbstractService {
     public function setSender()
     {
         
-        $this->sender = new Address();
+        if(!$this->sender instanceof Address) {
+            
+            $this->sender = new Address();
+            
+        }
         
         return $this->sender;
         
@@ -103,7 +107,14 @@ class ShippingService extends AbstractService {
     public function setCollection()
     {
         
-        $this->collection = new Collection($this->sender);
+        if(!$this->collection instanceof Collection) {
+            
+            // initialise object just in case when collection object is set
+            // before sender object - reverted sequence
+            $this->setSender();
+            $this->collection = new Collection( $this->sender );
+            
+        }
         
         return $this->collection;
         
