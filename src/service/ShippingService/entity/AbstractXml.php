@@ -24,7 +24,7 @@ abstract class AbstractXml {
     public function __construct()
     {
         
-        $this->xml = new \XMLWriter();
+        $this->xml = new XMLWriter();
         $this->xml->openMemory();
         $this->xml->setIndent(true);
         

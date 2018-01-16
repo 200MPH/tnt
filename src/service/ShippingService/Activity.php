@@ -15,11 +15,6 @@ use XMLWriter;
 use thm\tnt_ec\service\AbstractService;
 
 class Activity extends AbstractService {
-          
-    /**
-     * @var bool
-     */
-    private $printTagOpen = false;
     
     /**
      * @var XMLWriter[]
@@ -105,8 +100,7 @@ class Activity extends AbstractService {
      */
     public function printConsignmentNote($consignment)
     {
-        
-        $this->printTagOpen = true;
+                
         $this->buildActivityElement('PRINT', 'CONNOTE', $consignment);
         
         return $this;
@@ -122,7 +116,6 @@ class Activity extends AbstractService {
     public function printLabel($consignment)
     {
         
-        $this->printTagOpen = true;
         $this->buildActivityElement('PRINT', 'LABEL', $consignment);
         
         return $this;
@@ -138,7 +131,6 @@ class Activity extends AbstractService {
     public function printManifest($consignment)
     {
         
-        $this->printTagOpen = true;
         $this->buildActivityElement('PRINT', 'MANIFEST', $consignment);
         
         return $this;
@@ -154,8 +146,7 @@ class Activity extends AbstractService {
     public function printInvoice($consignment)
     {
         
-        $this->printTagOpen = true;
-        $this->buildActivityElement('PRINT', 'INVOICE', $consignment);
+       $this->buildActivityElement('PRINT', 'INVOICE', $consignment);
         
         return $this;
         

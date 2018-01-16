@@ -152,6 +152,19 @@ class Collection extends AbstractXml {
     }
 
     /**
+     * Set collection address
+     * 
+     * @return Address
+     */
+    public function setAddress()
+    {
+        
+        $this->collection = new Address();
+        return $this->collection;
+        
+    }
+    
+    /**
      * Set ship date
      * 
      * @param string $shipDate Date in format DD/MM/YYYY - TNT specified
@@ -223,7 +236,7 @@ class Collection extends AbstractXml {
         $this->collectInstruction = $collectInstruction;
         $this->xml->writeElement('COLLINSTRUCTIONS', $collectInstruction);
         
-        return $collectInstruction;
+        return $this;
         
     }
 

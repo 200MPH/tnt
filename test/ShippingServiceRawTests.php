@@ -4,10 +4,13 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 use thm\tnt_ec\service\ShippingService\ShippingService;
+use thm\tnt_ec\service\ShippingService\entity\Address;
 
 $shipping = new ShippingService('123', '123');
 
-$shipping->setSender()->setCompanyName('Company Test')
+$shipping->setAccountCountryCode('GB')
+         ->setAccountNumber('12345')
+         ->setSender()->setCompanyName('Company Test')
                       ->setAddressLine('Address line 1')
                       ->setAddressLine('Address line 2')
                       ->setAddressLine('Address line 3')
@@ -16,7 +19,6 @@ $shipping->setSender()->setCompanyName('Company Test')
                       ->setProvince('Province')
                       ->setPostcode('Post code')
                       ->setCountry('Country')
-                      ->setAccountNumber('Account number')
                       ->setVat('VAT')
                       ->setContactName('Contact name')
                       ->setContactDialCode('Dial code')

@@ -200,7 +200,7 @@ abstract class AbstractService {
     protected function getXmlContent()
     {
         
-        return $this->xml->outputMemory(false);
+        return $this->xml->flush(false);
         
     }
     

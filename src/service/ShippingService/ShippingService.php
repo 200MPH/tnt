@@ -18,7 +18,7 @@ use thm\tnt_ec\service\ShippingService\ShippingResponse;
 class ShippingService extends AbstractService {
     
     /* Version */
-    const VERSION = 3.0;
+    const VERSION = '3.0';
     
     /* Service URL */
     const URL = 'https://express.tnt.com/expressconnect/shipping/ship';
