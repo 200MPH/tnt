@@ -45,6 +45,22 @@ class ShippingService extends AbstractService {
     private $userXml = false;
     
     /**
+     * @var bool
+     */
+    private $activity = false;
+    
+    /**
+     * Get shipping service URL
+     * @return string
+     */
+    public function getServiceUrl()
+    {
+    
+        return self::URL;
+        
+    }
+    
+    /**
      * Set sender address
      * 
      * @return Address
@@ -90,16 +106,21 @@ class ShippingService extends AbstractService {
     }
     
     /**
-     * Get shipping service URL
-     * @return string
+     * Create activity - auto activity
+     * This will generate <ACTIVITY> element within this request.
+     * Following activities will be created: CREATE, BOOK, SHIP, PRINT (consignment, label, manifest).
+     * Anything else has to be created manually (RATE, PRINT INVOICE, EMAILTO, EMAILFROM)
+     * 
+     * @return ShippingService
      */
-    public function getServiceUrl()
+    public function autoActivity()
     {
-    
-        return self::URL;
+        
+        $this->activity = true;
+        return $this;
         
     }
-
+    
     /**
      * Send request to TNT
      * 
@@ -150,7 +171,7 @@ class ShippingService extends AbstractService {
         
         $this->endDocument();
         
-        return $this->xml->outputMemory(false);
+        return parent::getXmlContent();
         
     }
     
@@ -248,9 +269,27 @@ class ShippingService extends AbstractService {
     private function buildActivitySection()
     {
         
-        /**
-         * @todo Build activity section
-         */
+        if($this->activity === true) {
+            
+            $conRefs = [];
+            
+            foreach($this->consignment as $consignment) {
+                
+                $conRefs[] = $consignment->getConReference();
+                
+            }
+            
+            $activity = new Activity($this->userId, $this->password);
+            $activity->create($conRefs)
+                     ->ship($conRefs)
+                     ->book($conRefs)
+                     ->printConsignmentNote($conRefs)
+                     ->printLabel($conRefs)
+                     ->printManifest($conRefs);
+            
+            $this->xml->writeRaw( $activity->getXmlContent() );
+            
+        }
         
     }
     

@@ -498,4 +498,16 @@ class Consignment extends AbstractXml {
         
     }
     
+    /**
+     * Get consignment reference
+     * 
+     * @return string
+     */
+    public function getConReference()
+    {
+        
+        return $this->conReference;
+        
+    }
+    
 }
