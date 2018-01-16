@@ -117,6 +117,27 @@ class Consignment extends AbstractXml {
     private $serviceOptions = [];
     
     /**
+     * @var array
+     */
+    private $account = [];
+    
+    /**
+     * Set account
+     * 
+     * @param int $accountNumber
+     * @param string $accountCountry ISO2 country code
+     * 
+     * @return void
+     */
+    public function setAccount($accountNumber, $accountCountry)
+    {
+        
+        $this->account['number'] = $accountNumber;
+        $this->account['country'] = $accountCountry;
+        
+    }
+    
+    /**
      * Get entire XML as a string
      * 
      * @return string
@@ -227,7 +248,7 @@ class Consignment extends AbstractXml {
         
         $this->receiver = new Address;
 
-        return $this;
+        return $this->receiver;
         
     }
     
@@ -294,8 +315,8 @@ class Consignment extends AbstractXml {
     }
 
     /**
-     * Set payment.
-     * "S" sender pay, "R" receiver pay
+     * Set payment who pay
+     * "S" sender pays, "R" receiver pays
      * 
      * @param string $paymentind [optional] "S" default
      * @return Consignment
@@ -306,6 +327,13 @@ class Consignment extends AbstractXml {
         $this->paymentind = $paymentind;
         $this->xml->writeElement('PAYMENTIND', $paymentind);
      
+        if($this->paymentind === 'R') {
+            
+            $this->receiver->setAccountNumber($this->account['number']);
+            $this->receiver->setAcountCountry($this->account['country']);
+            
+        }
+        
         return $this;
         
     }

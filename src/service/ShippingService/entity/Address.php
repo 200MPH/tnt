@@ -71,6 +71,16 @@ class Address extends AbstractXml {
     private $email;
     
     /**
+     * @var int
+     */
+    private $account = 0;
+    
+    /**
+     * @var string
+     */
+    private $accountCountry;
+    
+    /**
      * Get company name
      * 
      * @return string
@@ -437,6 +447,36 @@ class Address extends AbstractXml {
         
     }
 
-
+    /**
+     * Set account
+     * 
+     * @param int $accountNumber
+     * @return Address
+     */
+    public function setAccountNumber($accountNumber)
+    {
+        
+        $this->account = $accountNumber;
+        $this->xml->writeElement('ACCOUNT', $accountNumber);
+        
+        return $this;
+        
+    }
+    
+    /**
+     * Set account country
+     * 
+     * @param string $accountCountry ISO2 country code
+     * @return Address
+     */
+    public function setAcountCountry($accountCountry)
+    {
+        
+        $this->accountCountry = $accountCountry;
+        $this->xml->writeElement('ACCOUNTCOUNTRY', $accountCountry);
+        
+        return $this;      
+        
+    }
     
 }

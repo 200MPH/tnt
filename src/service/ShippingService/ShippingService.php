@@ -39,6 +39,12 @@ class ShippingService extends AbstractService {
     private $consignment = [];
     
     /**
+     * User defined XML content - custom
+     * @var bool
+     */
+    private $userXml = false;
+    
+    /**
      * Set sender address
      * 
      * @return Address
@@ -75,7 +81,9 @@ class ShippingService extends AbstractService {
     public function addConsignment()
     {
         
-        $this->consignment[] = new Consignment();
+        $con = new Consignment();
+        $con->setAccount($this->account, $this->accountCountryCode);
+        $this->consignment[] = $con;
         
         return end($this->consignment);
         
@@ -105,6 +113,21 @@ class ShippingService extends AbstractService {
     }
     
     /**
+     * Set XML content.
+     * This is useful when you want to send your own prepared XML document.
+     * 
+     * @param string $xml
+     * @return bool
+     */
+    public function setXmlContent($xml)
+    {
+        
+        $this->userXml = true;
+        return parent::setXmlContent($xml);
+        
+    }
+    
+    /**
      * Get XML content
      * 
      * @return string
@@ -112,33 +135,18 @@ class ShippingService extends AbstractService {
     protected function getXmlContent()
     {
         
-        $this->startDocument();
-        
-        // build sender section
-        $this->xml->startElement('SENDER');
-            $this->xml->writeRaw( $this->sender->getAsXml() );
+        if($this->userXml === true) {
             
-            // build collection section
-            $this->xml->startElement('COLLECTION');
-            $this->xml->startElement('COLLECTIONADDRESS');
-                $this->xml->writeRaw( $this->collection->getAsXml() );
-            $this->xml->endElement();
-            $this->xml->endElement();
-            
-        $this->xml->endElement();
-        
-        // build consignment section
-        foreach($this->consignment as $consignment) {
-            
-            $this->xml->startElement('CONSIGNMENT');
-                $this->xml->writeRaw( $consignment->getAsXml() );
-            $this->xml->endElement();
+            // return user defined content without modifications
+            return parent::getXmlContent();
             
         }
         
-        /**
-         * @todo build <ACTIVITY> section
-         */
+        $this->startDocument();
+        
+        $this->buildSenderSection();
+        $this->buildConsignmentSection();
+        $this->buildActivitySection();
         
         $this->endDocument();
         
@@ -179,6 +187,70 @@ class ShippingService extends AbstractService {
         $this->xml->endElement();
         
         parent::endDocument();
+        
+    }
+    
+    /**
+     * Build sender section
+     * 
+     * @return void
+     */
+    private function buildSenderSection()
+    {
+        
+        $this->xml->startElement('SENDER');
+            $this->xml->writeRaw( $this->sender->getAsXml() );
+            $this->buildCollectionSection();
+            $this->xml->writeElement('ACCOUNT', $this->account); 
+        $this->xml->endElement();
+        
+    }
+    
+    /**
+     * Build collection section
+     * 
+     * @return void
+     */
+    private function buildCollectionSection()
+    {
+        
+        $this->xml->startElement('COLLECTION');
+        $this->xml->startElement('COLLECTIONADDRESS');
+            $this->xml->writeRaw( $this->collection->getAsXml() );
+        $this->xml->endElement();
+        $this->xml->endElement();
+        
+    }
+    
+    /**
+     * Build consignment section
+     * 
+     * @return void
+     */
+    private function buildConsignmentSection()
+    {
+        
+        foreach($this->consignment as $consignment) {
+            
+            $this->xml->startElement('CONSIGNMENT');
+                $this->xml->writeRaw( $consignment->getAsXml() );
+            $this->xml->endElement();
+            
+        }
+        
+    }
+    
+    /**
+     * Build activity section
+     * 
+     * @return void
+     */
+    private function buildActivitySection()
+    {
+        
+        /**
+         * @todo Build activity section
+         */
         
     }
     
