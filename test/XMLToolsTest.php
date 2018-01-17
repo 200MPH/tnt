@@ -28,5 +28,5 @@ class XMLToolsTest  extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($result, XMLTools::mergeXml($xml));
         
     }
-        
+    
 }
