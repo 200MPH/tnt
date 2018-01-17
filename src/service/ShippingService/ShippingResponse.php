@@ -139,8 +139,19 @@ class ShippingResponse extends AbstractResponse {
             
             $this->hasError = true;
             $this->errors[] = $this->simpleXml->error_reason->__toString();
-            $this->errors[] = $this->simpleXml->error_srcText->__toString();
+                        
+            if(isset($this->simpleXml->error_line) === true) {
+                
+                $this->errors[] = "Line: {$this->simpleXml->error_line}";
+                
+            }
             
+            if(empty($this->simpleXml->error_srcText->__toString()) === false) {
+                
+                $this->errors[] = $this->simpleXml->error_srcText->__toString();
+                
+            }
+                        
         }
         
         // catch validation error

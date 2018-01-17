@@ -92,6 +92,7 @@ class ShippingService extends AbstractService {
         if(!$this->sender instanceof Address) {
             
             $this->sender = new Address();
+            $this->sender->setAccountNumber($this->account);
             
         }
         
@@ -109,8 +110,8 @@ class ShippingService extends AbstractService {
         
         if(!$this->collection instanceof Collection) {
             
-            // initialise object just in case when collection object is set
-            // before sender object - reverted sequence
+            // initialise object just in case when collection object 
+            // is set before $sender object - reverted sequence
             $this->setSender();
             $this->collection = new Collection( $this->sender );
             
@@ -259,7 +260,6 @@ class ShippingService extends AbstractService {
         if($this->sender instanceof Address) {
         
             $this->xml->startElement('SENDER');
-                $this->xml->writeElement('ACCOUNT', $this->account);
                 $this->xml->writeRaw( $this->sender->getAsXml() );
                 $this->buildCollectionSection();
             $this->xml->endElement();
@@ -280,7 +280,6 @@ class ShippingService extends AbstractService {
         
             $this->xml->startElement('COLLECTION');
             $this->xml->startElement('COLLECTIONADDRESS');
-                $this->xml->writeElement('ACCOUNT', $this->account); 
                 $this->xml->writeRaw( $this->collection->getAsXml() );
             $this->xml->endElement();
             $this->xml->endElement();

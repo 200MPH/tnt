@@ -81,6 +81,11 @@ class Address extends AbstractXml {
     private $accountCountry;
     
     /**
+     * @var bool
+     */
+    private $accountIncluded = false;
+    
+    /**
      * Get company name
      * 
      * @return string
@@ -237,6 +242,13 @@ class Address extends AbstractXml {
         
             $this->company = $company;
             $this->xml->writeElement('COMPANYNAME', $company);
+            
+            if($this->accountIncluded === false && $this->account != 0) {
+                
+                $this->xml->writeElement('ACCOUNT', $this->account);
+                $this->accountIncluded = true;
+                
+            }
         
         }
         
@@ -358,7 +370,7 @@ class Address extends AbstractXml {
         
         if(empty($vat) === false) {
             
-            $this->vat = $vat;
+            $this->vat = $vat;        
             $this->xml->writeElement('VAT',$vat);
             
         }
@@ -456,9 +468,7 @@ class Address extends AbstractXml {
     public function setAccountNumber($accountNumber)
     {
         
-        $this->account = $accountNumber;
-        $this->xml->writeElement('ACCOUNT', $accountNumber);
-        
+        $this->account = $accountNumber;        
         return $this;
         
     }
