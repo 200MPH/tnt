@@ -199,8 +199,7 @@ class ShippingService extends AbstractService {
         
         $this->buildSenderSection();
         $this->buildConsignmentSection();
-        $this->buildActivitySection();
-        
+                
         $this->endDocument();
         
         return parent::getXmlContent();
@@ -237,6 +236,7 @@ class ShippingService extends AbstractService {
     {
         
         $this->xml->endElement();
+        $this->buildActivitySection();
         $this->xml->endElement();
         
         parent::endDocument();

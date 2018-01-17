@@ -9,6 +9,7 @@ $shipping = new ShippingService('123', '123');
 
 $shipping->setAccountCountryCode('GB')
          ->setAccountNumber('12345')
+         ->autoActivity()
          ->setSender()->setCompanyName('Company Test')
                       ->setAddressLine('Address line 1')
                       ->setAddressLine('Address line 2')
