@@ -258,7 +258,7 @@ class Address extends AbstractXml {
         if(empty($address) === false && count($this->address) < 3) {
             
             $this->address[] = $address;
-            $lineNo = key($this->address) + 1;
+            $lineNo = count($this->address);
             $this->xml->writeElement("STREETADDRESS" . $lineNo, $address);
             
         }

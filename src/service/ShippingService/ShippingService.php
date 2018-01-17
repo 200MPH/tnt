@@ -161,7 +161,12 @@ class ShippingService extends AbstractService {
     public function send()
     {
         
-        return new ShippingResponse($this->sendRequest(), $this->getXmlContent);
+        $r = $this->sendRequest();
+        $x = $this->getXmlContent();
+        $u = $this->userId;
+        $p = $this->password;
+                
+        return new ShippingResponse($r, $x, $u, $p);
         
     }
     
@@ -218,7 +223,7 @@ class ShippingService extends AbstractService {
         
         $this->xml->startElement('ESHIPPER');
         $this->xml->startElement('LOGIN');
-            $this->xml->writeElement('COMAPNY', $this->userId);
+            $this->xml->writeElement('COMPANY', $this->userId);
             $this->xml->writeElement('PASSWORD', $this->password);
             $this->xml->writeElement('APPID', $this->appid);
             $this->xml->writeElement('APPVERSION', self::VERSION);
@@ -254,9 +259,9 @@ class ShippingService extends AbstractService {
         if($this->sender instanceof Address) {
         
             $this->xml->startElement('SENDER');
+                $this->xml->writeElement('ACCOUNT', $this->account);
                 $this->xml->writeRaw( $this->sender->getAsXml() );
                 $this->buildCollectionSection();
-                $this->xml->writeElement('ACCOUNT', $this->account); 
             $this->xml->endElement();
         
         }
@@ -275,6 +280,7 @@ class ShippingService extends AbstractService {
         
             $this->xml->startElement('COLLECTION');
             $this->xml->startElement('COLLECTIONADDRESS');
+                $this->xml->writeElement('ACCOUNT', $this->account); 
                 $this->xml->writeRaw( $this->collection->getAsXml() );
             $this->xml->endElement();
             $this->xml->endElement();

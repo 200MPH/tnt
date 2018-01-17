@@ -5,10 +5,10 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 use thm\tnt_ec\service\ShippingService\ShippingService;
 
-$shipping = new ShippingService('123', '123');
+$shipping = new ShippingService('CLINICHA_T', 'tnt12345');
 
 $shipping->setAccountCountryCode('GB')
-         ->setAccountNumber('12345')
+         ->setAccountNumber('085061203')
          ->autoActivity()
          ->setSender()->setCompanyName('Company Test')
                       ->setAddressLine('Address line 1')
@@ -19,7 +19,7 @@ $shipping->setAccountCountryCode('GB')
                       ->setProvince('Province')
                       ->setPostcode('Post code')
                       ->setCountry('Country')
-                      ->setVat('VAT')
+                      ->setVat('123123')
                       ->setContactName('Contact name')
                       ->setContactDialCode('Dial code')
                       ->setContactPhone('Contact phone')
@@ -45,8 +45,8 @@ $c1 = $shipping->addConsignment()->setConReference('CON 123')
                            ->setService('15N')
                            ->addOption('PR')
                            ->setDescription('Computer parts')
-                           ->setDeliveryInstructions('To reception please')
-                           ->hazardous(1234);
+                           ->setDeliveryInstructions('To reception please');
+                           //->hazardous(1234);
 
 $c1->addPackage()->setItems(1)
                  ->setDescription('Computer parts - mtb')
@@ -76,4 +76,4 @@ $c1->setReceiver()->setCompanyName('RCV Company Name')
 $c1->setReceiverAsDelivery();
 
 //print_r($shipping);
-print_r($shipping->getXmlContent());
+//print_r($shipping->getXmlContent());

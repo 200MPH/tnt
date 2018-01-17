@@ -10,7 +10,6 @@
 namespace thm\tnt_ec\service;
 
 use XMLWriter;
-use thm\tnt_ec\Service\Response;
 use thm\tnt_ec\TNTException;
 
 abstract class AbstractService {
@@ -228,7 +227,7 @@ abstract class AbstractService {
         // $http_response_header comes from PHP engine, 
         // it's not a part of this code
         // http://php.net/manual/en/reserved.variables.httpresponseheader.php
-        Response::$headers = $http_response_header;
+        HTTPHeaders::$headers = $http_response_header;
                 
         return $output;
         

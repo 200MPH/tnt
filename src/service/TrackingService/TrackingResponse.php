@@ -9,10 +9,10 @@
 
 namespace thm\tnt_ec\service\TrackingService;
 
-use thm\tnt_ec\service\Response;
+use thm\tnt_ec\service\AbstractResponse;
 use thm\tnt_ec\service\TrackingService\entity\Consignment;
 
-class TrackingResponse extends Response {
+class TrackingResponse extends AbstractResponse {
     
     /**
      * @var Consignment[]
@@ -38,6 +38,19 @@ class TrackingResponse extends Response {
     }
     
     /**
+     * Catch errors for this response
+     * 
+     * @return void
+     */
+    protected function catchConcreteResponseError()
+    {
+        
+        $this->validateXml();
+        $this->catchErrorsFromXmlResponse();
+        
+    }
+    
+    /**
      * Set consignments
      * 
      * @return void
@@ -59,6 +72,27 @@ class TrackingResponse extends Response {
 
             $this->consignments[] = new Consignment($this->simpleXml->Consignment);
 
+        }
+        
+    }
+ 
+    /**
+     * Catch errors from XML response
+     * 
+     * @return void
+     */
+    private function catchErrorsFromXmlResponse()
+    {
+        
+        if($this->hasError === false) {
+            
+            if(isset($this->simpleXml->Error) === true) {
+                
+                $this->hasError = true;
+                $this->errors[] = $this->simpleXml->Error->Message->__toString();
+                
+            }
+            
         }
         
     }
