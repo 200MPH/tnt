@@ -54,28 +54,29 @@ class Package extends AbstractXml {
     public function getAsXml()
     {
         
-        if(empty($this->articles) === false) {
-            
-            $xml = new \XMLWriter();
-            $xml->openMemory();
-            $xml->setIndent(true);
-            $xml->writeRaw( parent::getAsXml() );
-            
-            foreach($this->articles as $article) {
-                
-                $xml->startElement('ARTICLE');
-                    $xml->writeRaw( $article->getAsXml() );
-                $xml->endElement();
-                
-            }
-            
-            return $xml->outputMemory(false);
-            
-        } else {
-            
+        if(empty($this->articles) === true) {
+         
             return parent::getAsXml();
             
         }
+            
+        $xml = new \XMLWriter();
+        $xml->openMemory();
+        $xml->setIndent(true);
+        $xml->writeRaw( parent::getAsXml() );
+
+        foreach($this->articles as $article) {
+
+            $xml->startElement('ARTICLE');
+                $xml->writeRaw( $article->getAsXml() );
+            $xml->endElement();
+
+        }
+
+        // re-assign variable
+        $this->xml = $xml;
+        
+        return $xml->outputMemory(false);
         
     }
     

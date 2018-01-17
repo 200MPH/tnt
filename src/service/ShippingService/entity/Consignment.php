@@ -145,28 +145,35 @@ class Consignment extends AbstractXml {
     public function getAsXml()
     {
         
-        if(empty($this->packages) === false) {
-            
-            $xml = new \XMLWriter();
-            $xml->openMemory();
-            $xml->setIndent(true);
-            $xml->writeRaw( parent::getAsXml() );
-            
-            foreach($this->packages as $package) {
-                
-                $xml->startElement('PACKAGE');
-                    $xml->writeRaw( $package->getAsXml() );
-                $xml->endElement();
-                
-            }
-            
-            return $xml->outputMemory(false);
-            
-        } else {
-            
+        if(empty($this->packages) === true) {
+         
             return parent::getAsXml();
             
         }
+            
+        $xml = new \XMLWriter();
+        $xml->openMemory();
+        $xml->setIndent(true);
+
+        $xml->writeElement('CONREF', $this->conReference);
+        $xml->startElement('DETAILS');
+
+            // merge addresses into new document
+            $this->mergeReceiverAddress($xml);
+            $this->mergeDeliveryAddress($xml);
+        
+            // copy this XML into new document
+            $xml->writeRaw( parent::getAsXml() );
+
+            // merge packages into new document
+            $this->mergePackages($xml);
+
+        $this->xml->endElement();
+
+        // re-assigne variable
+        $this->xml = $xml;
+        
+        return $xml->outputMemory(false);
         
     }
     
@@ -231,9 +238,11 @@ class Consignment extends AbstractXml {
     public function setConReference($conReference)
     {
         
-        $this->conReference = $conReference;
-        $this->xml->writeElement('CONREF', $conReference);
+        // NOTE that I'm not adding <CONREF> element here
+        // because it must be separate (see TNT documentation)
+        // <CONREF> is added in getAsXml() instead 
         
+        $this->conReference = $conReference;        
         return $this;
         
     }
@@ -514,6 +523,57 @@ class Consignment extends AbstractXml {
     {
         
         return $this->conReference;
+        
+    }
+    
+    /**
+     * Merge receiver address into this document
+     * 
+     * @param XMLWriter &$xml
+     * @return void
+     */
+    private function mergeReceiverAddress(\XMLWriter & $xml)
+    {
+        
+        $this->setReceiver(); // initialise in case when not set by user - avoid errors
+        $xml->startElement('RECEIVER');
+        $xml->writeRaw( $this->receiver->getAsXml() );
+        $xml->endElement();
+        
+    }
+    
+    /**
+     * Merge delivery address into this document
+     * 
+     * @param \XMLWriter &$xml
+     * @return void
+     */
+    private function mergeDeliveryAddress(\XMLWriter & $xml)
+    {
+        
+        $this->setReceiver(); // initialise in case when not set by user - avoid errors
+        $xml->startElement('DELIVERY');
+        $xml->writeRaw( $this->delivery->getAsXml() );
+        $xml->endElement();
+        
+    }
+    
+    /**
+     * Merge packages into this document
+     * 
+     * @param \XMLWriter &$xml
+     * @return void
+     */
+    private function mergePackages(\XMLWriter & $xml)
+    {
+        
+        foreach($this->packages as $package) {
+                
+            $xml->startElement('PACKAGE');
+                $xml->writeRaw( $package->getAsXml() );
+            $xml->endElement();
+
+        }
         
     }
     

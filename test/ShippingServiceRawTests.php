@@ -51,7 +51,10 @@ $c1->addPackage()->setItems(1)
                  ->setHeight(0.20)
                  ->setLength(0.30)
                  ->setWidth(0.15)
-                 ->setWeight(7);
+                 ->setWeight(7)
+                 ->addArticle()->setItems(1)
+                               ->setCountry('GB')
+                               ->setHts(123);
 
 $c1->setReceiver()->setCompanyName('RCV Company Name')
                   ->setAddressLine('RCV Address line 1')
