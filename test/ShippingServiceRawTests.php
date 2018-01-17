@@ -45,7 +45,8 @@ $c1 = $shipping->addConsignment()->setConReference('CON 123')
                            ->setService('15N')
                            ->addOption('PR')
                            ->setDescription('Computer parts')
-                           ->setDeliveryInstructions('To reception please');
+                           ->setDeliveryInstructions('To reception please')
+                           ->hazardous(1234);
 
 $c1->addPackage()->setItems(1)
                  ->setDescription('Computer parts - mtb')
