@@ -59,10 +59,10 @@ class ShippingService extends AbstractService {
      * 
      * @param string $userId
      * @param string $password
-     * @param string $appid [optional]
+     * @param string $appid [optional] Default "IN"
      * @throw TNTException
      */
-    public function __construct($userId, $password, $appid = '')
+    public function __construct($userId, $password, $appid = 'IN')
     {
         
         parent::__construct($userId, $password);
