@@ -9,6 +9,8 @@
 
 namespace thm\tnt_ec\service\ShippingService\entity;
 
+use thm\tnt_ec\MyXMLWriter;
+
 class Package extends AbstractXml {
     
     /**
@@ -60,7 +62,7 @@ class Package extends AbstractXml {
             
         }
             
-        $xml = new \XMLWriter();
+        $xml = new MyXMLWriter();
         $xml->openMemory();
         $xml->setIndent(true);
         $xml->writeRaw( parent::getAsXml() );
@@ -105,7 +107,7 @@ class Package extends AbstractXml {
     {
         
         $this->items = $items;
-        $this->xml->writeElement('ITEMS', $items);
+        $this->xml->writeElementCData('ITEMS', $items);
         
         return $this;
         
@@ -121,7 +123,7 @@ class Package extends AbstractXml {
     {
         
         $this->description = $description;
-        $this->xml->writeElement('DESCRIPTION', $description);
+        $this->xml->writeElementCData('DESCRIPTION', $description);
         
         return $this;
         
@@ -137,7 +139,7 @@ class Package extends AbstractXml {
     {
         
         $this->length = $length;
-        $this->xml->writeElement('LENGTH', $length);
+        $this->xml->writeElementCData('LENGTH', $length);
         
         return $this;
         
@@ -153,7 +155,7 @@ class Package extends AbstractXml {
     {
         
         $this->height = $height;
-        $this->xml->writeElement('HEIGHT', $height);
+        $this->xml->writeElementCData('HEIGHT', $height);
         
         return $this;
         
@@ -169,7 +171,7 @@ class Package extends AbstractXml {
     {
         
         $this->width = $width;
-        $this->xml->writeElement('WIDTH', $width);
+        $this->xml->writeElementCData('WIDTH', $width);
         
         return $this;
         
@@ -184,7 +186,7 @@ class Package extends AbstractXml {
     {
         
         $this->weight = $weight;
-        $this->xml->writeElement('WEIGHT', $weight);
+        $this->xml->writeElementCData('WEIGHT', $weight);
         
         return $this;
         

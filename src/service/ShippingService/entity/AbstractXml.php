@@ -9,7 +9,7 @@
 
 namespace thm\tnt_ec\service\ShippingService\entity;
 
-use XMLWriter;
+use thm\tnt_ec\MyXMLWriter;
 
 abstract class AbstractXml {
     
@@ -24,7 +24,7 @@ abstract class AbstractXml {
     public function __construct()
     {
         
-        $this->xml = new XMLWriter();
+        $this->xml = new MyXMLWriter();
         $this->xml->openMemory();
         $this->xml->setIndent(true);
         

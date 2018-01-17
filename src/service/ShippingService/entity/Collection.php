@@ -9,6 +9,8 @@
 
 namespace thm\tnt_ec\service\ShippingService\entity;
 
+use thm\tnt_ec\MyXMLWriter;
+
 class Collection extends AbstractXml {
     
     /**
@@ -68,7 +70,7 @@ class Collection extends AbstractXml {
     {
         
         // merge collection XML document with collection address XML document
-        $xml = new \XMLWriter();
+        $xml = new MyXMLWriter();
         $xml->openMemory();
         $xml->setIndent(true);
         $xml->writeRaw( $this->collection->getAsXml() );
@@ -176,7 +178,7 @@ class Collection extends AbstractXml {
     {
         
         $this->shipDate = $shipDate;
-        $this->xml->writeElement('SHIPDATE', $shipDate);
+        $this->xml->writeElementCData('SHIPDATE', $shipDate);
         
         return $this;
         
@@ -196,8 +198,8 @@ class Collection extends AbstractXml {
         $this->prefCollectTime['to'] = $timeTo;
         
         $this->xml->startElement('PREFCOLLECTTIME');
-            $this->xml->writeElement('FROM', $timeFrom);
-            $this->xml->writeElement('TO', $timeTo);
+            $this->xml->writeElementCData('FROM', $timeFrom);
+            $this->xml->writeElementCData('TO', $timeTo);
         $this->xml->endElement();
         
         return $this;
@@ -218,8 +220,8 @@ class Collection extends AbstractXml {
         $this->altCollectTime['to'] = $timeTo;
         
         $this->xml->startElement('ALTCOLLECTTIME');
-            $this->xml->writeElement('FROM', $timeFrom);
-            $this->xml->writeElement('TO', $timeTo);
+            $this->xml->writeElementCData('FROM', $timeFrom);
+            $this->xml->writeElementCData('TO', $timeTo);
         $this->xml->endElement();
         
         return $this;
@@ -236,7 +238,7 @@ class Collection extends AbstractXml {
     {
         
         $this->collectInstruction = $collectInstruction;
-        $this->xml->writeElement('COLLINSTRUCTIONS', $collectInstruction);
+        $this->xml->writeElementCData('COLLINSTRUCTIONS', $collectInstruction);
         
         return $this;
         

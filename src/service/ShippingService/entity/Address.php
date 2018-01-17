@@ -241,11 +241,11 @@ class Address extends AbstractXml {
         if(empty($company) === false) {
         
             $this->company = $company;
-            $this->xml->writeElement('COMPANYNAME', $company);
+            $this->xml->writeElementCData('COMPANYNAME', $company);
             
             if($this->accountIncluded === false && $this->account != 0) {
                 
-                $this->xml->writeElement('ACCOUNT', $this->account);
+                $this->xml->writeElementCData('ACCOUNT', $this->account);
                 $this->accountIncluded = true;
                 
             }
@@ -271,7 +271,7 @@ class Address extends AbstractXml {
             
             $this->address[] = $address;
             $lineNo = count($this->address);
-            $this->xml->writeElement("STREETADDRESS" . $lineNo, $address);
+            $this->xml->writeElementCData("STREETADDRESS" . $lineNo, $address);
             
         }
         
@@ -291,7 +291,7 @@ class Address extends AbstractXml {
         if(empty($city) === false) {
             
             $this->city = $city;
-            $this->xml->writeElement('CITY', $city);
+            $this->xml->writeElementCData('CITY', $city);
             
         }
         
@@ -311,7 +311,7 @@ class Address extends AbstractXml {
         if(empty($province) === false) {
             
             $this->province = $province;
-            $this->xml->writeElement('PROVINCE', $province);
+            $this->xml->writeElementCData('PROVINCE', $province);
             
         }
         
@@ -331,7 +331,7 @@ class Address extends AbstractXml {
         if(empty($postcode) === false) {
             
             $this->postcode = $postcode;
-            $this->xml->writeElement('POSTCODE', $postcode);
+            $this->xml->writeElementCData('POSTCODE', $postcode);
             
         }
         
@@ -351,7 +351,7 @@ class Address extends AbstractXml {
         if(empty($country) === false) {
             
             $this->country = $country;
-            $this->xml->writeElement('COUNTRY', $country);
+            $this->xml->writeElementCData('COUNTRY', $country);
             
         }
         
@@ -371,7 +371,7 @@ class Address extends AbstractXml {
         if(empty($vat) === false) {
             
             $this->vat = $vat;        
-            $this->xml->writeElement('VAT',$vat);
+            $this->xml->writeElementCData('VAT',$vat);
             
         }
         
@@ -391,7 +391,7 @@ class Address extends AbstractXml {
         if(empty($contactName) === false) {
             
             $this->contactName = $contactName;
-            $this->xml->writeElement('CONTACTNAME', $contactName);
+            $this->xml->writeElementCData('CONTACTNAME', $contactName);
             
         }
         
@@ -411,7 +411,7 @@ class Address extends AbstractXml {
         if(empty($contactDialCode) === false) {
             
             $this->contactDialCode = $contactDialCode;
-            $this->xml->writeElement('CONTACTDIALCODE', $contactDialCode);
+            $this->xml->writeElementCData('CONTACTDIALCODE', $contactDialCode);
             
         }
         
@@ -431,7 +431,7 @@ class Address extends AbstractXml {
         if(empty($contactPhone) === false) {
             
             $this->contactPhone = $contactPhone;
-            $this->xml->writeElement('CONTACTTELEPHONE', $contactPhone);
+            $this->xml->writeElementCData('CONTACTTELEPHONE', $contactPhone);
             
         }
         
@@ -451,7 +451,7 @@ class Address extends AbstractXml {
         if(empty($email) === false) {
             
             $this->email = $email;
-            $this->xml->writeElement('CONTACTEMAIL', $email);
+            $this->xml->writeElementCData('CONTACTEMAIL', $email);
             
         }
         
@@ -483,7 +483,7 @@ class Address extends AbstractXml {
     {
         
         $this->accountCountry = $accountCountry;
-        $this->xml->writeElement('ACCOUNTCOUNTRY', $accountCountry);
+        $this->xml->writeElementCData('ACCOUNTCOUNTRY', $accountCountry);
         
         return $this;      
         

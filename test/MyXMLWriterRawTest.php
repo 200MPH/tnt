@@ -6,6 +6,6 @@ $xml = new thm\tnt_ec\MyXMLWriter();
 $xml->openMemory();
 $xml->setIndent(true);
 $xml->writeElementCData('TEST', 'Wrapped');
-$xml->writeElementCData('PLAIN', 'Unwrapped', true);
+$xml->writeElementCData('PLAIN', 'Unwrapped', false);
 
 print_r($xml->flush());

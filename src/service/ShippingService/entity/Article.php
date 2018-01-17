@@ -56,7 +56,7 @@ class Article extends AbstractXml {
     {
         
         $this->items = $items;
-        $this->xml->writeElement('ITEMS', $items);
+        $this->xml->writeElementCData('ITEMS', $items);
         
         return $this;
         
@@ -72,7 +72,7 @@ class Article extends AbstractXml {
     {
         
         $this->description = $description;
-        $this->xml->writeElement('DESCRIPTION', $description);
+        $this->xml->writeElementCData('DESCRIPTION', $description);
         
         return $this;
         
@@ -88,7 +88,7 @@ class Article extends AbstractXml {
     {
         
         $this->weight = $weight;
-        $this->xml->writeElement('WEIGHT', $weight);
+        $this->xml->writeElementCData('WEIGHT', $weight);
         
         return $this;
         
@@ -104,7 +104,7 @@ class Article extends AbstractXml {
     {
         
         $this->invoiceValue = $invoiceValue;
-        $this->xml->writeElement('INVOICEVALUE', $invoiceValue);
+        $this->xml->writeElementCData('INVOICEVALUE', $invoiceValue);
         
         return $this;
         
@@ -120,7 +120,7 @@ class Article extends AbstractXml {
     {
         
         $this->invoiceDescription = $invoiceDescription;
-        $this->xml->writeElement('INVOICEDESC', $invoiceDescription);
+        $this->xml->writeElementCData('INVOICEDESC', $invoiceDescription);
         
         return $this;
         
@@ -136,7 +136,7 @@ class Article extends AbstractXml {
     {
         
         $this->hts = $hts;
-        $this->xml->writeElement('HTS', $hts);
+        $this->xml->writeElementCData('HTS', $hts);
         
         return $this;
         
@@ -152,7 +152,7 @@ class Article extends AbstractXml {
     {
         
         $this->country = $country;
-        $this->xml->writeElement('COUNTRY', $country);
+        $this->xml->writeElementCData('COUNTRY', $country);
         
         return $this;
         

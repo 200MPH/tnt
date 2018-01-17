@@ -11,7 +11,7 @@
 
 namespace thm\tnt_ec\service\ShippingService;
 
-use XMLWriter;
+use thm\tnt_ec\MyXMLWriter;
 use thm\tnt_ec\service\AbstractService;
 
 class Activity extends AbstractService {
@@ -162,9 +162,9 @@ class Activity extends AbstractService {
     public function printEmail($emailTo, $emailFrom)
     {
         
-        $xml = new \XMLWriter();
-        $xml->writeElement('EMAILTO', $emailTo);
-        $xml->writeElement('EMAILFROM', $emailFrom);
+        $xml = new MyXMLWriter();
+        $xml->writeElementCData('EMAILTO', $emailTo);
+        $xml->writeElementCData('EMAILFROM', $emailFrom);
         
         $this->xmls['PRINT']['EMAIL'] = $xml;
         
@@ -212,7 +212,7 @@ class Activity extends AbstractService {
     private function buildActivityElement($root, $element, $consignment)
     {
            
-        $xml = new XMLWriter();
+        $xml = new MyXMLWriter();
         $xml->openMemory();
         $xml->setIndent(true);
         
@@ -222,13 +222,13 @@ class Activity extends AbstractService {
             
             foreach($consignment as $number) {
                 
-                $xml->writeElement('CONREF', $number);
+                $xml->writeElementCData('CONREF', $number);
                 
             }
             
         } else {
             
-            $xml->writeElement('CONREF', $consignment);
+            $xml->writeElementCData('CONREF', $consignment);
             
         }
         

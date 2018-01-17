@@ -9,6 +9,8 @@
 
 namespace thm\tnt_ec\service\ShippingService\entity;
 
+use thm\tnt_ec\MyXMLWriter;
+
 class Consignment extends AbstractXml {
     
     /**
@@ -151,11 +153,11 @@ class Consignment extends AbstractXml {
             
         }
             
-        $xml = new \XMLWriter();
+        $xml = new MyXMLWriter();
         $xml->openMemory();
         $xml->setIndent(true);
 
-        $xml->writeElement('CONREF', $this->conReference);
+        $xml->writeElementCData('CONREF', $this->conReference);
         $xml->startElement('DETAILS');
 
             // merge addresses into new document
@@ -204,7 +206,7 @@ class Consignment extends AbstractXml {
         if(count($this->serviceOptions) < 5) {
             
             $this->serviceOptions[] = $option;
-            $this->xml->writeElement('OPTION', $option);
+            $this->xml->writeElementCData('OPTION', $option);
             
         }
         
@@ -221,9 +223,9 @@ class Consignment extends AbstractXml {
     public function hazardous($unNumber = '0000')
     {
         
-        $this->xml->writeElement('HAZARDOUS', 'Y');
-        $this->xml->writeElement('UNNUMBER', $unNumber);
-        $this->xml->writeElement('PACKINGGROUP', 'II');
+        $this->xml->writeElementCData('HAZARDOUS', 'Y');
+        $this->xml->writeElementCData('UNNUMBER', $unNumber);
+        $this->xml->writeElementCData('PACKINGGROUP', 'II');
         
         return $this;
         
@@ -307,7 +309,7 @@ class Consignment extends AbstractXml {
     {
         
         $this->customerRef = $customerRef;
-        $this->xml->writeElement('CUSTOMERREF', $customerRef);
+        $this->xml->writeElementCData('CUSTOMERREF', $customerRef);
         
         return $this;
         
@@ -324,7 +326,7 @@ class Consignment extends AbstractXml {
     {
         
         $this->contype = $contype;
-        $this->xml->writeElement('CONTYPE', $contype);
+        $this->xml->writeElementCData('CONTYPE', $contype);
         
         return $this;
         
@@ -341,7 +343,7 @@ class Consignment extends AbstractXml {
     {
         
         $this->paymentind = $paymentind;
-        $this->xml->writeElement('PAYMENTIND', $paymentind);
+        $this->xml->writeElementCData('PAYMENTIND', $paymentind);
      
         if($this->paymentind === 'R') {
             
@@ -364,7 +366,7 @@ class Consignment extends AbstractXml {
     {
         
         $this->items = $items;
-        $this->xml->writeElement('ITEMS', $items);
+        $this->xml->writeElementCData('ITEMS', $items);
         
         return $this;
         
@@ -380,7 +382,7 @@ class Consignment extends AbstractXml {
     {
         
         $this->totalWeight = $totalWeight;
-        $this->xml->writeElement('TOTALWEIGHT', $totalWeight);
+        $this->xml->writeElementCData('TOTALWEIGHT', $totalWeight);
         
         return $this;
         
@@ -396,7 +398,7 @@ class Consignment extends AbstractXml {
     {
         
         $this->totalVolume = $totalVolume;
-        $this->xml->writeElement('TOTALVOLUME', $totalVolume);
+        $this->xml->writeElementCData('TOTALVOLUME', $totalVolume);
         
         return $this;
         
@@ -412,7 +414,7 @@ class Consignment extends AbstractXml {
     {
         
         $this->currency = $currency;
-        $this->xml->writeElement('CURRENCY', $currency);
+        $this->xml->writeElementCData('CURRENCY', $currency);
         
         return $this;
         
@@ -428,7 +430,7 @@ class Consignment extends AbstractXml {
     {
         
         $this->goodsValue = $goodsValue;
-        $this->xml->writeElement('GOODSVALUE', $goodsValue);
+        $this->xml->writeElementCData('GOODSVALUE', $goodsValue);
         
         return $this;
         
@@ -444,7 +446,7 @@ class Consignment extends AbstractXml {
     {
         
         $this->insuranceValue = $insuranceValue;
-        $this->xml->writeElement('INSURANCEVALUE', $insuranceValue);
+        $this->xml->writeElementCData('INSURANCEVALUE', $insuranceValue);
         
         return $this;
         
@@ -460,7 +462,7 @@ class Consignment extends AbstractXml {
     {
         
         $this->insuranceCurrency = $insuranceCurrency;
-        $this->xml->writeElement('INSURANCECURRENCY', $insuranceCurrency);
+        $this->xml->writeElementCData('INSURANCECURRENCY', $insuranceCurrency);
         
         return $this;
         
@@ -476,7 +478,7 @@ class Consignment extends AbstractXml {
     {
         
         $this->service = $service;
-        $this->xml->writeElement('SERVICE', $service);
+        $this->xml->writeElementCData('SERVICE', $service);
         
         return $this;
         
@@ -492,7 +494,7 @@ class Consignment extends AbstractXml {
     {
         
         $this->description = $description;
-        $this->xml->writeElement('DESCRIPTION', $description);
+        $this->xml->writeElementCData('DESCRIPTION', $description);
         
         return $this;
         
@@ -508,7 +510,7 @@ class Consignment extends AbstractXml {
     {
                 
         $this->deliveryInstructions = $deliveryInstructions;
-        $this->xml->writeElement('DELIVERYINST', $deliveryInstructions);
+        $this->xml->writeElementCData('DELIVERYINST', $deliveryInstructions);
         
         return $this;
         

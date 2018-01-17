@@ -15,16 +15,16 @@ use XMLWriter;
 class MyXMLWriter extends XMLWriter {
     
     /**
-     * Write element and wrap it in <[CDATA]> tags.
+     * Write element and wrap it in <[CDATA]> tag.
      
      * @param string $name
      * @param string $content
      * @param bool $wrap [optional] Set FALSE to omit <[CDATA]> wrapping - disable
      */
-    public function writeElementCData(string $name, string $content = null, bool $wrap = false) 
+    public function writeElementCData(string $name, string $content = null, bool $wrap = true) 
     {
         
-        if($wrap === true) {
+        if($wrap === false) {
             
            return $this->writeElement($name, $content);
             
