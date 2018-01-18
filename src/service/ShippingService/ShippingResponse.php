@@ -118,6 +118,8 @@ class ShippingResponse extends AbstractResponse {
         
         }
         
+        return '';
+        
     }
     
     /**
@@ -133,6 +135,8 @@ class ShippingResponse extends AbstractResponse {
             return $this->rs->getResult($this->key, 'GET_LABEL');
         
         }
+        
+        return '';
         
     }
     
@@ -150,6 +154,8 @@ class ShippingResponse extends AbstractResponse {
         
         }
         
+        return '';
+        
     }
     
     /**
@@ -165,6 +171,8 @@ class ShippingResponse extends AbstractResponse {
             return $this->rs->getResult($this->key, 'GET_INVOICE');
         
         }
+        
+        return '';
         
     }
     

@@ -21,5 +21,17 @@ if($response->hasError() === true) {
 } else {
    
     print_r($response->getResults());
-     
+    
+    // get label
+    //$response->getLabel();
+    
+    // get manifest
+    //$response->getManifest();
+    
+    // get consignment note
+    //$response->getConsignmentNote();
+    
+    // get invoice
+    //$response->getInvoice();
+    
 }
