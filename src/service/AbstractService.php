@@ -57,6 +57,13 @@ abstract class AbstractService {
     protected $password;
     
     /**
+     * Disable SSL verification
+     * 
+     * @var bool
+     */
+    private $verifySSL = true;
+    
+    /**
      * Get TNT service URL
      * 
      * @var string
@@ -150,6 +157,18 @@ abstract class AbstractService {
     }
     
     /**
+     * Disable SSL verification
+     * 
+     * @return AbstractService
+     */
+    public function disableSSLVerify()
+    {
+        
+        $this->verifySSL = false;
+        
+    }
+    
+    /**
      * Build/start document
      * 
      * @return void
@@ -216,7 +235,10 @@ abstract class AbstractService {
                     'header' => $headers,
                     'method' => 'POST',
                     'content' => $this->buildHttpPostData()
-                )
+                ),
+                'ssl' => array(
+                     'verify_peer' => $this->verifySSL,
+                     'verify_peer_name' => $this->verifySSL)
         ));
         
         $output = file_get_contents($this->getServiceUrl(), false, $context);
