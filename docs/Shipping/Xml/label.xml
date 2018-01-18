@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="https://express.tnt.com/expresswebservices-website/stylesheets/HTMLAddressLabelRenderer.xsl" type="text/xsl"?>
+<CONSIGNMENTBATCH>
+   <BARCODEURL>/barbecue/barcode?type=code39&amp;height=70&amp;width=1&amp;data=</BARCODEURL>
+   <HOST>https://express.tnt.com</HOST>
+   <IMAGESDIR>/expresswebservices-website/rendering/images</IMAGESDIR>
+   <CONSIGNMENT originCountry="NL" marketType="INTERNATIONAL">
+      <HEADER>
+         <SHIPMENTDATE>19/01/2018</SHIPMENTDATE>
+         <SENDER>
+            <COMPANYNAME><![CDATA[Clinichain]]></COMPANYNAME>
+            <STREETADDRESS1><![CDATA[Draaibrugweg 19]]></STREETADDRESS1>
+            <CITY><![CDATA[Almere]]></CITY>
+            <POSTCODE>1332 AB</POSTCODE>
+            <COUNTRY>NETHERLANDS</COUNTRY>
+            <CONTACTNAME><![CDATA[Aren]]></CONTACTNAME>
+            <CONTACTDIALCODE>123</CONTACTDIALCODE>
+            <CONTACTTELEPHONE>123</CONTACTTELEPHONE>
+            <CONTACTEMAIL>support@clinichain.com</CONTACTEMAIL>
+            <ACCOUNT>085061203</ACCOUNT>
+         </SENDER>
+         <COLLECTION>
+            <COMPANYNAME><![CDATA[Clinichain]]></COMPANYNAME>
+            <STREETADDRESS1><![CDATA[Draaibrugweg 19]]></STREETADDRESS1>
+            <CITY><![CDATA[Almere]]></CITY>
+            <POSTCODE>1332 AB</POSTCODE>
+            <COUNTRY>NETHERLANDS</COUNTRY>
+            <CONTACTNAME><![CDATA[Aren]]></CONTACTNAME>
+            <CONTACTDIALCODE>123</CONTACTDIALCODE>
+            <CONTACTTELEPHONE>123</CONTACTTELEPHONE>
+            <CONTACTEMAIL>support@clinichain.com</CONTACTEMAIL>
+         </COLLECTION>
+         <CARRIAGEFORWARD>N</CARRIAGEFORWARD>
+      </HEADER>
+      <RECEIVER>
+         <COMPANYNAME><![CDATA[Mr. W Brozyna]]></COMPANYNAME>
+         <STREETADDRESS1><![CDATA[Flat 9]]></STREETADDRESS1>
+         <STREETADDRESS2><![CDATA[17 Mansel Road East]]></STREETADDRESS2>
+         <CITY><![CDATA[Southampton]]></CITY>
+         <POSTCODE>SO16 9DN</POSTCODE>
+         <COUNTRY>UNITED KINGDOM</COUNTRY>
+         <CONTACTNAME><![CDATA[Wojtek]]></CONTACTNAME>
+         <CONTACTDIALCODE>0044</CONTACTDIALCODE>
+         <CONTACTTELEPHONE>075548259</CONTACTTELEPHONE>
+         <CONTACTEMAIL>wojciech.brozyna@gmail.com</CONTACTEMAIL>
+      </RECEIVER>
+      <DELIVERY>
+         <COMPANYNAME><![CDATA[Mr. W Brozyna]]></COMPANYNAME>
+         <STREETADDRESS1><![CDATA[Flat 9]]></STREETADDRESS1>
+         <STREETADDRESS2><![CDATA[17 Mansel Road East]]></STREETADDRESS2>
+         <CITY><![CDATA[Southampton]]></CITY>
+         <POSTCODE>SO16 9DN</POSTCODE>
+         <COUNTRY>UNITED KINGDOM</COUNTRY>
+         <CONTACTNAME><![CDATA[Wojtek]]></CONTACTNAME>
+         <CONTACTDIALCODE>0044</CONTACTDIALCODE>
+         <CONTACTTELEPHONE>075548259</CONTACTTELEPHONE>
+         <CONTACTEMAIL>wojciech.brozyna@gmail.com</CONTACTEMAIL>
+      </DELIVERY>
+      <TOTALVOLUME units="m3">0.009</TOTALVOLUME>
+      <TOTALWEIGHT units="kg">7.00</TOTALWEIGHT>
+      <CUSTOMERREF><![CDATA[WEB543467]]></CUSTOMERREF>
+      <CONSIGNMENTTYPE>N</CONSIGNMENTTYPE>
+      <CONNUMBER>GE160996943NL</CONNUMBER>
+      <SERVICE>15N Express</SERVICE>
+      <GOODSDESC1><![CDATA[Computer parts]]></GOODSDESC1>
+      <TOTALITEMS>1</TOTALITEMS>
+      <DELIVERYINST><![CDATA[To reception please]]></DELIVERYINST>
+      <OPTION1 />
+      <OPTION2 />
+      <OPTION3 />
+      <OPTION4 />
+      <OPTION5 />
+      <PAYMENTIND>S</PAYMENTIND>
+      <CONREF>CC123456789</CONREF>
+      <PACKAGE>
+         <GOODSDESC>Computer parts - mtb</GOODSDESC>
+         <LENGTH units="cm">30.0</LENGTH>
+         <HEIGHT units="cm">20.0</HEIGHT>
+         <WIDTH units="cm">15.00</WIDTH>
+         <WEIGHT units="Kg">7.0</WEIGHT>
+         <ITEMS>1</ITEMS>
+         <VOLUME units="m3">0.009</VOLUME>
+         <PACKAGEINDEX>1</PACKAGEINDEX>
+         <PACKAGEMAX>1</PACKAGEMAX>
+         <PREVIOUSPACKAGEITEMCOUNT>0</PREVIOUSPACKAGEITEMCOUNT>
+      </PACKAGE>
+   </CONSIGNMENT>
+</CONSIGNMENTBATCH>

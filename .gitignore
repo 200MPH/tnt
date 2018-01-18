@@ -1,3 +1,4 @@
-/nbproject/
-./nbproject/
-./run.php
+nbproject/project.xml
+nbproject/project.properties
+nbproject/private/private.properties
+test/CliniTest.php

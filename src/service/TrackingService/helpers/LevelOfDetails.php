@@ -6,9 +6,9 @@
  * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
  */
 
-namespace thm\tnt_ec\Service\TrackingService\libs;
+namespace thm\tnt_ec\service\TrackingService\helpers;
 
-use thm\tnt_ec\Service\TrackingService\TrackingService;
+use thm\tnt_ec\service\TrackingService\TrackingService;
 
 class LevelOfDetails {
     

@@ -4,9 +4,10 @@
  * TNT Shipment Summary entity
  *
  * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
+ * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 
-namespace thm\tnt_ec\Service\TrackingService\libs;
+namespace thm\tnt_ec\service\TrackingService\entity;
 
 use SimpleXMLElement;
 

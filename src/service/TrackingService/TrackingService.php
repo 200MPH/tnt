@@ -4,17 +4,23 @@
  * Tracking Service
  *
  * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
+ * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 
-namespace thm\tnt_ec\Service\TrackingService;
+namespace thm\tnt_ec\service\TrackingService;
 
-use thm\tnt_ec\Service\AbstractService;
-use thm\tnt_ec\Service\TrackingService\libs\TrackingResponse;
-use thm\tnt_ec\Service\TrackingService\libs\LevelOfDetails;
+use thm\tnt_ec\service\AbstractService;
+use thm\tnt_ec\service\TrackingService\helpers\LevelOfDetails;
 use thm\tnt_ec\TNTException;
 use thm\tnt_ec\XMLTools;
 
 class TrackingService extends AbstractService {
+    
+    /* Version */
+    const VERSION = 3.1;
+    
+    /* Service URL */
+    const URL = 'https://express.tnt.com/expressconnect/track.do';
     
     /* Market types */
     const M_ITL = 'INTERNATIONAL';
@@ -67,6 +73,17 @@ class TrackingService extends AbstractService {
      * @var array
      */
     private $outputs;
+    
+    /**
+     * Get TNT service URL
+     * 
+     * @return string
+     */
+    public function getServiceUrl() {
+        
+        return self::URL;
+        
+    }
     
     /**
      * Search by consignment numbers (TNT reference)
@@ -123,7 +140,7 @@ class TrackingService extends AbstractService {
      * 
      * @param string $dateFrom Format: YYYYMMDD
      * @param string $dateTo [optional] Format YYYYMMDD
-     * @param int $days [optional] Number of days followind $dateFrom. 
+     * @param int $days [optional] Number of days following $dateFrom. 
      * If $dateTo is set, then $days will be ignored by TNT.
      * 
      * @return TrackingResponse
@@ -175,7 +192,7 @@ class TrackingService extends AbstractService {
     
     /**
      * Set locale - translate attempt.
-     * Will attempt to transalte status description in to relevant local language.
+     * Will attempt to translate status description in to relevant local language.
      * 
      * @param string $countryCode If not specified, English is set to default.
      * @return TrackingService
@@ -222,7 +239,7 @@ class TrackingService extends AbstractService {
         
         $this->xml->startElement("TrackRequest");
         $this->xml->writeAttribute('locale', $this->locale);
-        $this->xml->writeAttribute('version', AbstractService::VERSION);
+        $this->xml->writeAttribute('version', self::VERSION);
         $this->xml->startElement("SearchCriteria");
         $this->setMarketTypeAttributes();
                     
@@ -326,7 +343,7 @@ class TrackingService extends AbstractService {
     }
  
     /**
-     * Contiunue requesting TNT for more consignment - pagination
+     * Continue requesting TNT for more consignment - pagination
      * 
      * @param string $output XML output
      * @return bool True if requesting must be continued, otherwise false.
