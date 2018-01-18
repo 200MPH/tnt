@@ -3,7 +3,7 @@
 /* This is a place for testing Shipping functionality - request */
 
 require_once __DIR__ . '/../vendor/autoload.php';
-include_once 'ClinichainTest.php';
+include_once 'CliniTest.php';
 
 use thm\tnt_ec\service\ShippingService\ShippingService;
 
