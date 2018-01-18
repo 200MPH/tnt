@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?><ESHIPPER>
+	<LOGIN>
+		<COMPANY>YOUR USERID</COMPANY>
+		<PASSWORD>YOUR PASSWORD</PASSWORD>
+		<APPID>EC</APPID>
+		<APPVERSION>3.0</APPVERSION>
+	</LOGIN>
+	<CONSIGNMENTBATCH>
+		<SENDER>
+			<COMPANYNAME><![CDATA[Sender & TEST DO NOT COLLECT Company]]></COMPANYNAME>
+			<STREETADDRESS1><![CDATA[TNT Express]]></STREETADDRESS1>
+            <!--Element STREETADDRESS2 is optional-->
+            <STREETADDRESS2><![CDATA[TNT House]]></STREETADDRESS2>
+            <!--Element STREETADDRESS3 is optional-->
+            <STREETADDRESS3><![CDATA[Holly Lane]]></STREETADDRESS3>
+			<!--Element CITY is a key element.  To ship with TNT, we must know the exact 
+			location that you are shipping to/from, in TNT terms. The full town name must match 
+			the spelling TNT uses for validation.  Please work with your TNT representative to 
+			ensure your town names match TNT?s in case of errors.-->
+			<CITY><![CDATA[Atherstone]]></CITY>
+			<!--Element PROVINCE is optional and not validated by TNT.-->
+			<PROVINCE><![CDATA[Warwickshire]]></PROVINCE>
+			<!--Element postcode is optional in countries that do not support postcodes -->
+			<POSTCODE><![CDATA[CV9 2ry]]></POSTCODE>
+			<COUNTRY><![CDATA[GB]]></COUNTRY>
+			<ACCOUNT><![CDATA[YOUR ACCOUNT]]></ACCOUNT>
+			<!--Element VAT is optional  -->
+			<VAT/>
+			<CONTACTNAME><![CDATA[Mr Contact]]></CONTACTNAME>
+			<CONTACTDIALCODE><![CDATA[01827]]></CONTACTDIALCODE>
+			<CONTACTTELEPHONE><![CDATA[717733]]></CONTACTTELEPHONE>
+			<CONTACTEMAIL><![CDATA[contact@tnt.com]]></CONTACTEMAIL>
+			<COLLECTION>
+				<COLLECTIONADDRESS>
+				<COMPANYNAME><![CDATA[Collection Name]]></COMPANYNAME>
+		    		<STREETADDRESS1><![CDATA[TEST DO NOT COLLECT]]></STREETADDRESS1>
+                		<!--Element STREETADDRESS2 is optional-->
+                		<STREETADDRESS2><![CDATA[TEST DO NOT COLLECT]]></STREETADDRESS2>
+                		<!--Element STREETADDRESS3 is optional-->
+                		<STREETADDRESS3><![CDATA[TEST DO NOT COLLECT]]></STREETADDRESS3>
+			    	<!--Element CITY is a key element.  To ship with TNT, we must know the exact 
+			    	location that you are shipping to/from, in TNT terms. The full town name must
+					match the spelling TNT uses for validation.   Please work with your 
+					TNT representative to ensure your town names match TNT?s in case of errors.-->
+			    	<CITY><![CDATA[Atherstone]]></CITY>
+			    	<!--Element PROVINCE is optional and not validated by TNT.-->
+			    	<PROVINCE><![CDATA[Warwickshire]]></PROVINCE>
+			    	<!--Element postcode is optional in countries that do not support postcodes -->
+			    	<POSTCODE><![CDATA[CV9 1TT]]></POSTCODE>
+			    	<COUNTRY><![CDATA[GB]]></COUNTRY>
+			    	<!--Element VAT is optional  -->
+			    	<VAT/>
+			    	<CONTACTNAME><![CDATA[Mr Contact]]></CONTACTNAME>
+			    	<CONTACTDIALCODE><![CDATA[01827]]></CONTACTDIALCODE>
+			    	<CONTACTTELEPHONE><![CDATA[717733]]></CONTACTTELEPHONE>
+			    	<CONTACTEMAIL><![CDATA[contact@tnt.com]]></CONTACTEMAIL>
+				</COLLECTIONADDRESS>
+				<!--Element SHIPDATE is the date which you wish the parcels to be collected,
+				and it must be supplied in the format DD/MM/CCYY.  It is a mandatory field.-->
+				<SHIPDATE><![CDATA[18/01/2018]]></SHIPDATE>
+				<!--Collections is raised for every consignment, with exception of customers with 
+				scheduled collection.  The earliest time the goods may be collected (Goods ready time) 
+				should be supplied in the PREFCOLLECTTIM / FROM element, in the format HH:MM.
+				The latest time the goods can be collected must be supplied in the 
+				PREFCOLLECTTIM / TO element, in the format HH:MM.
+				If your company has a lunchtime, them please supply the morning opening times in the
+				PREFCOLLECTTIM element and the afternoon opening times in the ALTCOLLECTTIME.
+				These details are validated against the time the TNT truck will be within your area, to ensure 
+				the TNT truck is within your area at a time where you are open.-->
+				<PREFCOLLECTTIME>
+					<FROM><![CDATA[09:00]]></FROM>
+					<TO><![CDATA[10:00]]></TO>
+				</PREFCOLLECTTIME>
+				<ALTCOLLECTTIME>
+					<FROM><![CDATA[11:00]]></FROM>
+					<TO><![CDATA[12:00]]></TO>
+				</ALTCOLLECTTIME>
+				<!--Please supply any special instruction which need to be passed to the collection driver 
+				in the <COLLINSTRUCTIONS> element. -->
+				<COLLINSTRUCTIONS><![CDATA[use rear gate ]]></COLLINSTRUCTIONS>
+			</COLLECTION>
+		</SENDER>
+		<!--It is recommended that no more than 3 CONSIGNMENT elements are supplied, unless you have set a 
+		large timeout period. -->
+		<CONSIGNMENT>
+		    	<!--A CONSIGNMENT element contains a key attribute that identifies it uniquely within the request. 
+		    	The response will associate Shipping data and validation errors with their ACTIVITY through this key. 
+		    	The value of this key must be of type string and is supplied in CONREF element.-->
+			<CONREF>TESTREF1</CONREF>
+			<DETAILS>
+				<RECEIVER>
+					<COMPANYNAME><![CDATA[Receiver Company Name]]></COMPANYNAME>
+		       		<STREETADDRESS1><![CDATA[TEST DO NOT COLLECT]]></STREETADDRESS1>
+            		<!--Element STREETADDRESS2 is optional-->
+            		<STREETADDRESS2><![CDATA[TEST DO NOT COLLECT ]]></STREETADDRESS2>
+            		<!--Element STREETADDRESS3 is optional-->
+            			<STREETADDRESS3><![CDATA[TEST DO NOT COLLECT]]></STREETADDRESS3>
+			        	<!--Element CITY is a key element.  To ship with TNT, we must know the exact 
+						location that you are shipping to/from, in TNT terms. The full town name must match
+						the spelling TNT uses for validation.   Please work with your TNT representative to 
+						ensure your town names match TNT?s in case of errors.-->
+			        	<CITY><![CDATA[Hoofddorp]]></CITY>
+				        <!--Element PROVINCE is optional and not validated by TNT.-->
+				        <PROVINCE/>
+				        <!--Element postcode is optional in countries that do not support postcodes -->
+			        	<POSTCODE><![CDATA[2132 LS]]></POSTCODE>
+			        	<COUNTRY><![CDATA[NL]]></COUNTRY>
+				        <!--Element VAT is optional  -->
+				        <VAT/>
+				        <CONTACTNAME><![CDATA[Mr Contact]]></CONTACTNAME>
+			        	<CONTACTDIALCODE><![CDATA[01827]]></CONTACTDIALCODE>
+				        <CONTACTTELEPHONE><![CDATA[717733]]></CONTACTTELEPHONE>
+				        <CONTACTEMAIL><![CDATA[contact@tnt.com]]></CONTACTEMAIL>
+				</RECEIVER>
+				<DELIVERY>
+				    	<COMPANYNAME><![CDATA[Delivery Company Name]]></COMPANYNAME>
+						<STREETADDRESS1><![CDATA[TEST DO NOT COLLECT & cancelled]]></STREETADDRESS1>
+						<!--Element STREETADDRESS2 is optional-->
+						<STREETADDRESS2><![CDATA[TEST DO NOT COLLECT & cancelled]]></STREETADDRESS2>
+						<!--Element STREETADDRESS3 is optional-->
+                    	<STREETADDRESS3><![CDATA[TEST DO NOT COLLECT & cancelled]]></STREETADDRESS3>
+			        	<!--Element CITY is a key element.  To ship with TNT, we must know the exact 
+						location that you are shipping to/from, in TNT terms. The full town name must match
+						the spelling TNT uses for validation.   Please work with your TNT representative to 
+						ensure your town names match TNT?s in case of errors.-->
+			        	<CITY><![CDATA[Hoofddorp]]></CITY>
+				        <!--Element PROVINCE is optional and not validated by TNT.-->
+				        <PROVINCE/>
+				        <!--Element postcode is optional in countries that do not support postcodes -->
+				        <POSTCODE><![CDATA[2132 LS]]></POSTCODE>
+				        <COUNTRY><![CDATA[NL]]></COUNTRY>
+				        <!--Element VAT is optional  -->
+				        <VAT/>
+				        <CONTACTNAME><![CDATA[Mr Contact]]></CONTACTNAME>
+				        <CONTACTDIALCODE><![CDATA[01827]]></CONTACTDIALCODE>
+				        <CONTACTTELEPHONE><![CDATA[717733]]></CONTACTTELEPHONE>
+				        <CONTACTEMAIL><![CDATA[contact@tnt.com]]></CONTACTEMAIL>
+				</DELIVERY>
+				<!--Element CONNUMBER is optional, if not provided TNT will allocate the number.  
+				This element contains your consignment number, if your application generates 
+				its own TNT consignment number. -->   
+                <CONNUMBER/>
+				<!--Element CONNUMBER is optional This element contains your consignment reference.   
+				This will be printed on the shipping documentations and can be used to track your consignment. -->   
+				<CUSTOMERREF><![CDATA[Customer supplied ref]]></CUSTOMERREF>
+				<!--Element CONTYPE identifies whether you are shipping a ?D? Document (paper/manuals/reports) or 
+				?N? Non Document (packages).
+				Document services are not offered for a number of TNT domestic shipments. For domestic shipment 
+				within these countries please use a CONTYPE of ?N? for Non-document.-->				
+				<CONTYPE><![CDATA[N]]></CONTYPE>
+				<!--Element PAYMENTIND is optional.  A PAYMENTIND type of ?S? represents a sender pays shipments, 
+				?R? represents a receiver.  If this element is not supplied, then the payment type is defaulted 
+				to sender. Please see user guide for further details on receiver pays. -->
+				<PAYMENTIND><![CDATA[S]]></PAYMENTIND>
+				<!--Element ITEMS is mandatory.This element will contain the number of items within the shipment.   
+				The ITEMS element should match the total number of items defined in the packages elements. -->
+				<ITEMS><![CDATA[5]]></ITEMS>
+				<!--Elements TOTALWEIGHT and TOTALVOLUME describe the total weight and volume of the consignment
+				being shipped.  The WEIGHT element contains the total weight of the shipment in Kilograms and is 
+				a mandatory element.  The VOLUME element contains the total volume of the shipment in cubic metres 
+				and is a mandatory element for Non-documents, CONTYPE = ?N?.  These totals should match the sum of the 
+				weights and volume supplies in the packages elements.  The totals from the PACKAGE elements will 
+				be used if greater that the consignment supplied totals. -->
+				<TOTALWEIGHT><![CDATA[1.8]]></TOTALWEIGHT>
+				<TOTALVOLUME><![CDATA[0.642]]></TOTALVOLUME>
+				<!--Elements CURRENCY and GOODSVALUE identifies the value of the goods being shipped and the associated 
+				currency.  The currency is represented by the 3 digit ISO 4217 Alpha - 3 currency codes.  The value 
+				of goods must be supplied if you wish to insure the shipment. -->
+				<CURRENCY><![CDATA[GBP]]></CURRENCY>
+				<GOODSVALUE><![CDATA[180.00]]></GOODSVALUE>
+				<!--Elements INSURANCEVALUE and INSURANCECURRENCY are optional and contains the Enhanced Liability 
+				in countries where insurance is not available.-->
+				<INSURANCEVALUE><![CDATA[150.00]]></INSURANCEVALUE>
+				<INSURANCECURRENCY><![CDATA[GBP]]></INSURANCECURRENCY>
+				<!--Element DIVISION is optional-->
+				<DIVISION/>
+				<SERVICE><![CDATA[15N]]></SERVICE>
+				<!--Element option is optional, maxOccurs=5-->
+				<OPTION><![CDATA[LB]]></OPTION>
+				<!--Element DESCRIPTION is optional.   Please describe the consignment goods being shipped.   This 
+				is not used for custom purposes.
+				For UK domestic dangerous goods shipments, please include HZ in first 2 characters of the description.
+				For UK domestic shipments, please include the carton Code in first 2 characters of the description.
+				This must be used to attract the correct rate when invoicing the consignment for Palletised goods.-->
+				<DESCRIPTION><![CDATA[assorted office accessories]]></DESCRIPTION>
+				<!--Element DELIVERYINST is optional. Please supply any instructions that must be passed to the 
+				TNT delivery driver when delivering the consignment.
+				For UK dangerous domestic shipments, the UN Number must be supplied in the first 4 characters of 
+				the DELIVERYINST -->
+				<DELIVERYINST><![CDATA[Lithium Ion Batteries in compliance with Section II of PI966]]></DELIVERYINST>
+				<!--Element HAZARDOUS is optional-->
+				<HAZARDOUS><![CDATA[Y]]></HAZARDOUS>
+				<!--Element UNNUMBER and PACKINGGROUP are optional, please see user guide for further information-->
+				<UNNUMBER>3481</UNNUMBER>
+				<PACKINGGROUP>1</PACKINGGROUP>
+				<!--The PACKAGE element provides details on the package line.   There must be at least one Package 
+				per Consignment	when entered in detail form.  There may not be more than 50 Packages per Consignment
+				when entered in detail form with no more than 99 items for a consignment. -->
+				<PACKAGE>
+					<ITEMS><![CDATA[3]]></ITEMS>
+					<DESCRIPTION><![CDATA[box 1]]></DESCRIPTION>
+					<LENGTH><![CDATA[0.1]]></LENGTH>
+					<HEIGHT><![CDATA[0.2]]></HEIGHT>
+					<WIDTH><![CDATA[0.3]]></WIDTH>
+					<WEIGHT><![CDATA[0.6]]></WEIGHT>
+					<ARTICLE>
+						<ITEMS><![CDATA[1]]></ITEMS>
+						<DESCRIPTION><![CDATA[paperclips]]></DESCRIPTION>
+						<WEIGHT><![CDATA[0.6]]></WEIGHT>
+						<INVOICEVALUE><![CDATA[90.00]]></INVOICEVALUE>
+						<INVOICEDESC><![CDATA[metal paperclips]]></INVOICEDESC>
+						<!--Element HTS is optional-->
+						<HTS><![CDATA[ABC]]></HTS>
+						<!--Element COUNTRY Country of article?s origin is optional-->
+						<COUNTRY><![CDATA[GB]]></COUNTRY>
+						<!--Element EMRN is optional-->
+						<EMRN><![CDATA[Export Management]]></EMRN>						
+					</ARTICLE>
+				</PACKAGE>
+				<PACKAGE>
+					<ITEMS><![CDATA[2]]></ITEMS>
+					<DESCRIPTION><![CDATA[box 2]]></DESCRIPTION>
+					<LENGTH><![CDATA[0.5]]></LENGTH>
+					<HEIGHT><![CDATA[0.6]]></HEIGHT>
+					<WIDTH><![CDATA[0.7]]></WIDTH>
+					<WEIGHT><![CDATA[0.2]]></WEIGHT>
+					<ARTICLE>
+						<ITEMS><![CDATA[1]]></ITEMS>
+						<DESCRIPTION><![CDATA[paperclips]]></DESCRIPTION>
+						<WEIGHT><![CDATA[0.2]]></WEIGHT>
+						<INVOICEVALUE><![CDATA[90.00]]></INVOICEVALUE>
+						<INVOICEDESC><![CDATA[metal paperclips]]></INVOICEDESC>
+						<!--Element HTS is optional-->
+						<HTS><![CDATA[ABC]]></HTS>
+						<!--Element COUNTRY Country of article?s origin is optional-->
+						<COUNTRY><![CDATA[GB]]></COUNTRY>
+						<!--Element EMRN is optional-->
+						<EMRN><![CDATA[Export Management]]></EMRN>						
+					</ARTICLE>
+				</PACKAGE>
+			</DETAILS>
+		</CONSIGNMENT>
+	</CONSIGNMENTBATCH>
+	<ACTIVITY>
+	<CREATE>
+	    	<CONREF><![CDATA[TESTREF1]]></CONREF>
+    	</CREATE>
+    	<BOOK ShowBookingRef="Y">
+		<CONREF><![CDATA[TESTREF1]]></CONREF>
+	</BOOK>
+	<SHIP>
+		<CONREF><![CDATA[TESTREF1]]></CONREF>
+	</SHIP>
+	<PRINT>
+		<CONNOTE>
+			<CONREF><![CDATA[TESTREF1]]></CONREF>
+		</CONNOTE>
+		<LABEL>
+			<CONREF><![CDATA[TESTREF1]]></CONREF>
+		</LABEL>
+		<MANIFEST>
+			<CONREF><![CDATA[TESTREF1]]></CONREF>
+		</MANIFEST>
+		<INVOICE>
+			<CONREF><![CDATA[TESTREF1]]></CONREF>
+		</INVOICE>           
+		<EMAILTO><![CDATA[test.name@tnt.com]]></EMAILTO>
+		<EMAILFROM><![CDATA[test.name@tnt.com]]></EMAILFROM>
+	</PRINT>
+	</ACTIVITY>
+</ESHIPPER>
