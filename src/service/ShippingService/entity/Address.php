@@ -155,7 +155,7 @@ class Address extends AbstractXml {
     /**
      * Get country code
      * 
-     * @return string Country code ISO2
+     * @return string Country code ISO2 (two characters only)
      */
     public function getCountryCode()
     {
@@ -331,7 +331,7 @@ class Address extends AbstractXml {
      * Set country
      * 
      * @param string $country
-     * @return Address
+     * @return Address ISO2 country code (two characters only)
      */
     public function setCountry($country) 
     {

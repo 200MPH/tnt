@@ -23,7 +23,6 @@ if($response->hasError() === true) {
    
     //print_r($response->getResponse() . PHP_EOL);
     print_r($response->getResults());
-    print_r($response->getLabel());
-      
+          
 }
 

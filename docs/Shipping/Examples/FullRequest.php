@@ -1,31 +1,32 @@
 <?php
 
-/* This is a place for testing Shipping functionality */
+/**
+ * FULL REQUEST - all fields populate
+ */
 
-require_once __DIR__ . '/../vendor/autoload.php';
 use thm\tnt_ec\service\ShippingService\ShippingService;
 
 $shipping = new ShippingService('User ID', 'Password');
 
 $shipping->setAccountNumber('')
-         ->autoActivity()
-         ->setSender()->setCompanyName('Company name')
-                      ->setAddressLine('Address line 1')
-                      ->setAddressLine('Address line 2')
-                      ->setAddressLine('Address line 3')
-                      ->setAddressLine('Should be exxluded')
-                      ->setCity('City')
-                      ->setProvince('Province')
-                      ->setPostcode('Post code')
-                      ->setCountry('Country')
-                      ->setVat('123123')
-                      ->setContactName('Aren')
-                      ->setContactDialCode('Dial code')
-                      ->setContactPhone('Contact phone')
-                      ->setContactEmail('Email');
+         ->autoActivity() // this will generate <ACTIVITY> element autmatically.
+         ->setSender()->setCompanyName('')
+                      ->setAddressLine('')
+                      ->setAddressLine('')
+                      ->setAddressLine('')
+                      ->setAddressLine('')
+                      ->setCity('')
+                      ->setProvince('')
+                      ->setPostcode('')
+                      ->setCountry('')
+                      ->setVat('')
+                      ->setContactName('')
+                      ->setContactDialCode('')
+                      ->setContactPhone('')
+                      ->setContactEmail('');
 
-$shipping->setCollection()->useSenderAddress()
-                          ->setShipDate('16/01/2018')
+$shipping->setCollection()->useSenderAddress() // use same addres as is for sender
+                          ->setShipDate('19/01/2018')
                           ->setPrefCollectTime('10:00', '12:00')
                           ->setAltCollectionTime('12:00', '14:00')
                           ->setCollectInstruction('');
@@ -62,7 +63,7 @@ $c1->setReceiver()->setCompanyName('')
                   ->setContactPhone('')
                   ->setContactEmail('');
 
-$c1->setReceiverAsDelivery();
+$c1->setReceiverAsDelivery(); // make delivery address same as receiver
 
 $c1->addPackage()->setItems(0)
                  ->setDescription('')

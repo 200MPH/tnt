@@ -250,7 +250,7 @@ class Collection extends AbstractXml {
 
     /**
      * Use sender address.
-     * Useful when sender and collection address are the same.
+     * Use it when sender and collection address are the same.
      * 
      * @return Collection
      */

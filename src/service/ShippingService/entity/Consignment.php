@@ -284,7 +284,8 @@ class Consignment extends AbstractXml {
     }
     
     /**
-     * Set receiver address as delivery address.
+     * Make delivery address same as receiver.
+     * Useful when receiver and delivery addresses are the same.
      *  
      * @return Consignment
      */
