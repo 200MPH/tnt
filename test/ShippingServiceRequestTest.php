@@ -22,8 +22,8 @@ if($response->hasError() === true) {
 } else {
    
     //print_r($response->getResponse() . PHP_EOL);
-    print_r($response->getKey() . PHP_EOL);
     print_r($response->getResults());
+    print_r($response->getLabel());
       
 }
 

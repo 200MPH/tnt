@@ -35,7 +35,7 @@ abstract class AbstractResponse {
     /**
      * @var string
      */
-    private $response;
+    protected $response;
     
     /**
      * Request XML

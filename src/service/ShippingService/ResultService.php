@@ -35,7 +35,7 @@ class ResultService extends AbstractService {
      * 
      * @param int $key
      * @param string $function [optional] Function name: GET_RESULT (default), GET_CONNOTE, GET_LABEL, GET_MANIFEST, GET_INVOICE
-     * @return string
+     * @return string XML string
      */
     public function getResult($key, $function = 'GET_RESULT')
     {

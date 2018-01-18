@@ -218,7 +218,7 @@ class Activity extends AbstractService {
         
         $xml->startElement($element);
         
-        if($element == 'BOOOK') {
+        if($element == 'BOOK') {
             
             $xml->writeAttribute('ShowBookingRef', 'Y');
             
