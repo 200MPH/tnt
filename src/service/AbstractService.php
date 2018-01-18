@@ -183,9 +183,7 @@ abstract class AbstractService {
     public function setXmlContent($xml)
     {
         
-        $this->xml->flush();
-        $this->xml = new MyXMLWriter();
-        
+        $this->xml->flush();       
         return $this->xml->writeRaw($xml);
         
     }
