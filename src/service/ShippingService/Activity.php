@@ -218,6 +218,12 @@ class Activity extends AbstractService {
         
         $xml->startElement($element);
         
+        if($element == 'BOOOK') {
+            
+            $xml->writeAttribute('ShowBookingRef', 'Y');
+            
+        }
+        
         if(is_array($consignment) === true) {
             
             foreach($consignment as $number) {

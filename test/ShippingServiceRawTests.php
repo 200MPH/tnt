@@ -7,10 +7,9 @@ use thm\tnt_ec\service\ShippingService\ShippingService;
 
 $shipping = new ShippingService('CLINICHA_T', 'tnt12345');
 
-$shipping->setAccountCountryCode('GB')
-         ->setAccountNumber('085061203')
+$shipping->setAccountNumber('085061203')
          ->autoActivity()
-         ->setSender()->setCompanyName('Company Test')
+         ->setSender()->setCompanyName('Company name')
                       ->setAddressLine('Address line 1')
                       ->setAddressLine('Address line 2')
                       ->setAddressLine('Address line 3')
@@ -19,7 +18,7 @@ $shipping->setAccountCountryCode('GB')
                       ->setProvince('Province')
                       ->setPostcode('Post code')
                       ->setCountry('Country')
-                      //->setVat('123123')
+                      ->setVat('123123')
                       ->setContactName('Aren')
                       ->setContactDialCode('Dial code')
                       ->setContactPhone('Contact phone')
@@ -81,4 +80,4 @@ $c1->addPackage()->setItems(1)
                                ->setEmrn('abc');
 
 //print_r($shipping);
-print_r($shipping->getXmlContent());
+//print_r($shipping->getXmlContent());

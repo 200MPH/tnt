@@ -64,6 +64,25 @@ class ShippingResponse extends AbstractResponse {
     }
     
     /**
+     * Get results
+     * 
+     * @return array
+     */
+    public function getResults()
+    {
+        
+        if($this->hasError() === true) { return array(); }
+        
+        $this->setFromCreateElement();
+        $this->setFromElement('BOOK');
+        $this->setFromElement('SHIP');
+        $this->setFromPrint();
+        
+        return $this->results;
+        
+    }
+    
+    /**
      * Get consignment note
      * 
      * @param int $key [optional] Useful when performing <ACTIVITY> request later.
@@ -73,34 +92,6 @@ class ShippingResponse extends AbstractResponse {
     {
      
         return $this->rs->getResult($this->key, 'GET_CONNOTE');
-        
-    }
-            
-    /**
-     * Get activity result
-     * 
-     * @param int $key [optional] Useful when performing <ACTIVITY> request later.
-     * @return string Raw
-     */
-    public function getActivityResult($key = 0)
-    {
-        
-        if($key === 0) {
-
-            // try local key
-            $key = $this->key;
-
-        }
-        
-        if(isset($this->results[$key]) === false) {
-        
-            $this->results[$key] = $this->rs->getResult($key, 'GET_RESULT');
-            $this->simpleXml = simplexml_load_string($this->results[$key]);
-            $this->catchXmlErrors();
-            
-        }
-                
-        return $this->results[$key];
         
     }
     
@@ -117,6 +108,7 @@ class ShippingResponse extends AbstractResponse {
         if(isset($complete[0]) && $complete[0] === 'COMPLETE') {
         
             $this->key = (int) $complete[1];
+            $this->setActivityResult();
             
         } else {
             
@@ -127,6 +119,20 @@ class ShippingResponse extends AbstractResponse {
     }
 
     /**
+     * Set activity result
+     * 
+     * @return void
+     */
+    private function setActivityResult()
+    {
+        
+        $res = $this->rs->getResult($this->key, 'GET_RESULT');
+        $this->simpleXml = simplexml_load_string($res);
+        $this->catchXmlErrors();
+        
+    }
+    
+    /**
      * Catch XML errors
      * 
      * @return void
@@ -134,7 +140,19 @@ class ShippingResponse extends AbstractResponse {
     private function catchXmlErrors()
     {
         
-        // catch runtime error
+        $this->catchRuntimeErrors();
+        $this->catchValidationErrors();
+                
+    }
+    
+    /**
+     * Catch runtime errors
+     * 
+     * @return void
+     */
+    private function catchRuntimeErrors()
+    {
+        
         if(isset($this->simpleXml->error_reason) === true) {
             
             $this->hasError = true;
@@ -154,13 +172,138 @@ class ShippingResponse extends AbstractResponse {
                         
         }
         
-        // catch validation error
-        if(isset($this->simpleXml->CODE) === true) {
+    }
+    
+    /**
+     * Catch validation errors
+     * 
+     * @return void
+     */
+    private function catchValidationErrors()
+    {
+          
+        if(isset($this->simpleXml->ERROR) === false) { return null; }
+        
+        $this->hasError = true;
+
+        if(is_array($this->simpleXml->ERROR) === true) {
+
+            foreach($this->simpleXml->ERROR as $xml) {
+
+                $this->errors[] = $xml->CODE->__toString();
+                $this->errors[] = $xml->DESCRIPTION->__toString();
+                $this->errors[] = $xml->SOURCE->__toString();
+
+            }
+
+        } else {
             
-            $this->hasError = true;
-            $this->errors[] = $this->simpleXml->CODE->__toString();
-            $this->errors[] = $this->simpleXml->DESCRIPTION->__toString();
-            $this->errors[] = $this->simpleXml->SOURCE->__toString();
+            $this->errors[] = $this->simpleXml->ERROR->CODE->__toString();
+            $this->errors[] = $this->simpleXml->ERROR->DESCRIPTION->__toString();
+            $this->errors[] = $this->simpleXml->ERROR->SOURCE->__toString();
+
+        }
+
+    } 
+    
+    /**
+     * Set result from <CREATE> element
+     * 
+     * @void
+     */
+    private function setFromCreateElement()
+    {
+        
+        if(isset($this->simpleXml->CREATE) === false) { return null; }
+        
+        if(is_array($this->simpleXml->CREATE) === true) {
+
+            foreach($this->simpleXml->CREATE as $xml) {
+                
+                $consignmentRef = $xml->CONREF->__toString();
+                $consignmentNumber = $xml->CONNUMBER->__toString();
+                
+                $this->results[$consignmentRef]['NUMBER'] = $consignmentNumber;
+                $this->results[$consignmentRef]['CREATE'] = $xml->SUCCESS->__toString();
+                
+            }
+
+        } else {
+
+            $consignmentRef = $this->simpleXml->CREATE->CONREF->__toString();
+            $consignmentNumber = $this->simpleXml->CREATE->CONNUMBER->__toString();
+            
+            $this->results[$consignmentRef]['NUMBER'] = $consignmentNumber;
+            $this->results[$consignmentRef]['CREATE'] = $this->simpleXml->CREATE->SUCCESS->__toString();
+
+        }
+        
+    }
+    
+    /**
+     * Set result from selected element name
+     * 
+     * @param string $element Element name to get data from
+     * @void
+     */
+    private function setFromElement($element)
+    {
+        
+        if(isset($this->simpleXml->{$element}) === false) { return null; }
+        
+        if(is_array($this->simpleXml->{$element}->CONSIGNMENT) === true) {
+
+            foreach($this->simpleXml->{$element}->CONSIGNMENT as $xml) {
+
+                $consignmentRef = $xml->CONREF->__toString();
+                $this->results[$consignmentRef][$element] = $xml->SUCCESS->__toString();
+                
+            }
+
+        } else {
+
+            $consignmentRef = $this->simpleXml->{$element}->CONSIGNMENT->CONREF->__toString();
+            $this->results[$consignmentRef][$element] = $this->simpleXml->{$element}->CONSIGNMENT->SUCCESS->__toString();
+
+        }
+        
+    }
+    
+    /**
+     * Set from <PRINT>
+     * 
+     * @return void
+     */
+    private function setFromPrint()
+    {
+        
+        if(isset($this->simpleXml->PRINT) === false) { return null; }
+        
+        if(isset($this->simpleXml->PRINT->CONNOTE) === true 
+           && $this->simpleXml->PRINT->CONNOTE == 'CREATED') {
+            
+            $this->results['PRINT']['CONNOTE'] = 'Y';
+            
+        }
+        
+        if(isset($this->simpleXml->PRINT->LABEL) === true 
+           && $this->simpleXml->PRINT->LABEL == 'CREATED') {
+            
+            $this->results['PRINT']['LABEL'] = 'Y';
+            
+        }
+        
+        if(isset($this->simpleXml->PRINT->MANIFEST) === true 
+           && $this->simpleXml->PRINT->MANIFEST == 'CREATED') {
+            
+            $this->results['PRINT']['MANIFEST'] = 'Y';
+            
+        }
+        
+        if(isset($this->simpleXml->PRINT->INVOICE) === true 
+           && $this->simpleXml->PRINT->INVOICE == 'CREATED') {
+            
+            $this->results['PRINT']['INVOICE'] = 'Y';
             
         }
         

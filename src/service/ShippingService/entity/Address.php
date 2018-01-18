@@ -346,7 +346,7 @@ class Address extends AbstractXml {
             if($this->account != 0) {
                 
                 $this->xml->writeElementCData('ACCOUNT', $this->account);
-                
+                                
             }
             
         }
@@ -478,9 +478,7 @@ class Address extends AbstractXml {
     public function setAcountCountry($accountCountry)
     {
         
-        $this->accountCountry = $accountCountry;
-        $this->xml->writeElementCData('ACCOUNTCOUNTRY', $accountCountry);
-        
+        $this->accountCountry = $accountCountry;        
         return $this;      
         
     }
@@ -494,6 +492,18 @@ class Address extends AbstractXml {
     {
         
         return $this->account;
+        
+    }
+    
+    /**
+     * Get account country code
+     * 
+     * @return string
+     */
+    public function getAccountCountryCode()
+    {
+        
+        return $this->accountCountry;
         
     }
     

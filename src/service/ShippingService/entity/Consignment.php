@@ -363,14 +363,7 @@ class Consignment extends AbstractXml {
         
         $this->paymentind = $paymentind;
         $this->xml->writeElementCData('PAYMENTIND', $paymentind);
-     
-        if($this->paymentind === 'R') {
-            
-            $this->receiver->setAccountNumber($this->account['number']);
-            $this->receiver->setAcountCountry($this->account['country']);
-            
-        }
-        
+      
         return $this;
         
     }
