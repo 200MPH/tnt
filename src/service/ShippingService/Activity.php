@@ -17,7 +17,7 @@ use thm\tnt_ec\service\AbstractService;
 class Activity extends AbstractService {
     
     /**
-     * @var XMLWriter[]
+     * @var MyXMLWriter[]
      */
     private $xmls = [];
     

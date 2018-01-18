@@ -47,6 +47,11 @@ class Article extends AbstractXml {
     protected $country;
     
     /**
+     * @var string
+     */
+    protected $emrn;
+    
+    /**
      * Set items
      * 
      * @param int $items
@@ -154,6 +159,22 @@ class Article extends AbstractXml {
         $this->country = $country;
         $this->xml->writeElementCData('COUNTRY', $country);
         
+        return $this;
+        
+    }
+    
+    /**
+     * Set EMRN
+     * 
+     * @param string $emrn
+     * @return Aticle
+     */
+    public function setEmrn($emrn)
+    {
+        
+        $this->emrn = $emrn;
+        $this->xml->writeElementCData('EMRN', $emrn);
+
         return $this;
         
     }

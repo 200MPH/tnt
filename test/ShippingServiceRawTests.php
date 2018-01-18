@@ -48,16 +48,6 @@ $c1 = $shipping->addConsignment()->setConReference('CON 123')
                            ->setDeliveryInstructions('To reception please');
                            //->hazardous(1234);
 
-$c1->addPackage()->setItems(1)
-                 ->setDescription('Computer parts - mtb')
-                 ->setHeight(0.20)
-                 ->setLength(0.30)
-                 ->setWidth(0.15)
-                 ->setWeight(7)
-                 ->addArticle()->setItems(1)
-                               ->setCountry('GB')
-                               ->setHts(123);
-
 $c1->setReceiver()->setCompanyName('RCV Company Name')
                   ->setAddressLine('RCV Address line 1')
                   ->setAddressLine('RCV Address line 2')
@@ -75,5 +65,20 @@ $c1->setReceiver()->setCompanyName('RCV Company Name')
 
 $c1->setReceiverAsDelivery();
 
+$c1->addPackage()->setItems(1)
+                 ->setDescription('Computer parts - mtb')
+                 ->setLength(0.30)
+                 ->setHeight(0.20)
+                 ->setWidth(0.15)
+                 ->setWeight(7)
+                 ->addArticle()->setItems(1)
+                               ->setDescription('Item desc')
+                               ->setWeight(0.6)
+                               ->setInvoiceValue(55.45)
+                               ->setInvoiceDescription('GTFR345')
+                               ->setHts(123)
+                               ->setCountry('GB')
+                               ->setEmrn('abc');
+
 //print_r($shipping);
-//print_r($shipping->getXmlContent());
+print_r($shipping->getXmlContent());

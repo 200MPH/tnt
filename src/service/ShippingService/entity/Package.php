@@ -62,23 +62,20 @@ class Package extends AbstractXml {
             
         }
             
-        $xml = new MyXMLWriter();
-        $xml->openMemory();
-        $xml->setIndent(true);
-        $xml->writeRaw( parent::getAsXml() );
+        $parentXml = parent::getAsXml();
+        
+        $this->xml->flush();
+        $this->xml->writeRaw( $parentXml );
 
         foreach($this->articles as $article) {
 
-            $xml->startElement('ARTICLE');
-                $xml->writeRaw( $article->getAsXml() );
-            $xml->endElement();
+            $this->xml->startElement('ARTICLE');
+                $this->xml->writeRaw( $article->getAsXml() );
+            $this->xml->endElement();
 
         }
-
-        // re-assign variable
-        $this->xml = $xml;
         
-        return $xml->outputMemory(false);
+        return $this->xml->outputMemory(false);
         
     }
     

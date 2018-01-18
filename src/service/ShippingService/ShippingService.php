@@ -279,9 +279,7 @@ class ShippingService extends AbstractService {
         if($this->collection instanceof Collection) {
         
             $this->xml->startElement('COLLECTION');
-            $this->xml->startElement('COLLECTIONADDRESS');
                 $this->xml->writeRaw( $this->collection->getAsXml() );
-            $this->xml->endElement();
             $this->xml->endElement();
         
         }
@@ -330,8 +328,8 @@ class ShippingService extends AbstractService {
             
             $activity = new Activity($this->userId, $this->password);
             $activity->create($conRefs)
-                     ->ship($conRefs)
                      ->book($conRefs)
+                     ->ship($conRefs)
                      ->printConsignmentNote($conRefs)
                      ->printLabel($conRefs)
                      ->printManifest($conRefs);

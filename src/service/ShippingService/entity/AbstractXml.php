@@ -14,7 +14,7 @@ use thm\tnt_ec\MyXMLWriter;
 abstract class AbstractXml {
     
    /**
-     * @var XMLWriter
+     * @var MyXMLWriter
      */
     protected $xml; 
  

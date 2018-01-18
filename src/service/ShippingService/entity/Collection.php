@@ -69,11 +69,15 @@ class Collection extends AbstractXml {
     public function getAsXml()
     {
         
-        // merge collection XML document with collection address XML document
+        // merge addresses into one XML document
         $xml = new MyXMLWriter();
         $xml->openMemory();
         $xml->setIndent(true);
+        
+        $xml->startElement('COLLECTIONADDRESS');
         $xml->writeRaw( $this->collection->getAsXml() );
+        $xml->endElement();
+        
         $xml->writeRaw( parent::getAsXml() );
                 
         //re-assign object
@@ -253,7 +257,16 @@ class Collection extends AbstractXml {
     public function useSenderAddress()
     {
         
-        $this->collection = $this->sender;
+        $auxXml = $this->sender->getAsXml();
+        $account = $this->sender->getAccount();
+        $delete = "<ACCOUNT><![CDATA[{$account}]]></ACCOUNT>";
+        
+        $newXml = str_replace($delete, '', $auxXml);
+        
+        $this->collection = new Address();
+        $this->collection->xml->flush();
+        $this->collection->xml->writeRaw($newXml);
+        
         return $this;
         
     }
