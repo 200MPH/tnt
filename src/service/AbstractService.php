@@ -71,7 +71,7 @@ abstract class AbstractService {
     abstract public function getServiceUrl();
     
     /**
-     * Initialize service
+     * Initialise service
      * 
      * @param string $userId
      * @param string $password
@@ -151,7 +151,6 @@ abstract class AbstractService {
     {
         
         $this->originCountryCode = $countryCode;
-        
         return $this;
         
     }
@@ -165,6 +164,7 @@ abstract class AbstractService {
     {
         
         $this->verifySSL = false;
+        return $this;
         
     }
     
@@ -239,7 +239,8 @@ abstract class AbstractService {
                 'ssl' => array(
                      'verify_peer' => $this->verifySSL,
                      'verify_peer_name' => $this->verifySSL)
-        ));
+                )
+        );
         
         $output = file_get_contents($this->getServiceUrl(), false, $context);
         
@@ -261,7 +262,6 @@ abstract class AbstractService {
     {
         
         $post = http_build_query(array('xml_in' => $this->getXmlContent()));
-        
         return $post;
         
     }
