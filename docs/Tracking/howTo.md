@@ -1,6 +1,6 @@
 
 
-# Tracking Service Usage
+# Tracking Service Usage:
 
 ## 1. Search criteria
 
@@ -103,8 +103,9 @@ Tracking information can be translated to some languages.
 Use option:
 
     $ts->setLocale('DE');
+Country code is a code of country you want translate to.
 
-6. SSL certificate problem
+## 6. SSL certificate problem
 
 In case when you experienced SSL certificate issue try disable SSL verification.
 
@@ -112,6 +113,6 @@ In case when you experienced SSL certificate issue try disable SSL verification.
 
 Problem may occur on DEV machine.
 
-## 6. TNT Documentation
+## 7. TNT Documentation
 For more details please read TNT documentation in the link below.
 [https://express.tnt.com/expresswebservices-website/docs/ExpressConnect_Tracking_V3_1.pdf](Here%20is%20full%20TNT%20documentation%20https://express.tnt.com/expresswebservices-website/docs/ExpressConnect_Tracking_V3_1.pdf)
