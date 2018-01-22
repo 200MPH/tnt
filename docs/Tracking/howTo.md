@@ -115,4 +115,4 @@ Problem may occur on DEV machine.
 
 ## 7. TNT Documentation
 For more details please read TNT documentation in the link below.
-https://github.com/200MPH/tnt/blob/develop/docs/Tracking/ExpressConnect_Tracking_V3_1.pdf](https://github.com/200MPH/tnt/blob/develop/docs/Tracking/ExpressConnect_Tracking_V3_1.pdf)
+[https://github.com/200MPH/tnt/blob/develop/docs/Tracking/ExpressConnect_Tracking_V3_1.pdf](https://github.com/200MPH/tnt/blob/develop/docs/Tracking/ExpressConnect_Tracking_V3_1.pdf)
