@@ -1,28 +1,118 @@
-Simple Usage:
 
-use thm\tnt_ec\Service\TrackingService\TrackingService;
 
-$ts = new TrackingService('login', 'password');
+# Tracking Service Usage:
 
-$response = $ts->searchByConsignment(array('12345678'));
+## 1. Search criteria
 
-print_r($response->getErrors());
+You can search by: 
+- consignment number which looks like GB123456789
+  **searchByConsignment(array)**
+ - customer reference number, your reference number **searchByCustomerReference(array)**
+ - by date
+ **searchByDate()**
+ 
+## 2. Minimal request example
 
-foreach($response->getConsignments() as $consignment) {
+    use thm\tnt_ec\service\TrackingService\TrackingService;
+    
+    $ts = new TrackingService('login', 'password');
+    
+    $response = $ts->searchByConsignment(array('12345678'));
+    
+    if($response->hasError() === true) {
+        
+        foreach($response->getErrors() as $error) {
+            
+            print_r($error);
+            
+        }
+        
+    } 
+    
+    foreach ($response->getConsignments() as $consignment) {
+    
+        // you can output entire Consignment object for testing purpose
+        print_r($consignment);
+    
+        foreach ($consignment->getStatuses() as $status) {
+    
+            // here is a tracking details
+            var_dump($status->getStatusCode());
+            var_dump($status->getStatusDescription());
+            var_dump($status->getLocalEventDate());
+            var_dump($status->getLocalEventTime());
+            var_dump($status->getDepotCode());
+            var_dump($status->getDepotName());
+            
+        }
+    }
 
-  print_r($consignment);
+## 3. More detailed request
 
-  foreach($consignment->getStatuses() as $status) {
-  
-    var_dump($status->getStatusCode());
-    var_dump($status->getStatusDescription());
-    var_dump($status->getLocalEventDate());
-    var_dump($status->getLocalEventTime());
-    var_dump($status->getDepotCode());
-    var_dump($status->getDepotName());
-  
-  }
+    use thm\tnt_ec\service\TrackingService\TrackingService;
+    
+    $ts = new TrackingService('login', 'password');
+    
+    // this will return more detailed response
+    // for more details please read TNT documentation (link below)
+    $ts->setLevelOfDetails()->setComplete()->setDestinationAddress()
+                                           ->setOriginAddress()
+                                           ->setPackage()
+                                           ->setPod()
+                                           ->setShipment();
+    
+    $response = $ts->searchByConsignment(array('12345678'));
+    
+    if($response->hasError() === true) {
+        
+        foreach($response->getErrors() as $error) {
+            
+            print_r($error);
+            
+        }
+        
+    } 
+    
+    foreach ($response->getConsignments() as $consignment) {
+    
+        // you can output entire Consignment object for testing purpose
+        print_r($consignment);
+    
+        foreach ($consignment->getStatuses() as $status) {
+    
+            // here is a tracking details
+            var_dump($status->getStatusCode());
+            var_dump($status->getStatusDescription());
+            var_dump($status->getLocalEventDate());
+            var_dump($status->getLocalEventTime());
+            var_dump($status->getDepotCode());
+            var_dump($status->getDepotName());
+            
+        }
+    }
 
-}
+## 4. International parcel tracking
 
-Here is full TNT documentation https://express.tnt.com/expresswebservices-website/docs/ExpressConnect_Tracking_V3_1.pdf
+For international tracking use this option:
+
+    $ts->setMarketTypeInternational();
+
+## 5. Output translations
+
+Tracking information can be translated to some languages.
+Use option:
+
+    $ts->setLocale('DE');
+Country code is a code of country you want translate to.
+
+## 6. SSL certificate problem
+
+In case when you experienced SSL certificate issue try disable SSL verification.
+
+    $ts->disableSSLVerify();
+
+Problem may occur on DEV machine.
+
+## 7. TNT Documentation
+For more details please read TNT documentation in the link below.
+[https://express.tnt.com/expresswebservices-website/docs/ExpressConnect_Tracking_V3_1.pdf](Here%20is%20full%20TNT%20documentation%20https://express.tnt.com/expresswebservices-website/docs/ExpressConnect_Tracking_V3_1.pdf)
