@@ -1,12 +1,17 @@
 <?php
 
 /**
- * TNT Address Party entity
+ * TNT Address Party for tracking service.
+ * 
+ * Note that this class may looks very similar to other address class
+ * but functions referrer to another XML elements therefore it cannot be extended.
+ * Or just partially extended.
  *
  * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
+ * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 
-namespace thm\tnt_ec\Service\TrackingService\libs;
+namespace thm\tnt_ec\service\TrackingService\entity;
 
 use SimpleXMLElement;
 
@@ -21,7 +26,7 @@ class AddressParty {
     /**
      * @var SimpleXMLElement
      */
-    private $xml;
+    protected $xml;
     
     /**
      * Initialize object
@@ -64,6 +69,7 @@ class AddressParty {
     public function getAddressLine($lineNo = 1)
     {
         
+        // array starts from 0
         $index = $lineNo - 1;
         
         if(isset($this->xml->AddressLine[$index]) === true) {

@@ -1,9 +1,10 @@
 <?php
 
 /**
- * TNT XML Tools
+ * TNT Express Connect - XML Tools
  *
  * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
+ * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 
 namespace thm\tnt_ec;
@@ -16,26 +17,26 @@ class XMLTools {
      * Merge XML documents in to one document.
      * 
      * @param array $documents
-     * @return string Merged douments as one XML file
+     * @return string Merged documents as one XML file
      */
     static public function mergeXml(array $documents)
     {
         
-        // if only one element in array return it without merging
+        // if only one element in array then return without merging
         if(count($documents) === 1) { return $documents[0]; }
         
         $merged = null;
         
-        // always merge firts elements of array with the others
-        // therefore we have to subtract one position form array
-        // otherwise we will get undefined offest error 
+        // always merge firt elements of array with the others
+        // therefore we have to subtract one position from array
+        // otherwise we will get undefined offset error 
         $counter = count($documents) - 1;
         
         for($i=0; $i < $counter; $i++) {
             
             // skip empty documents
             if(empty($documents[$i]) === true) { continue; }
-            
+                        
             if($i === 0) {
                 
                 // add first document to the merge string.

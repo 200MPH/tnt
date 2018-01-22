@@ -4,18 +4,15 @@
  * Abstract Service
  *
  * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
+ * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 
-namespace thm\tnt_ec\Service;
+namespace thm\tnt_ec\service;
 
-use XMLWriter;
-use thm\tnt_ec\Service\Response;
+use thm\tnt_ec\MyXMLWriter;
 use thm\tnt_ec\TNTException;
 
 abstract class AbstractService {
-    
-    /* Version */
-    const VERSION = 3.1;
     
     /**
      * XML Request
@@ -44,30 +41,37 @@ abstract class AbstractService {
      * @var string
      */
     protected $originCountryCode = 'GB';
-    
-    /**
-     * Web service URL
-     * 
-     * @var string
-     */
-    private $url = 'https://express.tnt.com/expressconnect/track.do';
-    
+            
     /**
      * User ID
      * 
      * @var string
      */
-    private $userId;
+    protected $userId;
     
     /**
      * Password
      * 
      * @var string
      */
-    private $password;
+    protected $password;
     
     /**
-     * Initialize service
+     * Disable SSL verification
+     * 
+     * @var bool
+     */
+    private $verifySSL = true;
+    
+    /**
+     * Get TNT service URL
+     * 
+     * @var string
+     */
+    abstract public function getServiceUrl();
+    
+    /**
+     * Initialise service
      * 
      * @param string $userId
      * @param string $password
@@ -91,7 +95,7 @@ abstract class AbstractService {
         $this->userId = $userId;
         $this->password = $password;
         
-        $this->xml = new XMLWriter();
+        $this->xml = new MyXMLWriter();
         $this->xml->openMemory();
         $this->xml->setIndent(true);
                 
@@ -147,7 +151,19 @@ abstract class AbstractService {
     {
         
         $this->originCountryCode = $countryCode;
+        return $this;
         
+    }
+    
+    /**
+     * Disable SSL verification
+     * 
+     * @return AbstractService
+     */
+    public function disableSSLVerify()
+    {
+        
+        $this->verifySSL = false;
         return $this;
         
     }
@@ -177,6 +193,21 @@ abstract class AbstractService {
     }
     
     /**
+     * Set XML content.
+     * This is useful when you want to send your own prepared XML document.
+     * 
+     * @param string $xml
+     * @return bool
+     */
+    public function setXmlContent($xml)
+    {
+        
+        $this->xml->flush();       
+        return $this->xml->writeRaw($xml);
+        
+    }
+    
+    /**
      * Get XML content
      * 
      * @return string
@@ -184,7 +215,7 @@ abstract class AbstractService {
     protected function getXmlContent()
     {
         
-        return $this->xml->outputMemory(false);
+        return $this->xml->flush(false);
         
     }
     
@@ -204,16 +235,20 @@ abstract class AbstractService {
                     'header' => $headers,
                     'method' => 'POST',
                     'content' => $this->buildHttpPostData()
+                ),
+                'ssl' => array(
+                     'verify_peer' => $this->verifySSL,
+                     'verify_peer_name' => $this->verifySSL)
                 )
-        ));
+        );
         
-        $output = file_get_contents($this->url, false, $context);
+        $output = file_get_contents($this->getServiceUrl(), false, $context);
         
         // $http_response_header comes from PHP engine, 
         // it's not a part of this code
         // http://php.net/manual/en/reserved.variables.httpresponseheader.php
-        Response::$headers = $http_response_header;
-        
+        HTTPHeaders::$headers = $http_response_header;
+                
         return $output;
         
     }
@@ -227,7 +262,6 @@ abstract class AbstractService {
     {
         
         $post = http_build_query(array('xml_in' => $this->getXmlContent()));
-        
         return $post;
         
     }

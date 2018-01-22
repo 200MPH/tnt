@@ -6,11 +6,16 @@
  * to the more user friendly object by giving function for each XML property
  *
  * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
+ * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 
-namespace thm\tnt_ec\Service\TrackingService\libs;
+namespace thm\tnt_ec\service\TrackingService\entity;
 
 use SimpleXMLElement;
+use thm\tnt_ec\service\TrackingService\entity\AddressParty;
+use thm\tnt_ec\service\TrackingService\entity\Package;
+use thm\tnt_ec\service\TrackingService\entity\ShipmentSummary;
+use thm\tnt_ec\service\TrackingService\entity\StatusData;
 
 class Consignment {
     
@@ -157,7 +162,7 @@ class Consignment {
     }
     
     /**
-     * Get customer referenc
+     * Get customer reference
      * 
      * @return string
      */
