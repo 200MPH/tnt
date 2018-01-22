@@ -203,7 +203,9 @@ In case when you experienced SSL certificate issue try disable SSL verification.
     $shipping->disableSSLVerify();
 
 Problem may occur on DEV machine.
-7. TNT Documentation
+
+## 7. TNT Documentation
+
 For more details please read TNT documentation
 [https://github.com/200MPH/tnt/blob/develop/docs/Shipping/ExpressConnect%20Shipping%20Integration%20Guide%20v3.8.pdf](https://github.com/200MPH/tnt/blob/develop/docs/Shipping/ExpressConnect%20Shipping%20Integration%20Guide%20v3.8.pdf)
  
