@@ -63,8 +63,7 @@ Read the comments in the below code and PHP documentor. Each method functionalit
                       ->setLength(0.00)
                       ->setHeight(0.00)
                       ->setWidth(0.00)
-                      ->setWeight(0)
-                      ->addArticle();
+                      ->setWeight(0);
 
 .... and something extra for customs ...
 
