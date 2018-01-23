@@ -111,6 +111,17 @@ abstract class AbstractResponse {
     public function getErrors()
     {
         
+        // remove empty lines
+        array_walk($this->errors, function($val, $key) {
+            
+            if(empty($val) === true) {
+                
+                unset($this->errors[$key]);
+                
+            }
+            
+        });
+        
         return $this->errors;
         
     }

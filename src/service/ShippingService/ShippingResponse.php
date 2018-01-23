@@ -24,6 +24,11 @@ class ShippingResponse extends AbstractResponse {
     private $userId;
     
     /**
+     * @var string
+     */
+    private $password;
+    
+    /**
      * @var ResultService
      */
     private $rs;
@@ -47,8 +52,8 @@ class ShippingResponse extends AbstractResponse {
         $this->password = $password;
         $this->rs = new ResultService($userId, $password);
         
-        //init PRINT array
-        $this->results['PRINT']['CONNOTE'] = 'N';
+        // init PRINT array
+        $this->results['PRINT']['CONNOTE']  = 'N';
         $this->results['PRINT']['LABEL']    = 'N';
         $this->results['PRINT']['MANIFEST'] = 'N';
         $this->results['PRINT']['INVOICE']  = 'N';
@@ -71,7 +76,7 @@ class ShippingResponse extends AbstractResponse {
     
     /**
      * Set key.
-     * Useful when documents need to re-download.
+     * Useful when documents need to be re-download.
      * Note, TNT keeps files up to 26 days after consignment create.
      * 
      * @param int $key
