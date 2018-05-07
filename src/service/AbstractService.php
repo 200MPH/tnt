@@ -242,7 +242,7 @@ abstract class AbstractService {
                 )
         );
         
-        $output = file_get_contents($this->getServiceUrl(), false, $context);
+        $output = @file_get_contents($this->getServiceUrl(), false, $context);
         
         // $http_response_header comes from PHP engine, 
         // it's not a part of this code
