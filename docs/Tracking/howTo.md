@@ -1,6 +1,6 @@
 
 
-# Tracking Service Usage:
+# Tracking Service Usage
 
 ## 1. Search criteria
 
