@@ -10,6 +10,7 @@
 namespace thm\tnt_ec\service\ShippingService;
 
 use thm\tnt_ec\service\AbstractResponse;
+use thm\tnt_ec\XmlConverter;
 
 class ShippingResponse extends AbstractResponse {    
     
@@ -24,9 +25,14 @@ class ShippingResponse extends AbstractResponse {
     private $userId;
     
     /**
-     * @var ResultService
+     * @var string
      */
-    private $rs;
+    private $password;
+    
+    /**
+     * @var ShippingResultService
+     */
+    private $srs;
     
     /**
      * @var array
@@ -45,10 +51,10 @@ class ShippingResponse extends AbstractResponse {
         
         $this->userId = $userId;
         $this->password = $password;
-        $this->rs = new ResultService($userId, $password);
+        $this->srs = new ShippingResultService($userId, $password);
         
-        //init PRINT array
-        $this->results['PRINT']['CONNOTE'] = 'N';
+        // init PRINT array
+        $this->results['PRINT']['CONNOTE']  = 'N';
         $this->results['PRINT']['LABEL']    = 'N';
         $this->results['PRINT']['MANIFEST'] = 'N';
         $this->results['PRINT']['INVOICE']  = 'N';
@@ -70,23 +76,9 @@ class ShippingResponse extends AbstractResponse {
     }
     
     /**
-     * Set key.
-     * Useful when documents need to re-download.
-     * Note, TNT keeps files up to 26 days after consignment create.
-     * 
-     * @param int $key
-     * @return ShippingResponse
-     */
-    public function setKey($key) 
-    {
-        
-        $this->key = $key;
-        return $this;
-        
-    }
-    
-    /**
-     * Get results
+     * Get results.
+     * Returns consignment numbers 
+     * and document print availability  information.
      * 
      * @return array
      */
@@ -107,15 +99,16 @@ class ShippingResponse extends AbstractResponse {
     /**
      * Get consignment note
      * 
-     * @return string
+     * @return XmlConverter
      */
     public function getConsignmentNote()
     {
         
         if($this->results['PRINT']['CONNOTE'] === 'Y') {
         
-            return $this->rs->getResult($this->key, 'GET_CONNOTE');
-        
+            $xml = $this->srs->getResult($this->key, 'GET_CONNOTE');
+            return new XmlConverter($xml);
+            
         }
         
         return '';
@@ -125,15 +118,16 @@ class ShippingResponse extends AbstractResponse {
     /**
      * Get label
      * 
-     * @return string
+     * @return XmlConverter
      */
     public function getLabel()
     {
         
         if($this->results['PRINT']['LABEL'] === 'Y') {
         
-            return $this->rs->getResult($this->key, 'GET_LABEL');
-        
+            $xml = $this->srs->getResult($this->key, 'GET_LABEL');
+            return new XmlConverter($xml);
+            
         }
         
         return '';
@@ -143,15 +137,16 @@ class ShippingResponse extends AbstractResponse {
     /**
      * Get manifest
      * 
-     * @return string
+     * @return XmlConverter
      */
     public function getManifest()
     {
         
         if($this->results['PRINT']['MANIFEST'] === 'Y') {
         
-            return $this->rs->getResult($this->key, 'GET_MANIFEST');
-        
+            $xml = $this->srs->getResult($this->key, 'GET_MANIFEST');
+            return new XmlConverter($xml);
+            
         }
         
         return '';
@@ -161,15 +156,16 @@ class ShippingResponse extends AbstractResponse {
     /**
      * Get invoice
      * 
-     * @return string
+     * @return XMLConverter
      */
     public function getInvoice()
     {
         
         if($this->results['PRINT']['MANIFEST'] === 'Y') {
         
-            return $this->rs->getResult($this->key, 'GET_INVOICE');
-        
+            $xml = $this->srs->getResult($this->key, 'GET_INVOICE');
+            return new XmlConverter($xml);
+            
         }
         
         return '';
@@ -207,7 +203,7 @@ class ShippingResponse extends AbstractResponse {
     private function setActivityResult()
     {
         
-        $this->response = $this->rs->getResult($this->key, 'GET_RESULT');
+        $this->response = $this->srs->getResult($this->key, 'GET_RESULT');
         $this->simpleXml = simplexml_load_string($this->response);
         $this->catchXmlErrors();
         
