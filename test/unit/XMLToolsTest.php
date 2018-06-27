@@ -6,7 +6,7 @@
  * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
  */
 
-namespace thm\tnt_ec\tests;
+namespace thm\tnt_ec\test\unit;
 
 use thm\tnt_ec\XMLTools;
 

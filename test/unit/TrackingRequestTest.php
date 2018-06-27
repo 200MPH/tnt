@@ -6,14 +6,14 @@
  * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
  */
 
-namespace thm\tnt_ec\tests;
+namespace thm\tnt_ec\tests\unit;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use thm\tnt_ec\service\TrackingService\TrackingService;
 use thm\tnt_ec\Service\TrackingService\TrackingResponse;
 
-class TNTTest extends \PHPUnit_Framework_TestCase {
+class TrackingRequestTest extends \PHPUnit_Framework_TestCase {
     
     private $ts;
         
@@ -22,7 +22,7 @@ class TNTTest extends \PHPUnit_Framework_TestCase {
         
         parent::setUp();
         
-        $this->ts = new TrackingService('123', 'abc');
+        $this->ts = new TrackingService('user', 'password');
                 
     }
     
