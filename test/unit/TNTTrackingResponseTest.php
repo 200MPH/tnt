@@ -8,7 +8,7 @@
 
 namespace thm\tnt_ec\tests;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use thm\tnt_ec\Service\TrackingService\TrackingResponse;
 use thm\tnt_ec\service\TrackingService\entity\Consignment;
@@ -262,7 +262,7 @@ class TNTTrackingResponseTest extends \PHPUnit_Framework_TestCase {
     }
     
     /**
-     * getPieceQuantuty Returnz Integer
+     * getPieceQuantuty is return integer
      */
     public function testGetPieceQuantityReturnsInt()
     {

@@ -2,7 +2,7 @@
 
 /* Place to test Activity class */
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 use thm\tnt_ec\service\ShippingService\Activity;
 
 $a = new Activity(123, 123);

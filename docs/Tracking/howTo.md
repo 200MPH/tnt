@@ -47,19 +47,26 @@ You can search by:
         }
     }
 
-## 3. More detailed request
+## 3. More detailed request 
+
+    // for more info please read TNT documentation (link below)
 
     use thm\tnt_ec\service\TrackingService\TrackingService;
     
     $ts = new TrackingService('login', 'password');
     
-    // this will return more detailed response
-    // for more details please read TNT documentation (link below)
+    // to get full output just add below line (POD URL won't be returned, see another example)
+    $ts->setLevelOfDetails()->setComplete();
+
+    // you can still specify output by calling particular methods
     $ts->setLevelOfDetails()->setComplete()->setDestinationAddress()
                                            ->setOriginAddress()
                                            ->setPackage()
                                            ->setPod()
                                            ->setShipment();
+
+    // to retrieve POD you must call setPod() method
+    $ts->setLevelOfDetails()->setComplete()->setPod();
     
     $response = $ts->searchByConsignment(array('12345678'));
     
