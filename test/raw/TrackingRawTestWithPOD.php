@@ -20,6 +20,13 @@ if($response->hasError() === true) {
     
 foreach($response->getConsignments() as $consignment) {
 
+    /*
+     * Below functions will work only if parcel is delivered - DEL status
+     * Otherwise empty string will be retured.
+     * 
+     */
+    
+    
     // get POD URL
     // URL is valid for 2 hours only !
     print_r($consignment->getPod());
