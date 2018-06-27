@@ -10,7 +10,6 @@
 namespace thm\tnt_ec\service\ShippingService;
 
 use thm\tnt_ec\service\AbstractService;
-use thm\tnt_ec\XmlConverter;
 
 class ShippingResultService extends AbstractService {
     
