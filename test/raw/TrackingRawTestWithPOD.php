@@ -5,7 +5,7 @@
 require_once __DIR__ . '/../../vendor/autoload.php';
 use thm\tnt_ec\service\TrackingService\TrackingService;
 
-$ts = new TrackingService('', '');
+$ts = new TrackingService('user', 'passwoord');
 
 // add this line to get POD in response
 $ts->setLevelOfDetails()->setComplete()->setPod();
