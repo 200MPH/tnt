@@ -7,7 +7,7 @@
  * but functions referrer to another XML elements therefore it cannot be extended.
  * Or just partially extended.
  *
- * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
+ * @author Wojciech Brozyna <http://vobro.systems>
  * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 

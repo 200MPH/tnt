@@ -3,10 +3,10 @@
 /**
  * TNT Tests
  *
- * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
+ * @author Wojciech Brozyna <http://vobro.systems>
  */
 
-namespace thm\tnt_ec\tests\unit;
+namespace thm\tnt_ec\test\unit;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 

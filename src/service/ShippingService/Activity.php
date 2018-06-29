@@ -1,11 +1,11 @@
 <?php
 
 /**
- * It'a a "sub service" for Shipping.
+ * It's a "sub service" for Shipping.
  * This class generate <ACTIVITY> section and is able to send it to TNT as a 
  * separate request if necessary. 
  *
- * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
+ * @author Wojciech Brozyna <http://vobro.systems>
  * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 

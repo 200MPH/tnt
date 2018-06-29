@@ -3,7 +3,7 @@
 /**
  * Level Of Details
  * 
- * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
+ * @author Wojciech Brozyna <http://vobro.systems>
  */
 
 namespace thm\tnt_ec\service\TrackingService\helpers;
