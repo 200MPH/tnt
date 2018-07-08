@@ -49,6 +49,7 @@ class ShippingResponse extends AbstractResponse {
     public function __construct($response, $requestXml, $userId, $password)
     {
         
+        print_r($response);
         $this->userId = $userId;
         $this->password = $password;
         $this->srs = new ShippingResultService($userId, $password);

@@ -315,28 +315,29 @@ class ShippingService extends AbstractService {
      */
     private function buildActivitySection()
     {
+            
+        $conRefs = [];
+
+        foreach($this->consignments as $consignment) {
+
+            $conRefs[] = $consignment->getConReference();
+
+        }
+
+        $activity = new Activity($this->userId, $this->password);
+        $activity->create($conRefs);
         
         if($this->activity === true) {
-            
-            $conRefs = [];
-            
-            foreach($this->consignments as $consignment) {
-                
-                $conRefs[] = $consignment->getConReference();
-                
-            }
-            
-            $activity = new Activity($this->userId, $this->password);
-            $activity->create($conRefs)
-                     ->book($conRefs)
+        
+            $activity->book($conRefs)
                      ->ship($conRefs)
                      ->printConsignmentNote($conRefs)
                      ->printLabel($conRefs)
                      ->printManifest($conRefs);
-            
-            $this->xml->writeRaw( $activity->getXmlContent(false) );
-            
+
         }
+        
+        $this->xml->writeRaw( $activity->getXmlContent(false) );
         
     }
     

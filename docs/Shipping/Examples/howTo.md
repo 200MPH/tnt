@@ -51,7 +51,13 @@ Read the comments in the below code and PHP documentor. Each method functionalit
                       ->setContactEmail('');
     
     $c1->setReceiverAsDelivery(); // make delivery address same as receiver
- That's it.
+
+You can add multiple consignments to the request
+
+    $c2 = $shipping->addConsignment();
+    $c3 = $shipping->addConsignment();
+
+and so on.
 
 ## 2. Non EU shipping
 
@@ -87,7 +93,15 @@ If you sending hazardous goods, add this code:
 
     $c1 = $shipping->hazardous(uncode);
 
-## 4. Full request
+## 4. Raw request.
+
+You can also send RAW XML content, without using object setters.
+    
+    $shipping = new ShippingService('User ID', 'Password');
+    $shipping->setXmlContent($your_xml);
+    $response = $shipping->send();
+
+## 5. Full request
 
     Here is full request, all options that you can send to TNT database.
     use thm\tnt_ec\service\ShippingService\ShippingService;
@@ -168,7 +182,7 @@ If you sending hazardous goods, add this code:
   
     print_r($shipping->getXmlContent());
 
-## 5. Response
+## 6. Response
 OK, we have to send prepared request first.
 
     $response = $shipping->send();
@@ -196,14 +210,14 @@ Catch the result ...
         
     }
 
-## 6. SSL certificate problem
+## 7. SSL certificate problem
 In case when you experienced SSL certificate issue try disable SSL verification.
 
     $shipping->disableSSLVerify();
 
 Problem may occur on DEV machine.
 
-## 7. TNT Documentation
+## 8. TNT Documentation
 
 For more details please read TNT documentation
 [https://github.com/200MPH/tnt/blob/develop/docs/Shipping/ExpressConnect%20Shipping%20Integration%20Guide%20v3.8.pdf](https://github.com/200MPH/tnt/blob/develop/docs/Shipping/ExpressConnect%20Shipping%20Integration%20Guide%20v3.8.pdf)

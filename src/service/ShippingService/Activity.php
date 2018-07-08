@@ -22,6 +22,32 @@ class Activity extends AbstractService {
     private $xmls = [];
     
     /**
+     * @var int
+     */
+    private $key = 0;
+    
+    /**
+     * @var string
+     */
+    private $activityReqStr = '';
+    
+    /**
+     * Initialise service
+     * 
+     * @param string $userId
+     * @param string $password
+     * @param int $key [optional] Shipment response key
+     * @throw TNTException
+     */
+    public function __construct($userId, $password, $key = 0)
+    {
+        
+        $this->key = $key;
+        parent::__construct($userId, $password);
+        
+    }
+    
+    /**
      * Get shipping service URL
      * @return string
      */
@@ -181,6 +207,9 @@ class Activity extends AbstractService {
     public function getXmlContent($xmlHeaderIncluded = true)
     {
         
+        // return activity request immediate if set
+        if(empty($this->activityReqStr) === false) { return $this->activityReqStr; }
+        
         if($xmlHeaderIncluded === true) { $this->startDocument(); }
         
         $this->xml->startElement('ACTIVITY');
@@ -198,6 +227,22 @@ class Activity extends AbstractService {
         if($xmlHeaderIncluded === true) { $this->endDocument(); }
         
         return parent::getXmlContent();
+        
+    }
+    
+    /**
+     * Get activity
+     * 
+     * @param string $function [optional] Function name: GET_RESULT (default), GET_CONNOTE, GET_LABEL, GET_MANIFEST, GET_INVOICE
+     * @return string XML string
+     */
+    public function getActivity($function = 'GET_RESULT')
+    {
+        
+        $this->activityReqStr = "{$function}:{$this->key}";
+        $response = $this->sendRequest();
+        
+        return new ActivityResponse($response, $this->getXmlContent());
         
     }
     
