@@ -21,7 +21,7 @@ class MyXMLWriter extends XMLWriter {
      * @param string $content
      * @param bool $wrap [optional] Set FALSE to omit <[CDATA]> wrapping - disable
      */
-    public function writeElementCData(string $name, string $content = null, bool $wrap = true) 
+    public function writeElementCData($name, $content = null, $wrap = true) 
     {
         
         if($wrap === false) {
