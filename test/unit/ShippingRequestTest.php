@@ -23,8 +23,10 @@ class ShippingRequestTest extends \PHPUnit_Framework_TestCase {
 
         $this->shipping = new ShippingService('user', 'password');
 
-        $this->shipping->setAccountNumber('A1234')
-                ->setSender()->setCompanyName('Test Company')
+        $this->shipping
+                ->setAccountNumber('A1234')
+                ->setSender()
+                ->setCompanyName('Test Company')
                 ->setAddressLine('Address line 1')
                 ->setAddressLine('Address line 2')
                 ->setAddressLine('Address line 3')
@@ -210,6 +212,10 @@ class ShippingRequestTest extends \PHPUnit_Framework_TestCase {
 </DETAILS>
 </CONSIGNMENT>
  </CONSIGNMENTBATCH>
+<ACTIVITY><CREATE>
+ <CONREF><![CDATA[GB123456789]]></CONREF>
+</CREATE>
+</ACTIVITY>
 </ESHIPPER>
 ';
         

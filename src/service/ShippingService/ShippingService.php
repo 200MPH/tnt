@@ -324,6 +324,7 @@ class ShippingService extends AbstractService {
 
         }
 
+        // CREATE activity is mandaory for every request
         $activity = new Activity($this->userId, $this->password);
         $activity->create($conRefs);
         

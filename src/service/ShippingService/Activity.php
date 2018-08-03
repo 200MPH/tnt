@@ -30,6 +30,16 @@ class Activity extends AbstractService {
     /**
      * @var string
      */
+    private $userId = '';
+    
+    /**
+     * @var string
+     */
+    private $password = '';
+    
+    /**
+     * @var string
+     */
     private $activityReqStr = '';
     
     /**
@@ -40,10 +50,13 @@ class Activity extends AbstractService {
      * @param int $key [optional] Shipment response key
      * @throw TNTException
      */
-    public function __construct($userId, $password, $key = 0)
+    public function __construct(string $userId, string $password, string $key = 0)
     {
         
+        $this->userId   = $userId;
+        $this->password = $password;
         $this->key = $key;
+        
         parent::__construct($userId, $password);
         
     }
@@ -59,6 +72,36 @@ class Activity extends AbstractService {
         
     }
 
+    /**
+     * Send request
+     * 
+     * @return ActivityResult
+     */
+    public function send()
+    {
+        
+        $ar = new ActivityResponse($this->sendRequest(), $this->getXmlContent());
+        
+        return new ActivityResult($this, $ar);
+        
+    }
+    
+    /* 
+     * Call activity function
+     * 
+     * @param string $function [optional] Function name: GET_RESULT (default), GET_CONNOTE, GET_LABEL, GET_MANIFEST, GET_INVOICE
+     * @return ActivityResult
+     */
+    public function callActivityFunction($function = 'GET_RESULT')
+    {
+        
+        $this->activityReqStr = "{$function}:{$this->key}";
+        $ar = new ActivityResponse($this->sendRequest(), $this->getXmlContent());
+        
+        return new ActivityResult($this, $ar);
+        
+    }
+    
     /**
      * Add <CREATE> activity
      * 

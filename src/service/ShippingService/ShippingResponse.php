@@ -8,10 +8,8 @@
  */
 
 namespace thm\tnt_ec\service\ShippingService;
-
-use thm\tnt_ec\service\AbstractResponse;
     
-class ShippingResponse extends AbstractResponse {    
+class ShippingResponse extends AbstractShippingResponse {    
     
     /**
      * @var int
@@ -64,12 +62,13 @@ class ShippingResponse extends AbstractResponse {
     /**
      * Get activity
      *  
-     * @return ActivityResponse
+     * @return ActivityResult
      */
     public function getActivity()
     {
         
-        
+        $activity = new Activity($this->userId, $this->password, $this->key);
+        return $activity->send();
         
     }
         
@@ -89,41 +88,10 @@ class ShippingResponse extends AbstractResponse {
             
         } else {
             
-            $this->catchXmlErrors();
+            $this->catchErrors();
             
         }
         
-    }
-    
-    /**
-     * Catch XML errors
-     * 
-     * @return void
-     */
-    private function catchXmlErrors()
-    {
-        
-        $this->validateXml();
-        
-        if(isset($this->simpleXml->error_reason) === true) {
-            
-            $this->hasError = true;
-            $this->errors[] = $this->simpleXml->error_reason->__toString();
-                        
-            if(isset($this->simpleXml->error_line) === true) {
-                
-                $this->errors[] = "Line: {$this->simpleXml->error_line}";
-                
-            }
-            
-            if(empty($this->simpleXml->error_srcText->__toString()) === false) {
-                
-                $this->errors[] = $this->simpleXml->error_srcText->__toString();
-                
-            }
-                        
-        }
-                
     }
         
 }

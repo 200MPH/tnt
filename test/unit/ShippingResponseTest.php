@@ -31,6 +31,4 @@ class ShippingResponseTest extends \PHPUnit_Framework_TestCase {
         
     }
     
-    
-    
 }
