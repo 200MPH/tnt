@@ -8,8 +8,6 @@
 
 namespace thm\tnt_ec\test\unit;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-
 use thm\tnt_ec\Service\TrackingService\TrackingResponse;
 use thm\tnt_ec\service\TrackingService\entity\Consignment;
 use thm\tnt_ec\service\TrackingService\entity\StatusData;

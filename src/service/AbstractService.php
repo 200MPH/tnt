@@ -248,7 +248,7 @@ abstract class AbstractService {
         // it's not a part of this code
         // http://php.net/manual/en/reserved.variables.httpresponseheader.php
         HTTPHeaders::$headers = $http_response_header;
-                
+        
         return $output;
         
     }

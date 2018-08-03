@@ -12,6 +12,7 @@
 namespace thm\tnt_ec\service\ShippingService;
 
 use thm\tnt_ec\MyXMLWriter;
+use thm\tnt_ec\XmlConverter;
 use thm\tnt_ec\service\AbstractService;
 
 class Activity extends AbstractService {
@@ -234,15 +235,21 @@ class Activity extends AbstractService {
      * Get activity
      * 
      * @param string $function [optional] Function name: GET_RESULT (default), GET_CONNOTE, GET_LABEL, GET_MANIFEST, GET_INVOICE
-     * @return string XML string
+     * @return XmlConverter|array XmlConverter object on success, otherwise array contains errors.
      */
     public function getActivity($function = 'GET_RESULT')
     {
         
         $this->activityReqStr = "{$function}:{$this->key}";
-        $response = $this->sendRequest();
+        $ar = new ActivityResponse($this->sendRequest(), $this->getXmlContent());
         
-        return new ActivityResponse($response, $this->getXmlContent());
+        if($ar->hasError() === true) {
+            
+            return $ar->getErrors();
+            
+        }
+        
+        return new XmlConverter($ar->getResponse());
         
     }
     

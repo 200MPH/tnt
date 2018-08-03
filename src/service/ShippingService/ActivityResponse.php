@@ -10,11 +10,169 @@
 namespace thm\tnt_ec\service\ShippingService;
 
 use thm\tnt_ec\service\AbstractResponse;
+use thm\tnt_ec\XmlConverter;
 
-class ActivityResponse extends AbstractResponse {
+class ActivityResponse extends AbstractResponse {    
     
     /**
-     * Catch errors from Activity service
+     * @var int
+     */
+    private $key = 0;
+    
+    /**
+     * @var string
+     */
+    private $userId;
+    
+    /**
+     * @var string
+     */
+    private $password;
+    
+    /**
+     * @var ShippingResultService
+     */
+    private $srs;
+    
+    /**
+     * @var array
+     */
+    private $results = [];
+            
+    /**
+     * 
+     * @param string $response
+     * @param string $requestXml
+     * @param string $userId
+     * @param string $password
+     */
+    public function __construct(string $response, string $requestXml, string $userId, string $password)
+    {
+                
+        $this->userId = $userId;
+        $this->password = $password;
+               
+        // init PRINT array
+        $this->results['PRINT']['CONNOTE']  = 'N';
+        $this->results['PRINT']['LABEL']    = 'N';
+        $this->results['PRINT']['MANIFEST'] = 'N';
+        $this->results['PRINT']['INVOICE']  = 'N';
+        
+        parent::__construct($response, $requestXml);
+        
+    }
+    
+    /**
+     * Get key - response key
+     * 
+     * @return int
+     */
+    public function getKey()
+    {
+        
+        return $this->key;
+        
+    }
+    
+    /**
+     * Get results.
+     * Returns consignment numbers 
+     * and document print availability  information.
+     * 
+     * @return array
+     */
+    public function getResults()
+    {
+        
+        if($this->hasError() === true) { return array(); }
+        
+        $this->setFromCreateElement();
+        $this->setFromElement('BOOK');
+        $this->setFromElement('SHIP');
+        $this->setFromPrint();
+        
+        return $this->results;
+        
+    }
+    
+    /**
+     * Get consignment note
+     * 
+     * @return XmlConverter
+     */
+    public function getConsignmentNote()
+    {
+        
+        if($this->results['PRINT']['CONNOTE'] === 'Y') {
+        
+            $xml = $this->srs->getResult($this->key, 'GET_CONNOTE');
+            return new XmlConverter($xml);
+            
+        }
+        
+        return '';
+        
+    }
+    
+    /**
+     * Get label
+     * 
+     * @return XmlConverter
+     */
+    public function getLabel()
+    {
+        
+        if($this->results['PRINT']['LABEL'] === 'Y') {
+        
+            $xml = $this->srs->getResult($this->key, 'GET_LABEL');
+            return new XmlConverter($xml);
+            
+        }
+        
+        return '';
+        
+    }
+    
+    /**
+     * Get manifest
+     * 
+     * @return XmlConverter
+     */
+    public function getManifest()
+    {
+        
+        if($this->results['PRINT']['MANIFEST'] === 'Y') {
+        
+            $xml = $this->srs->getResult($this->key, 'GET_MANIFEST');
+            return new XmlConverter($xml);
+            
+        }
+        
+        return '';
+        
+    }
+    
+    /**
+     * Get invoice
+     * 
+     * @return XMLConverter
+     */
+    public function getInvoice()
+    {
+        
+        if($this->results['PRINT']['MANIFEST'] === 'Y') {
+        
+            $xml = $this->srs->getResult($this->key, 'GET_INVOICE');
+            return new XmlConverter($xml);
+            
+        }
+        
+        return '';
+        
+    }
+    
+    /**
+     * Catch errors for shipping service
      * 
      * @return void
      */
@@ -25,8 +183,8 @@ class ActivityResponse extends AbstractResponse {
         
         if(isset($complete[0]) && $complete[0] === 'COMPLETE') {
         
-            $key = (int) $complete[1];
-            $this->activity = new Activity($this->user, $this->password, $key);
+            $this->key = (int) $complete[1];
+            $this->setActivityResult();
             
         } else {
             
@@ -36,6 +194,20 @@ class ActivityResponse extends AbstractResponse {
         
     }
 
+    /**
+     * Set activity result
+     * 
+     * @return void
+     */
+    private function setActivityResult()
+    {
+        
+        $this->response = $this->srs->getResult($this->key, 'GET_RESULT');
+        $this->simpleXml = simplexml_load_string($this->response);
+        $this->catchXmlErrors();
+        
+    }
+    
     /**
      * Catch XML errors
      * 
@@ -109,5 +281,128 @@ class ActivityResponse extends AbstractResponse {
         }
 
     } 
+    
+    /**
+     * Set result from <CREATE> element
+     * 
+     * @void
+     */
+    private function setFromCreateElement()
+    {
+        
+        if(isset($this->simpleXml->CREATE) === false) { return null; }
+        
+        if(is_array($this->simpleXml->CREATE) === true) {
+
+            foreach($this->simpleXml->CREATE as $xml) {
+                
+                $consignmentRef = $xml->CONREF->__toString();
+                $consignmentNumber = $xml->CONNUMBER->__toString();
+                
+                $this->results[$consignmentRef]['NUMBER'] = $consignmentNumber;
+                $this->results[$consignmentRef]['CREATE'] = $xml->SUCCESS->__toString();
+                
+            }
+
+        } else {
+
+            $consignmentRef = $this->simpleXml->CREATE->CONREF->__toString();
+            $consignmentNumber = $this->simpleXml->CREATE->CONNUMBER->__toString();
+            
+            $this->results[$consignmentRef]['NUMBER'] = $consignmentNumber;
+            $this->results[$consignmentRef]['CREATE'] = $this->simpleXml->CREATE->SUCCESS->__toString();
+
+        }
+        
+    }
+    
+    /**
+     * Set result from selected element name
+     * 
+     * @param string $element Element name to get data from
+     * @void
+     */
+    private function setFromElement($element)
+    {
+        
+        if(isset($this->simpleXml->{$element}) === false) { return null; }
+        
+        if(is_array($this->simpleXml->{$element}->CONSIGNMENT) === true) {
+
+            foreach($this->simpleXml->{$element}->CONSIGNMENT as $xml) {
+
+                $consignmentRef = $xml->CONREF->__toString();
+                $this->results[$consignmentRef][$element] = $xml->SUCCESS->__toString();
+                $this->setBookingRef($consignmentRef, $xml);
+                
+            }
+
+        } else {
+
+            $consignmentRef = $this->simpleXml->{$element}->CONSIGNMENT->CONREF->__toString();
+            $this->results[$consignmentRef][$element] = $this->simpleXml->{$element}->CONSIGNMENT->SUCCESS->__toString();
+            $this->setBookingRef($consignmentRef, $this->simpleXml->CONSIGNMENT);
+            
+        }
+        
+    }
+    
+    /**
+     * Set from <PRINT>
+     * 
+     * @return void
+     */
+    private function setFromPrint()
+    {
+        
+        if(isset($this->simpleXml->PRINT) === false) { return null; }
+        
+        if(isset($this->simpleXml->PRINT->CONNOTE) === true 
+           && $this->simpleXml->PRINT->CONNOTE == 'CREATED') {
+            
+            $this->results['PRINT']['CONNOTE'] = 'Y';
+            
+        }
+        
+        if(isset($this->simpleXml->PRINT->LABEL) === true 
+           && $this->simpleXml->PRINT->LABEL == 'CREATED') {
+            
+            $this->results['PRINT']['LABEL'] = 'Y';
+            
+        }
+        
+        if(isset($this->simpleXml->PRINT->MANIFEST) === true 
+           && $this->simpleXml->PRINT->MANIFEST == 'CREATED') {
+            
+            $this->results['PRINT']['MANIFEST'] = 'Y';
+            
+        }
+        
+        if(isset($this->simpleXml->PRINT->INVOICE) === true 
+           && $this->simpleXml->PRINT->INVOICE == 'CREATED') {
+            
+            $this->results['PRINT']['INVOICE'] = 'Y';
+            
+        }
+        
+    }
+    
+    /**
+     * Set booking reference
+     * 
+     * @param string $consignmentRef
+     * @param \SimpleXMLElement & $xml
+     * @return void
+     */
+    private function setBookingRef($consignmentRef, \SimpleXMLElement & $xml)
+    {
+        
+        if(isset($xml->BOOKINGREF) === true) {
+            
+            $this->results[$consignmentRef]['BOOKINGREF'] = $xml->BOOKINGREF->__toString();
+            
+        }
+        
+    }
     
 }

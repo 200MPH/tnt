@@ -8,8 +8,6 @@
 
 namespace thm\tnt_ec\test\unit;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-
 use thm\tnt_ec\service\ShippingService\ShippingService;
 
 class ShippingRequestTest extends \PHPUnit_Framework_TestCase {
