@@ -80,6 +80,18 @@ abstract class AbstractResponse {
     }
     
     /**
+     * Get XML response
+     * 
+     * @return SimpleXMLElement
+     */
+    public function getResponseXml()
+    {
+        
+        return $this->simpleXml;
+        
+    }
+    
+    /**
      * Get request XML
      * 
      * @return string

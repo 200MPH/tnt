@@ -72,18 +72,22 @@ abstract class AbstractShippingResponse extends AbstractResponse {
 
             foreach($this->simpleXml->ERROR as $xml) {
 
-                $this->errors[] = $xml->CODE->__toString();
-                $this->errors[] = $xml->DESCRIPTION->__toString();
-                $this->errors[] = $xml->SOURCE->__toString();
+                $error['CODE'] = $xml->CODE->__toString();
+                $error['DESC'] = $xml->DESCRIPTION->__toString();
+                $error['SOURCE'] = $xml->SOURCE->__toString();
 
+                array_push($this->errors, $error);
+                
             }
 
         } else {
             
-            $this->errors[] = $this->simpleXml->ERROR->CODE->__toString();
-            $this->errors[] = $this->simpleXml->ERROR->DESCRIPTION->__toString();
-            $this->errors[] = $this->simpleXml->ERROR->SOURCE->__toString();
+            $error['CODE'] = $this->simpleXml->ERROR->CODE->__toString();
+            $error['DESC'] = $this->simpleXml->ERROR->DESCRIPTION->__toString();
+            $error['SOURCE'] = $this->simpleXml->ERROR->SOURCE->__toString();
 
+            array_push($this->errors, $error);
+            
         }
 
     } 

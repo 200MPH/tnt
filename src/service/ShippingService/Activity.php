@@ -12,15 +12,9 @@
 namespace thm\tnt_ec\service\ShippingService;
 
 use thm\tnt_ec\MyXMLWriter;
-use thm\tnt_ec\XmlConverter;
 use thm\tnt_ec\service\AbstractService;
 
 class Activity extends AbstractService {
-    
-    /**
-     * @var MyXMLWriter[]
-     */
-    private $xmls = [];
     
     /**
      * @var int
@@ -28,14 +22,9 @@ class Activity extends AbstractService {
     private $key = 0;
     
     /**
-     * @var string
+     * @var MyXMLWriter[]
      */
-    private $userId = '';
-    
-    /**
-     * @var string
-     */
-    private $password = '';
+    private $xmls = [];
     
     /**
      * @var string
@@ -43,20 +32,25 @@ class Activity extends AbstractService {
     private $activityReqStr = '';
     
     /**
-     * Initialise service
-     * 
-     * @param string $userId
-     * @param string $password
-     * @param int $key [optional] Shipment response key
-     * @throw TNTException
+     * @var array
      */
-    public function __construct(string $userId, string $password, string $key = 0)
-    {
+    private $results = [];
+    
+    /**
+     * @var bool
+     */
+    private $activityInitialised = false;
+    
+    /**
+     * Activity constructor
+     * 
+     * @var string $userId
+     * @var string $passowrd
+     * @var int $key
+     */
+    public function __construct(string $userId, string $password, int $key = 0) {
         
-        $this->userId   = $userId;
-        $this->password = $password;
         $this->key = $key;
-        
         parent::__construct($userId, $password);
         
     }
@@ -75,30 +69,16 @@ class Activity extends AbstractService {
     /**
      * Send request
      * 
-     * @return ActivityResult
+     * @return ActivityResponse
      */
     public function send()
     {
-        
-        $ar = new ActivityResponse($this->sendRequest(), $this->getXmlContent());
-        
-        return new ActivityResult($this, $ar);
-        
-    }
-    
-    /* 
-     * Call activity function
-     * 
-     * @param string $function [optional] Function name: GET_RESULT (default), GET_CONNOTE, GET_LABEL, GET_MANIFEST, GET_INVOICE
-     * @return ActivityResult
-     */
-    public function callActivityFunction($function = 'GET_RESULT')
-    {
-        
-        $this->activityReqStr = "{$function}:{$this->key}";
-        $ar = new ActivityResponse($this->sendRequest(), $this->getXmlContent());
-        
-        return new ActivityResult($this, $ar);
+                        
+        return new ActivityResponse($this->sendRequest(), 
+                                    $this->getXmlContent(), 
+                                    $this->userId, 
+                                    $this->password, 
+                                    $this->key);
         
     }
     
@@ -275,27 +255,65 @@ class Activity extends AbstractService {
     }
     
     /**
-     * Get activity
-     * 
-     * @param string $function [optional] Function name: GET_RESULT (default), GET_CONNOTE, GET_LABEL, GET_MANIFEST, GET_INVOICE
-     * @return XmlConverter|array XmlConverter object on success, otherwise array contains errors.
+     * Get activity results.
+     *  
+     * @return ActivityResponse
      */
-    public function getActivity($function = 'GET_RESULT')
+    public function getResults()
     {
         
-        $this->activityReqStr = "{$function}:{$this->key}";
-        $ar = new ActivityResponse($this->sendRequest(), $this->getXmlContent());
-        
-        if($ar->hasError() === true) {
-            
-            return $ar->getErrors();
-            
-        }
-        
-        return new XmlConverter($ar->getResponse());
+        return $this->callActivityFunction('GET_RESULT');
         
     }
     
+    /**
+     * Get consignment note
+     * 
+     * @return ActivityResponse
+     */
+    public function getConsignmentNote()
+    {
+        
+        return $this->callActivityFunction('GET_CONNOTE');
+        
+    }
+    
+    /**
+     * Get label
+     * 
+     * @return ActivityResponse
+     */
+    public function getLabel()
+    {
+        
+        return $this->callActivityFunction('GET_LABEL');
+        
+    }
+    
+    /**
+     * Get manifest
+     * 
+     * @return ActivityResponse
+     */
+    public function getManifest()
+    {
+        
+        return $this->callActivityFunction('GET_MANIFEST');
+                
+    }
+    
+    /**
+     * Get invoice
+     * 
+     * @return ActivityResponse
+     */
+    public function getInvoice()
+    {
+        
+        return $this->callActivityFunction('GET_INVOICE');
+                
+    }
+        
     /**
      * Build activity element
      * 
@@ -358,6 +376,20 @@ class Activity extends AbstractService {
         
         }
         
+    }
+    
+    /* 
+     * Call activity function
+     * 
+     * @param string $function [optional] Function name: GET_RESULT (default), GET_CONNOTE, GET_LABEL, GET_MANIFEST, GET_INVOICE
+     * @return ActivityResponse
+     */
+    private function callActivityFunction(string $function = 'GET_RESULT')
+    {
+        
+        $this->activityReqStr = "{$function}:{$this->key}";
+        return $this->send();
+                
     }
     
 }

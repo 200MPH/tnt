@@ -8,7 +8,7 @@
 
 namespace thm\tnt_ec\test\unit;
 
-use thm\tnt_ec\service\ShippingService\ShippingResponse;
+use thm\tnt_ec\service\ShippingService\ActivityResponse;
 
 class ShippingResponseTest extends \PHPUnit_Framework_TestCase {
     
@@ -20,7 +20,7 @@ class ShippingResponseTest extends \PHPUnit_Framework_TestCase {
         
         $response = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><runtime_error><error_reason>The request to ExpressConnect Shipping has failed. Please contact your local service centre for further assistance</error_reason><error_srcText>Error persisting the shipping request and response to the database.</error_srcText></runtime_error>';
         
-        $sr = new ShippingResponse($response, '', '', '');
+        $sr = new ActivityResponse($response, '', '', '');
         
         $this->assertTrue(is_array($sr->getErrors()));
         $this->assertTrue($sr->hasError());

@@ -167,7 +167,7 @@ class ShippingService extends AbstractService {
         $u = $this->userId;
         $p = $this->password;
                 
-        return new ShippingResponse($r, $x, $u, $p);
+        return new ActivityResponse($r, $x, $u, $p);
         
     }
     
