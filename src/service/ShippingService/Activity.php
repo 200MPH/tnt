@@ -279,7 +279,8 @@ class Activity extends AbstractService {
     public function setGroupCode(int $code)
     {
         
-        $this->groupCode = (int) $code;
+        $this->groupCode = $code;
+        return $this;
         
     }
     

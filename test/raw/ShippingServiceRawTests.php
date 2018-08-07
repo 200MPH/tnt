@@ -9,6 +9,7 @@ $shipping = new ShippingService('User ID', 'Password');
 
 $shipping->setAccountNumber('')
          ->autoActivity()
+         ->setGroupCode('123456789')
          ->setSender()->setCompanyName('Company name')
                       ->setAddressLine('Address line 1')
                       ->setAddressLine('Address line 2')
@@ -78,5 +79,4 @@ $c1->addPackage()->setItems(0)
                                ->setCountry('GB')
                                ->setEmrn('');
 
-//print_r($shipping);
-//print_r($shipping->getXmlContent());
+print_r($shipping->getXmlContent());

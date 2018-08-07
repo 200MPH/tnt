@@ -13,7 +13,6 @@ use thm\tnt_ec\service\AbstractService;
 use thm\tnt_ec\service\ShippingService\entity\Address;
 use thm\tnt_ec\service\ShippingService\entity\Collection;
 use thm\tnt_ec\service\ShippingService\entity\Consignment;
-use thm\tnt_ec\service\ShippingService\ShippingResponse;
 
 class ShippingService extends AbstractService {
     
@@ -130,7 +129,7 @@ class ShippingService extends AbstractService {
     
     /**
      * Add consignment.
-     * TNT allow to add up to 50 consignments, but they recommend add 3 per request. 
+     * TNT allow to add up to 50 consignment, but they recommend add 3 per request. 
      * 
      * @return Consignment
      */
@@ -171,6 +170,7 @@ class ShippingService extends AbstractService {
     {
         
         $this->groupCode = (int) $groupCode;
+        return $this;
         
     }
             
@@ -178,7 +178,7 @@ class ShippingService extends AbstractService {
     /**
      * Send request to TNT
      * 
-     * @return ShippingResponse
+     * @return ActivityResponse
      */
     public function send()
     {

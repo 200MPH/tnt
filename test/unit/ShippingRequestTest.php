@@ -24,6 +24,8 @@ class ShippingRequestTest extends \PHPUnit_Framework_TestCase {
         $this->shipping = new ShippingService('user', 'password');
 
         $this->shipping
+                ->autoActivity()
+                ->setGroupCode('123456789')
                 ->setAccountNumber('A1234')
                 ->setSender()
                 ->setCompanyName('Test Company')
@@ -107,6 +109,7 @@ class ShippingRequestTest extends \PHPUnit_Framework_TestCase {
   <APPVERSION>3.0</APPVERSION>
  </LOGIN>
  <CONSIGNMENTBATCH>
+  <GROUPCODE>123456789</GROUPCODE>
   <SENDER><COMPANYNAME><![CDATA[Test Company]]></COMPANYNAME>
 <STREETADDRESS1><![CDATA[Address line 1]]></STREETADDRESS1>
 <STREETADDRESS2><![CDATA[Address line 2]]></STREETADDRESS2>
@@ -215,11 +218,24 @@ class ShippingRequestTest extends \PHPUnit_Framework_TestCase {
 <ACTIVITY><CREATE>
  <CONREF><![CDATA[GB123456789]]></CONREF>
 </CREATE>
+<BOOK ShowBookingRef="Y">
+ <CONREF><![CDATA[GB123456789]]></CONREF>
+</BOOK>
+<SHIP>
+ <CONREF><![CDATA[GB123456789]]></CONREF>
+</SHIP>
+ <PRINT><REQUIRED>
+ <CONREF><![CDATA[GB123456789]]></CONREF>
+</REQUIRED>
+</PRINT>
 </ACTIVITY>
 </ESHIPPER>
 ';
         
-        $this->assertEquals($xml, $this->shipping->getXmlContent());
+        $xml1 = new \SimpleXMLElement($xml);
+        $xml2 = new \SimpleXMLElement($this->shipping->getXmlContent());
+        
+        $this->assertEquals($xml1->asXML(), $xml2->asXML());
                         
     }
             
