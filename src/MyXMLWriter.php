@@ -23,7 +23,7 @@ class MyXMLWriter extends XMLWriter {
      */
     public function writeElementCData(string $name, string $content = null, bool $wrap = true) 
     {
-        
+                
         if($wrap === false) {
             
            return $this->writeElement($name, $content);

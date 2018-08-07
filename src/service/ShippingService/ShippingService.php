@@ -45,6 +45,13 @@ class ShippingService extends AbstractService {
     private $userXml = false;
     
     /**
+     * Group code
+     * 
+     * @var int
+     */
+    private $groupCode = 0;
+    
+    /**
      * @var bool
      */
     private $activity = false;
@@ -155,6 +162,20 @@ class ShippingService extends AbstractService {
     }
     
     /**
+     * Set group code
+     * 
+     * @param int $groupCode
+     * @return ShippingService 
+     */
+    public function setGroupCode(int $groupCode)
+    {
+        
+        $this->groupCode = (int) $groupCode;
+        
+    }
+            
+    
+    /**
      * Send request to TNT
      * 
      * @return ShippingResponse
@@ -230,6 +251,12 @@ class ShippingService extends AbstractService {
             $this->xml->writeElement('APPVERSION', self::VERSION);
         $this->xml->endElement();
         $this->xml->startElement('CONSIGNMENTBATCH');
+        
+        if($this->groupCode > 0) {
+            
+            $this->xml->writeElement('GROUPCODE', $this->groupCode);
+            
+        }
         
     }
     
@@ -332,10 +359,8 @@ class ShippingService extends AbstractService {
         
             $activity->book($conRefs)
                      ->ship($conRefs)
-                     ->printConsignmentNote($conRefs)
-                     ->printLabel($conRefs)
-                     ->printManifest($conRefs);
-
+                     ->printAll($conRefs);
+                     
         }
         
         $this->xml->writeRaw( $activity->getXmlContent(false) );

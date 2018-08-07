@@ -4,7 +4,7 @@
     - support for PHP 7+ only
     - improved shipping response
     - user may now re-use received TNT key to obtain shipping at any time.
-      Key is valid no longer then one weeks.
+      Key is valid no longer then 26 days.
     - tidy up code
 
 ----- 2.0.2 -----

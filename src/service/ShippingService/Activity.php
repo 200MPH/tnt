@@ -22,6 +22,16 @@ class Activity extends AbstractService {
     private $key = 0;
     
     /**
+     * @var int
+     */
+    private $groupCode = 0;
+    
+    /**
+     * @var bool
+     */
+    private $bookingConf = false;
+    
+    /**
      * @var MyXMLWriter[]
      */
     private $xmls = [];
@@ -32,14 +42,9 @@ class Activity extends AbstractService {
     private $activityReqStr = '';
     
     /**
-     * @var array
-     */
-    private $results = [];
-    
-    /**
      * @var bool
      */
-    private $activityInitialised = false;
+    private $printAll = false;
     
     /**
      * Activity constructor
@@ -116,11 +121,13 @@ class Activity extends AbstractService {
      * Add <BOOK> activity
      * 
      * @param array|string $consignment Consignment references or single reference
+     * @param bool $confirmation [optional] Send booking confirmation email to sender.
      * @return Activity
      */
-    public function book($consignment)
+    public function book($consignment, bool $confirmation = false)
     {
         
+        $this->sendBookingConfirmationEmail($confirmation);
         $this->buildActivityElement('ACTIVITY', 'BOOK', $consignment);
         
         return $this;
@@ -137,6 +144,25 @@ class Activity extends AbstractService {
     {
         
         $this->buildActivityElement('ACTIVITY', 'SHIP', $consignment);
+        
+        return $this;
+        
+    }
+    
+    /**
+     * Print all possible shipment documents.
+     * If this function is called, calls to print*****() methods will be ignored. 
+     * 
+     * @param array|string $consignment Consignment references or single reference
+     * @return Activity
+     */
+    public function printAll($consignment)
+    {
+        
+        // do not change instruction sequence here!
+        $this->xmls['PRINT'] = [];
+        $this->buildActivityElement('PRINT', 'REQUIRED', $consignment);
+        $this->printAll = true;
         
         return $this;
         
@@ -198,7 +224,7 @@ class Activity extends AbstractService {
         
        $this->buildActivityElement('PRINT', 'INVOICE', $consignment);
         
-        return $this;
+       return $this;
         
     }
     
@@ -211,14 +237,62 @@ class Activity extends AbstractService {
      */
     public function printEmail($emailTo, $emailFrom)
     {
-        
+                
         $xml = new MyXMLWriter();
+        $xml->openMemory();
+        $xml->setIndent(true);
+        
         $xml->writeElementCData('EMAILTO', $emailTo);
         $xml->writeElementCData('EMAILFROM', $emailFrom);
         
         $this->xmls['PRINT']['EMAIL'] = $xml;
         
         return $this;
+        
+    }
+    
+    /**
+     * Add <SHOW_GROUPCODE/> tag.
+     * 
+     * @return Activity
+     */
+    public function showGroupCode()
+    {
+        
+        $xml = new MyXMLWriter();
+        $xml->openMemory();
+        $xml->setIndent(true);
+        $xml->writeElement('SHOW_GROUPCODE');
+        
+        $this->xmls['ACTIVITY']['G_CODE'] = $xml;
+        
+        return $this;
+        
+    }
+    
+    /**
+     * Set group code
+     * 
+     * @param int $code
+     * @return Activity
+     */
+    public function setGroupCode(int $code)
+    {
+        
+        $this->groupCode = (int) $code;
+        
+    }
+    
+    /**
+     * Send booking confirmation
+     * 
+     * @param bool $flag [optional] True default
+     * @return Activity
+     */
+    public function sendBookingConfirmationEmail(bool $flag = true)
+    {
+        
+        $this->bookingConf = $flag;
         
     }
     
@@ -324,35 +398,53 @@ class Activity extends AbstractService {
      */
     private function buildActivityElement($root, $element, $consignment)
     {
-           
+        
+        if($this->printAll === true) { return null; }
+        
         $xml = new MyXMLWriter();
         $xml->openMemory();
         $xml->setIndent(true);
         
         $xml->startElement($element);
-        
+                        
         if($element == 'BOOK') {
+            
+            if($this->bookingConf === true) {
+                
+                $xml->writeAttribute('EMAILREQD', 'Y');
+                
+            }
             
             $xml->writeAttribute('ShowBookingRef', 'Y');
             
         }
-        
-        if(is_array($consignment) === true) {
             
-            foreach($consignment as $number) {
-                
-                $xml->writeElementCData('CONREF', $number);
-                
-            }
+        if($this->groupCode > 0) {
+            
+            $xml->writeElementCData('GROUPCODE', $this->groupCode);
             
         } else {
             
-            $xml->writeElementCData('CONREF', $consignment);
+            // transform consignment to array
+            if(is_array($consignment) === false) {
+                
+                $consignments[] = $consignment;
+                
+            } else {
+                
+                $consignments = $consignment;
+                
+            }
+            
+            foreach($consignments as $number) {
+
+                $xml->writeElementCData('CONREF', $number);
+
+            }
             
         }
         
-        $xml->endElement();
-        
+        $xml->endElement(); 
         $this->xmls[$root][$element] = $xml;
         
     }

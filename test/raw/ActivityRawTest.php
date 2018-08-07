@@ -5,13 +5,13 @@
 require_once __DIR__ . '/../../vendor/autoload.php';
 use thm\tnt_ec\service\ShippingService\Activity;
 
-$a = new Activity(123, 123);
+$consignment = '123456789';
+$activity = new Activity('test', 'test');
+$activity->create($consignment)
+         ->book($consignment, true)
+         ->rate($consignment)
+         ->ship($consignment)
+         ->printAll($consignment)
+         ->showGroupCode();
 
-$a->book('123')
-  ->create('123')
-  ->ship('123')
-  ->printConsignmentNote('123')
-  ->printLabel('123')
-  ->printManifest('123');
-
-print_r($a->getXmlContent(false));
+print_r($activity->getXmlContent());
