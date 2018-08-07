@@ -253,4 +253,18 @@ class ActivityTest extends \PHPUnit_Framework_TestCase {
         
     }
     
+    public function testReturnsObject()
+    {
+             
+        $consignment = '123456789';
+        $activity = new Activity('test', 'test');
+        $activity->create($consignment)
+                 ->book($consignment, true)
+                 ->rate($consignment)
+                 ->ship($consignment);
+        
+        $this->assertTrue($activity->send() instanceof ActivityResponse);
+        
+    }
+    
 }
