@@ -222,6 +222,7 @@ class ShippingService extends AbstractService {
             
         }
         
+        $this->initXml();
         $this->startDocument();
         
         $this->buildSenderSection();

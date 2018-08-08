@@ -9,6 +9,7 @@
 
 namespace thm\tnt_ec\service;
 
+use XMLWriter;
 use thm\tnt_ec\MyXMLWriter;
 use thm\tnt_ec\TNTException;
 
@@ -95,9 +96,7 @@ abstract class AbstractService {
         $this->userId = $userId;
         $this->password = $password;
         
-        $this->xml = new MyXMLWriter();
-        $this->xml->openMemory();
-        $this->xml->setIndent(true);
+        $this->initXml();
                 
     }
     
@@ -112,6 +111,20 @@ abstract class AbstractService {
         
     }
     
+    /**
+     * Init XML object
+     * 
+     * @return void
+     */
+    public function initXml()
+    {
+        
+        $this->xml = new MyXMLWriter();
+        $this->xml->openMemory();
+        $this->xml->setIndent(true);
+        
+    }
+           
     /**
      * Set account
      * 

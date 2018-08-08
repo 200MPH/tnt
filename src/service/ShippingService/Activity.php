@@ -22,6 +22,11 @@ class Activity extends AbstractService {
     private $key = 0;
     
     /**
+     * @var bool
+     */
+    private $showGroupCode = false;
+    
+    /**
      * @var int
      */
     private $groupCode = 0;
@@ -254,18 +259,13 @@ class Activity extends AbstractService {
     /**
      * Add <SHOW_GROUPCODE/> tag.
      * 
+     * @param bool $flag [optional] 
      * @return Activity
      */
-    public function showGroupCode()
+    public function showGroupCode($flag = true)
     {
         
-        $xml = new MyXMLWriter();
-        $xml->openMemory();
-        $xml->setIndent(true);
-        $xml->writeElement('SHOW_GROUPCODE');
-        
-        $this->xmls['ACTIVITY']['G_CODE'] = $xml;
-        
+        $this->showGroupCode = $flag;
         return $this;
         
     }
@@ -309,6 +309,8 @@ class Activity extends AbstractService {
         // return activity request immediate if set
         if(empty($this->activityReqStr) === false) { return $this->activityReqStr; }
         
+        $this->initXml();
+        
         if($xmlHeaderIncluded === true) { $this->startDocument(); }
         
         $this->xml->startElement('ACTIVITY');
@@ -320,6 +322,10 @@ class Activity extends AbstractService {
             $this->mergeActivities('PRINT');
             $this->xml->endElement();
             
+        }
+        
+        if($this->showGroupCode === true) {
+            $this->xml->writeElement('SHOW_GROUPCODE');
         }
         
         $this->xml->endElement();
@@ -463,7 +469,7 @@ class Activity extends AbstractService {
             
             foreach($this->xmls[$name] as $xml) {
                 
-                $this->xml->writeRaw($xml->outputMemory());
+                $this->xml->writeRaw($xml->outputMemory(false));
                 
             }
         
