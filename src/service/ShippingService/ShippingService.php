@@ -23,6 +23,11 @@ class ShippingService extends AbstractService {
     const URL = 'https://express.tnt.com/expressconnect/shipping/ship';
         
     /**
+     * @var string
+     */
+    public $appid;
+    
+    /**
      * @var Address
      */
     private $sender;
@@ -53,15 +58,15 @@ class ShippingService extends AbstractService {
     /**
      * @var bool
      */
-    private $activity = false;
+    private $auto_activity = false;
     
     /**
-     * @var string
+     * @var Activity
      */
-    private $appid;
+    private $activity;
     
     /**
-     * Initialize service
+     * Initialise service
      * 
      * @param string $userId
      * @param string $password
@@ -145,17 +150,18 @@ class ShippingService extends AbstractService {
     }
     
     /**
-     * Create activity - auto activity
-     * This will generate <ACTIVITY> element within this request.
-     * Following activities will be created: CREATE, BOOK, SHIP, PRINT (consignment, label, manifest).
-     * Anything else has to be created manually (RATE, PRINT INVOICE, EMAILTO, EMAILFROM)
+     * Create optional activity elements.
+     * Although <ACTIVITY><CREATE> element is mandatory and created automatically for each shipment request,
+     * you may want to add other <ACTIVITY> elements.   
+     * Calling this method will create following activities: BOOK, SHIP, PRINT (all available documents).
+     * Anything else has to be created manually (RATE, EMAILTO, EMAILFROM)
      * 
      * @return ShippingService
      */
-    public function autoActivity()
+    public function createOptionalActivities()
     {
         
-        $this->activity = true;
+        $this->auto_activity = true;
         return $this;
         
     }
@@ -226,11 +232,30 @@ class ShippingService extends AbstractService {
         $this->startDocument();
         
         $this->buildSenderSection();
-        $this->buildConsignmentSection();
-                
+        
+        if($this->groupCode === 0) {
+            
+            $this->buildConsignmentSection();
+            
+        }
+                        
         $this->endDocument();
         
         return parent::getXmlContent();
+        
+    }
+    
+    /**
+     * Set Activity object
+     * 
+     * @param Activity $activity
+     * @return ShippingService
+     */
+    public function setActivity(Activity $activity) 
+    {
+        
+        $this->activity = $activity;
+        return $this;
         
     }
     
@@ -258,7 +283,7 @@ class ShippingService extends AbstractService {
             $this->xml->writeElement('GROUPCODE', $this->groupCode);
             
         }
-        
+    
     }
     
     /**
@@ -343,7 +368,25 @@ class ShippingService extends AbstractService {
      */
     private function buildActivitySection()
     {
+           
+        $this->xml->writeRaw( $this->getActivity()->getXmlContent(false) );
+        
+    }
+    
+    /**
+     * Get activity
+     * 
+     * @return Activity
+     */
+    final private function getActivity()
+    {
+        
+        if($this->activity instanceof Activity) {
             
+            return $this->activity;
+            
+        } 
+        
         $conRefs = [];
 
         foreach($this->consignments as $consignment) {
@@ -351,20 +394,21 @@ class ShippingService extends AbstractService {
             $conRefs[] = $consignment->getConReference();
 
         }
-
-        // CREATE activity is mandaory for every request
-        $activity = new Activity($this->userId, $this->password);
-        $activity->create($conRefs);
         
-        if($this->activity === true) {
+        // CREATE activity is mandatory for every request
+        $this->activity = new Activity($this->userId, $this->password);
+        $this->activity->showGroupCode()
+                       ->create($conRefs);
         
-            $activity->book($conRefs)
-                     ->ship($conRefs)
-                     ->printAll($conRefs);
+        if($this->auto_activity === true) {
+        
+            $this->activity->book($conRefs)
+                           ->ship($conRefs)
+                           ->printAll($conRefs);
                      
         }
         
-        $this->xml->writeRaw( $activity->getXmlContent(false) );
+        return $this->activity;
         
     }
     
