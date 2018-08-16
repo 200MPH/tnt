@@ -2,5 +2,4 @@ nbproject/
 /composer.lock
 /composer.phar
 /test/raw/IS_test.php
-/test/raw/ActivityResponseRawTest.php
 /test/raw/IS_group.php

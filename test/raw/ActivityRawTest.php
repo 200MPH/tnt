@@ -1,17 +1,15 @@
 <?php
 
-/* Place to test Activity class */
+/* This is a place for testing Activity functionality */
 
 require_once __DIR__ . '/../../vendor/autoload.php';
+
 use thm\tnt_ec\service\ShippingService\Activity;
 
-$consignment = '123456789';
-$activity = new Activity('test', 'test');
-$activity->create($consignment)
-         ->book($consignment, true)
-         ->rate($consignment)
-         ->ship($consignment)
-         ->printAll($consignment)
-         ->showGroupCode();
+$activity = new Activity('user', 'password', 0);
 
-print_r($activity->getXmlContent());
+print_r($activity->getResults());
+print_r($activity->getLabel()->getResponse());
+print_r($activity->getInvoice()->getResponse());
+print_r($activity->getManifest()->getResponse());
+print_r($activity->getConsignmentNote()->getResponse());
