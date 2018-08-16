@@ -336,7 +336,8 @@ class Activity extends AbstractService {
     }
     
     /**
-     * Get activity results.
+     * Get activity results.<br>
+     * Useful to check what documents are available for printing.
      *  
      * @return ActivityResponse
      */
