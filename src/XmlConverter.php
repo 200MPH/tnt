@@ -22,12 +22,11 @@ class XmlConverter {
     /**
      * Construct object
      * 
-     * @param SimpleXMLElement $xml
+     * @param string $xml
      */
-    public function __construct(SimpleXMLElement $xml) 
+    public function __construct(string $xml) 
     {
-    
-        
+            
         $this->xml = $xml;
         
     }
@@ -49,7 +48,7 @@ class XmlConverter {
     public function toString()
     {
         
-        return $this->xml->asXML();
+        return $this->xml;
         
     }
     
@@ -61,8 +60,8 @@ class XmlConverter {
     public function toXml()
     {
         
-        return $this->xml;
-        
+        return new SimpleXMLElement($this->xml);
+                
     }
     
 }

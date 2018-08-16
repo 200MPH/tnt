@@ -7,7 +7,7 @@ use thm\tnt_ec\service\ShippingService\ShippingService;
 $shipping = new ShippingService('User ID', 'Password');
 
 $shipping->setAccountNumber('')
-         ->autoActivity() // this will generate <ACTIVITY> element autmatically.
+         ->createOptionalActivities() // this will generate <ACTIVITY> optional elements automatically.
          ->setSender()->setCompanyName('')
                       ->setAddressLine('')
                       ->setCity('')
@@ -47,5 +47,5 @@ $c1->setReceiver()->setCompanyName('')
 
 $c1->setReceiverAsDelivery(); // make delivery address same as receiver
 
-//print_r($shipping);
-//print_r($shipping->getXmlContent());
+print_r($shipping);
+print_r($shipping->getXmlContent());
