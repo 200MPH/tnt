@@ -1,7 +1,5 @@
-nbproject/project.xml
-nbproject/project.properties
-nbproject/private/private.properties
-test/CliniTest.php
-nbproject/private/private.xml
-/nbproject/private/
-test/raw/IS_test.php
+nbproject/
+/composer.lock
+/composer.phar
+/test/raw/IS_test.php
+/test/raw/IS_group.php
