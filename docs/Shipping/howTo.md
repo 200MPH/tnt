@@ -212,7 +212,7 @@ You must send the shipping request first.
 
 ... now you can process TNT response
 	
-    // below method is good to check what document are available to print
+    // below method is good to check what activities are available to process
     print_r($response->getActivity()->getResults());
     // get label
     print_r($response->getActivity()->getLabel());
