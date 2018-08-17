@@ -3,7 +3,7 @@
 /**
  * Common Response Object
  *
- * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
+ * @author Wojciech Brozyna <http://vobro.systems>
  * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 
@@ -80,6 +80,18 @@ abstract class AbstractResponse {
     }
     
     /**
+     * Get XML response
+     * 
+     * @return SimpleXMLElement
+     */
+    public function getResponseXml()
+    {
+        
+        return $this->simpleXml;
+        
+    }
+    
+    /**
      * Get request XML
      * 
      * @return string
@@ -110,6 +122,17 @@ abstract class AbstractResponse {
      */
     public function getErrors()
     {
+        
+        // remove empty lines
+        array_walk($this->errors, function($val, $key) {
+            
+            if(empty($val) === true) {
+                
+                unset($this->errors[$key]);
+                
+            }
+            
+        });
         
         return $this->errors;
         

@@ -4,7 +4,7 @@
  * MyXMLWriter
  * Wrapper for PHP XMLWriter to speed up writing <[CDATA]> elements.
  *
- * @author Wojciech Brozyna <wojciech.brozyna@gmail.com>
+ * @author Wojciech Brozyna <http://vobro.systems>
  * license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
  */
 
@@ -23,7 +23,7 @@ class MyXMLWriter extends XMLWriter {
      */
     public function writeElementCData($name, $content = null, $wrap = true) 
     {
-        
+                
         if($wrap === false) {
             
            return $this->writeElement($name, $content);

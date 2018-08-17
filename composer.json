@@ -1,7 +1,7 @@
 {
     "name": "200mph/tnt-express-connect",
     "type": "library",
-    "description": "TNT ExpressConnect web service (API) client",
+    "description": "TNT ExpressConnect (API) client",
     "keywords": ["tnt", "tnt express connect", "tnt tracking", "tnt shipping"],
     "license": "MIT",
     "homepage": "https://github.com/200MPH/tnt-ec",
@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "php": ">=5.6.0",
+        "php": ">=7.0",
         "lib-libxml": "*"
     },
     "require-dev": {
