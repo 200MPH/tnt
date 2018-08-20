@@ -1,6 +1,3 @@
-
-# Shipping Service Usage Examples
-
 ## 1. Minimal request
 **NOTE!** You cannot skip any of below code, otherwise you will get a TNT errors.
 Sender address must be real. Must match the details assigned to TNT account number.
@@ -255,8 +252,11 @@ Now you can call activity method.
     print_r($response->getActivity()->getInvoice());
     // get consignment note
     print_r($response->getActivity()->getConsignmentNote());
-
-## 7. XML Conversion
+## 7. GROUP functionality 
+TNT provide facilities for group shipments (described in TNT documentation).
+In my opinion working with "single" shipments is faster than grouped ones, therefore I'm not going to describe step by step GROUP functionality here.
+However if you would like give a try with this package then please create a ticket or drop me an e-mail so I will update this section.
+## 8. XML Conversion
 This package comes with simple XML conversion tool which let you convert XML to other formats.
 The format list will be extended in the future.
 
@@ -266,14 +266,14 @@ The format list will be extended in the future.
     $xml->toXml();
     print($xml); //produce string output
 
-## 8. SSL certificate problem
+## 9. SSL certificate problem
 In case when you experienced SSL certificate issue try disable SSL verification.
 
     $shipping->disableSSLVerify();
 
 Problem may occur on development environment.
 
-## 9. TNT Documentation
+## 10. TNT Documentation
 
 For more details please read TNT documentation.
 [https://github.com/200MPH/tnt/blob/develop/docs/Shipping/ExpressConnect%20Shipping%20Integration%20Guide%20v3.8.pdf](https://github.com/200MPH/tnt/blob/develop/docs/Shipping/ExpressConnect%20Shipping%20Integration%20Guide%20v3.8.pdf)

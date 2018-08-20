@@ -427,7 +427,7 @@ class Activity extends AbstractService {
             
         }
             
-        if($this->groupCode > 0) {
+        if($this->groupCode > 0 && $root != 'PRINT') {
             
             $xml->writeElementCData('GROUPCODE', $this->groupCode, false);
             

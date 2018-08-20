@@ -229,16 +229,9 @@ class ShippingService extends AbstractService {
         }
         
         $this->initXml();
-        $this->startDocument();
-        
+        $this->startDocument();     
         $this->buildSenderSection();
-        
-        if($this->groupCode === 0) {
-            
-            $this->buildConsignmentSection();
-            
-        }
-                        
+        $this->buildConsignmentSection();
         $this->endDocument();
         
         return parent::getXmlContent();
@@ -394,7 +387,7 @@ class ShippingService extends AbstractService {
             $conRefs[] = $consignment->getConReference();
 
         }
-        
+     
         // CREATE activity is mandatory for every request
         $this->activity = new Activity($this->userId, $this->password);
         $this->activity->showGroupCode()
