@@ -112,7 +112,7 @@ abstract class AbstractService {
     }
     
     /**
-     * Init XML object
+     * Initialize XML object
      * 
      * @return void
      */
