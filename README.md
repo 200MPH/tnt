@@ -13,3 +13,4 @@ For PHP < 7 please install version 2.x.x
 Price quotation is still under development.
 
 Thanks for interesting and contribution :)
+[Donate](https://paypal.me/WojciechBrozyna)
