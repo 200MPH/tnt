@@ -60,18 +60,10 @@ class TrackingResponse extends AbstractResponse {
         
         $this->consignments = [];
         
-        if(is_array($this->simpleXml->Consignment) === true) {
-                
-            foreach ($this->simpleXml->Consignment as $cs) {
-                
-                $this->consignments[] = new Consignment($cs);
+        foreach ($this->simpleXml->Consignment as $cs) {
 
-            }
-
-        } else {
-
-            $this->consignments[] = new Consignment($this->simpleXml->Consignment);
-
+            $this->consignments[] = new Consignment($cs);
+            
         }
         
     }
