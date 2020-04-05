@@ -105,7 +105,9 @@ abstract class AbstractService {
     {
         
         // clean up output buffer
-        $this->xml->flush();
+        if($this->xml instanceof MyXMLWriter) {
+            $this->xml->flush();
+        }
         
     }
     
