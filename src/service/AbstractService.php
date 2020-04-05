@@ -9,7 +9,6 @@
 
 namespace thm\tnt_ec\service;
 
-use XMLWriter;
 use thm\tnt_ec\MyXMLWriter;
 use thm\tnt_ec\TNTException;
 
@@ -18,7 +17,7 @@ abstract class AbstractService {
     /**
      * XML Request
      * 
-     * @var XMLWriter
+     * @var MyXMLWriter
      */
     protected $xml;
     
@@ -95,7 +94,6 @@ abstract class AbstractService {
         
         $this->userId = $userId;
         $this->password = $password;
-        
         $this->initXml();
                 
     }
@@ -260,7 +258,9 @@ abstract class AbstractService {
         // $http_response_header comes from PHP engine, 
         // it's not a part of this code
         // http://php.net/manual/en/reserved.variables.httpresponseheader.php
-        HTTPHeaders::$headers = $http_response_header;
+        if(empty($http_response_header) === false) {
+            HTTPHeaders::$headers = $http_response_header;
+        }
         
         return $output;
         

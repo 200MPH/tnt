@@ -156,7 +156,6 @@ class Activity extends AbstractService {
     
     /**
      * Print all possible shipment documents.
-     * If this function is called, calls to print*****() methods will be ignored. 
      * 
      * @param array|string $consignment Consignment references or single reference
      * @return Activity

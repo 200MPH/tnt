@@ -8,7 +8,7 @@ use thm\tnt_ec\service\ShippingService\ShippingService;
 $shipping = new ShippingService('User ID', 'Password');
 
 $shipping->setAccountNumber('')
-         ->autoActivity()
+         ->createOptionalActivities()
          ->setGroupCode('123456789')
          ->setSender()->setCompanyName('Company name')
                       ->setAddressLine('Address line 1')
