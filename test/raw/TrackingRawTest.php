@@ -11,6 +11,7 @@ $response = $ts->searchByConsignment(array('37148969'));
 
 if($response->hasError() === true) {
     
+    print('Errors: ' . PHP_EOL);
     print_r($response->getErrors());
     
 } 
