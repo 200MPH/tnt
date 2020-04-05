@@ -14,7 +14,7 @@ use thm\tnt_ec\service\ShippingService\ActivityResponse;
 class ActivityTest extends \PHPUnit_Framework_TestCase {
     
     /**
-     * Test runtime error
+     * Test run time error
      */
     public function testRuntimeError()
     {
