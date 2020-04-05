@@ -99,6 +99,19 @@ abstract class AbstractService {
     }
     
     /**
+     * Clean up memory
+     */
+    public function __destruct()
+    {
+        
+        // clean up output buffer
+        if($this->xml instanceof MyXMLWriter) {
+            $this->xml->flush();
+        }
+        
+    }
+    
+    /**
      * Initialize XML object
      * 
      * @return void
