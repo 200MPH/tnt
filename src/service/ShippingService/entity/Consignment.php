@@ -482,7 +482,8 @@ class Consignment extends AbstractXml {
     }
 
     /**
-     * Set service
+     * Set service.
+     * Will be provided by your TNT representative.
      * 
      * @param string $service
      * @return Consignment

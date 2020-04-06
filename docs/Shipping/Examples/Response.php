@@ -5,13 +5,13 @@ use thm\tnt_ec\service\ShippingService\ShippingService;
 /* @var $shipping ShippingService */
 
 $shipping = new ShippingService('abc', 'abs');
+
 /*
  * Create ShippingService object first or import from another file
  *  
  *  populate the object .... see MinimalResponse.php
  *   
  */
-
 $response = $shipping->send();
 
 if($response->hasError() === true) {
@@ -20,18 +20,18 @@ if($response->hasError() === true) {
     
 } else {
    
-    print_r($response->getResults());
+    print_r($response->getActivity()->getResults());
     
     // get label
-    //$response->getLabel();
+    $response->getActivity()->getLabel();
     
     // get manifest
-    //$response->getManifest();
+    //$response->getActivity()->getManifest();
     
     // get consignment note
-    //$response->getConsignmentNote();
+    //$response->getActivity()->getConsignmentNote();
     
     // get invoice
-    //$response->getInvoice();
+    //$response->getActivity()->getInvoice();
     
 }

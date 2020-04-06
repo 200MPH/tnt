@@ -8,7 +8,7 @@ use thm\tnt_ec\service\ShippingService\ShippingService;
 
 $shipping = new ShippingService('User ID', 'Password');
 
-$shipping->setAccountNumber('')
+$shipping->setAccountNumber('') // will be provided by your TNT representative.
          ->createOptionalActivities() // this will create <ACTIVITY> optionals element automatically.
          ->setSender()->setCompanyName('')
                       ->setAddressLine('')
@@ -41,7 +41,7 @@ $c1 = $shipping->addConsignment()->setConReference('')
                            ->setGoodsValue(0.00)
                            ->setInsuranceValue(0.00)
                            ->setInsuranceCurrency('GBP')
-                           ->setService('15N')
+                           ->setService('15N') // will be provided by your TNT representative.
                            ->addOption('PR')
                            ->setDescription('')
                            ->setDeliveryInstructions('');

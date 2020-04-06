@@ -52,6 +52,11 @@ class Activity extends AbstractService {
     private $printAll = false;
     
     /**
+     * @var ActivityResponse
+     */
+    private $results;
+    
+    /**
      * Activity constructor
      * 
      * @var string $userId
@@ -156,7 +161,6 @@ class Activity extends AbstractService {
     
     /**
      * Print all possible shipment documents.
-     * If this function is called, calls to print*****() methods will be ignored. 
      * 
      * @param array|string $consignment Consignment references or single reference
      * @return Activity
@@ -344,8 +348,12 @@ class Activity extends AbstractService {
     public function getResults()
     {
         
-        return $this->callActivityFunction('GET_RESULT');
+        if($this->results instanceof ActivityResponse) {
+            return $this->results;
+        }
         
+        $this->results = $this->callActivityFunction('GET_RESULT');
+        return $this->results;
     }
     
     /**
@@ -355,9 +363,16 @@ class Activity extends AbstractService {
      */
     public function getConsignmentNote()
     {
+        /* 
+         * TNT API may throw 500 error when calling this function and there is a error in XML request.
+         * However getResults() returns an error list, therefore we call getResults()
+         * to get a clear errors.
+         */
+        if($this->getResults()->hasError() === true) {
+            return $this->getResults();
+        }
         
         return $this->callActivityFunction('GET_CONNOTE');
-        
     }
     
     /**
@@ -367,9 +382,16 @@ class Activity extends AbstractService {
      */
     public function getLabel()
     {
+        /* 
+         * TNT API may throw 500 error when calling this function and there is a error in XML request.
+         * However getResults() returns an error list, therefore we call getResults()
+         * to get a clear errors.
+         */
+        if($this->getResults()->hasError() === true) {
+            return $this->getResults();
+        }
         
         return $this->callActivityFunction('GET_LABEL');
-        
     }
     
     /**
@@ -379,9 +401,16 @@ class Activity extends AbstractService {
      */
     public function getManifest()
     {
+        /* 
+         * TNT API may throw 500 error when calling this function and there is a error in XML request.
+         * However getResults() returns an error list, therefore we call getResults()
+         * to get a clear errors.
+         */
+        if($this->getResults()->hasError() === true) {
+            return $this->getResults();
+        }
         
-        return $this->callActivityFunction('GET_MANIFEST');
-                
+        return $this->callActivityFunction('GET_MANIFEST');        
     }
     
     /**
@@ -391,9 +420,16 @@ class Activity extends AbstractService {
      */
     public function getInvoice()
     {
+        /* 
+         * TNT API may throw 500 error when calling this function and there is a error in XML request.
+         * However getResults() returns an error list, therefore we call getResults()
+         * to get a clear errors.
+         */
+        if($this->getResults()->hasError() === true) {
+            return $this->getResults();
+        }
         
-        return $this->callActivityFunction('GET_INVOICE');
-                
+        return $this->callActivityFunction('GET_INVOICE');        
     }
         
     /**

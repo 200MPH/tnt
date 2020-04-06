@@ -81,20 +81,16 @@ class ActivityResponse extends AbstractShippingResponse {
      * @return void
      */
     protected function catchConcreteResponseError()
-    {
-                
-        $complete = explode(':', $this->getResponse());
+    {        
+        $complete = explode(':', $this->getResponse());   
         
         if(isset($complete[0]) && $complete[0] === 'COMPLETE') {
-        
             $this->key = (int) $complete[1];
-            
         } else {
-            
-            $this->catchErrors();
-            
+            $this->validateXml();
+            $this->catchRuntimeErrors();
+            $this->catchValidationErrors();
         }
-        
     }
         
 }
