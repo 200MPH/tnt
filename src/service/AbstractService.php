@@ -125,7 +125,8 @@ abstract class AbstractService {
     }
            
     /**
-     * Set account
+     * Set account number.
+     * Will be provided by your TNT representative.
      * 
      * @param int $accountNumber
      * @return AbstractService

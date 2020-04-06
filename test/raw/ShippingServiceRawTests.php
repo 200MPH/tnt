@@ -9,7 +9,6 @@ $shipping = new ShippingService('User ID', 'Password');
 
 $shipping->setAccountNumber('')
          ->createOptionalActivities()
-         ->setGroupCode('123456789')
          ->setSender()->setCompanyName('Company name')
                       ->setAddressLine('Address line 1')
                       ->setAddressLine('Address line 2')

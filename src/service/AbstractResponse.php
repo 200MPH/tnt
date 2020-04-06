@@ -187,7 +187,7 @@ abstract class AbstractResponse {
      */
     private function catchErrorsFromHttpResponseHeader()
     {
-             
+            
         if(empty(HTTPHeaders::$headers) === false) {
             
             switch(HTTPHeaders::$headers[0]) {
@@ -195,13 +195,13 @@ abstract class AbstractResponse {
                 case 'HTTP/1.1 401 Unauthorized':
                     
                     $this->hasError = true;
-                    $this->errors[] = "Unauthorized connection! Please check your credentials";
+                    $this->errors[] = "TNT API: 401 Unauthorized connection. Please check your credentials.";
                     break;
                 
-                case 'HTTP/1.1 500':
+                case 'HTTP/1.1 500 Internal Server Error':
                     
                     $this->hasError = true;
-                    $this->errors[] = "Internal server error";
+                    $this->errors[] = "TNT API: 500 Internal server error.";
                     break;
                 
             }

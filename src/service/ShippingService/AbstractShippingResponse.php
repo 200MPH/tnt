@@ -13,27 +13,12 @@ use thm\tnt_ec\service\AbstractResponse;
 abstract class AbstractShippingResponse extends AbstractResponse {
     
     /**
-     * Catch errors
+     * Catch run time errors
      * 
      * @return void
      */
-    protected function catchErrors()
+    protected function catchRuntimeErrors()
     {
-        
-        $this->catchRuntimeErrors();
-        $this->catchValidationErrors();
-        
-    }
-    
-    /**
-     * Catch runtime errors
-     * 
-     * @return void
-     */
-    private function catchRuntimeErrors()
-    {
-        
-        $this->validateXml();
         
         if(isset($this->simpleXml->error_reason) === true) {
             
@@ -61,33 +46,21 @@ abstract class AbstractShippingResponse extends AbstractResponse {
      * 
      * @return void
      */
-    private function catchValidationErrors()
+    protected function catchValidationErrors()
     {
           
         if(isset($this->simpleXml->ERROR) === false) { return null; }
         
         $this->hasError = true;
 
-        if(is_array($this->simpleXml->ERROR) === true) {
+        foreach($this->simpleXml->ERROR as $xml) {
 
-            foreach($this->simpleXml->ERROR as $xml) {
-
-                $error['CODE'] = $xml->CODE->__toString();
-                $error['DESC'] = $xml->DESCRIPTION->__toString();
-                $error['SOURCE'] = $xml->SOURCE->__toString();
-
-                array_push($this->errors, $error);
-                
-            }
-
-        } else {
-            
-            $error['CODE'] = $this->simpleXml->ERROR->CODE->__toString();
-            $error['DESC'] = $this->simpleXml->ERROR->DESCRIPTION->__toString();
-            $error['SOURCE'] = $this->simpleXml->ERROR->SOURCE->__toString();
+            $error['CODE'] = $xml->CODE->__toString();
+            $error['DESC'] = $xml->DESCRIPTION->__toString();
+            $error['SOURCE'] = $xml->SOURCE->__toString();
 
             array_push($this->errors, $error);
-            
+
         }
 
     } 

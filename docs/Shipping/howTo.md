@@ -34,7 +34,7 @@ Read the comments in the below code and PHP documentor. Each method functionalit
                                      ->setItems(0)
                                      ->setTotalWeight(0)
                                      ->setTotalVolume(0.00)
-                                     ->setService('15N')
+                                     ->setService('15N') // will be provided by your TNT representative.
                                      ->setDescription('')
                                      ->setDeliveryInstructions('');
     
