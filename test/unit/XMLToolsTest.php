@@ -10,7 +10,8 @@ namespace thm\tnt_ec\test\unit;
 
 use thm\tnt_ec\XMLTools;
 
-class XMLToolsTest  extends \PHPUnit_Framework_TestCase {
+class XMLToolsTest extends \PHPUnit_Framework_TestCase
+{
     
     /**
      * Merging test
@@ -26,7 +27,5 @@ class XMLToolsTest  extends \PHPUnit_Framework_TestCase {
         $result = '<?xml version="1.0"?><track><consignment><item>1</item></consignment><consignment><item>2</item></consignment><consignment><item>3</item></consignment><consignment><item>4</item></consignment><consignment><item>5</item></consignment><consignment><item>6</item></consignment></track>';
         
         $this->assertEquals($result, XMLTools::mergeXml($xml));
-        
     }
-    
 }

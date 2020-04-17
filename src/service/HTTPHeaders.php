@@ -9,13 +9,13 @@
 
 namespace thm\tnt_ec\service;
 
-class HTTPHeaders {
+class HTTPHeaders
+{
     
     /**
      * Response HTTP headers
-     * 
+     *
      * @var array
      */
-    static public $headers = [];
-    
+    public static $headers = [];
 }

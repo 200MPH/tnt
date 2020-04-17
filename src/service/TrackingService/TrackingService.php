@@ -14,7 +14,8 @@ use thm\tnt_ec\service\TrackingService\helpers\LevelOfDetails;
 use thm\tnt_ec\TNTException;
 use thm\tnt_ec\XMLTools;
 
-class TrackingService extends AbstractService {
+class TrackingService extends AbstractService
+{
     
     /* Version */
     const VERSION = 3.1;
@@ -28,28 +29,28 @@ class TrackingService extends AbstractService {
     
     /**
      * Search date from
-     * 
+     *
      * @var string
      */
     private $dateFrom = null;
     
     /**
      * Search date to
-     * 
+     *
      * @var string
      */
     private $dateTo = null;
     
     /**
      * Number of days to search from days
-     * 
+     *
      * @var int
      */
     private $days = 0;
     
     /**
      * Market type
-     * 
+     *
      * @var string
      */
     private $marketType = TrackingService::M_DST;
@@ -57,7 +58,7 @@ class TrackingService extends AbstractService {
     /**
      * Locale - translate.
      * English US set as default.
-     * 
+     *
      * @var string
      */
     private $locale = 'en_US';
@@ -69,25 +70,25 @@ class TrackingService extends AbstractService {
     
     /**
      * Origin output
-     * 
+     *
      * @var array
      */
     private $outputs;
     
     /**
      * Get TNT service URL
-     * 
+     *
      * @return string
      */
-    public function getServiceUrl() {
+    public function getServiceUrl()
+    {
         
         return self::URL;
-        
     }
     
     /**
      * Search by consignment numbers (TNT reference)
-     * 
+     *
      * @param array $consignments
      * @return TrackingResponse
      */
@@ -98,21 +99,18 @@ class TrackingService extends AbstractService {
         
         $this->startDocument();
             
-            foreach($consignments as $consignment) {
-
-                $this->xml->writeElement('ConsignmentNumber', $consignment);
-
-            }
+        foreach ($consignments as $consignment) {
+            $this->xml->writeElement('ConsignmentNumber', $consignment);
+        }
                 
         $this->endDocument();
             
-        return new TrackingResponse( $this->sendRequest(), $this->getXmlContent() );
-        
+        return new TrackingResponse($this->sendRequest(), $this->getXmlContent());
     }
     
     /**
      * Search by customer references (your reference)
-     * 
+     *
      * @param array $references
      * @return TrackingResponse
      */
@@ -123,26 +121,23 @@ class TrackingService extends AbstractService {
         
         $this->startDocument();
             
-            foreach($references as $reference) {
-
-                $this->xml->writeElement('CustomerReference', $reference);
-
-            }
+        foreach ($references as $reference) {
+            $this->xml->writeElement('CustomerReference', $reference);
+        }
                 
         $this->endDocument();
             
-        return new TrackingResponse( $this->sendRequest(), $this->getXmlContent() );
-        
+        return new TrackingResponse($this->sendRequest(), $this->getXmlContent());
     }
 
     /**
      * Search by date period
-     * 
+     *
      * @param string $dateFrom Format: YYYYMMDD
      * @param string $dateTo [optional] Format YYYYMMDD
-     * @param int $days [optional] Number of days following $dateFrom. 
+     * @param int $days [optional] Number of days following $dateFrom.
      * If $dateTo is set, then $days will be ignored by TNT.
-     * 
+     *
      * @return TrackingResponse
      */
     public function searchByDate($dateFrom, $dateTo = null, $days = 3)
@@ -160,13 +155,12 @@ class TrackingService extends AbstractService {
                 
         $this->endDocument();
             
-        return new TrackingResponse( $this->sendRequest(), $this->getXmlContent() );
-        
+        return new TrackingResponse($this->sendRequest(), $this->getXmlContent());
     }
     
     /**
      * Set market type DOMESTIC
-     * 
+     *
      * @return TrackingService
      */
     public function setMarketTypeDomestic()
@@ -174,12 +168,11 @@ class TrackingService extends AbstractService {
         
         $this->marketType = TrackingService::M_DST;
         return $this;
-        
     }
 
     /**
      * Set market type INTERNATIONAL
-     * 
+     *
      * @return TrackingService
      */
     public function setMarketTypeInternational()
@@ -187,49 +180,42 @@ class TrackingService extends AbstractService {
         
         $this->marketType = TrackingService::M_ITL;
         return $this;
-        
     }
     
     /**
      * Set locale - translate attempt.
      * Will attempt to translate status description in to relevant local language.
-     * 
+     *
      * @param string $countryCode If not specified, English is set to default.
      * @return TrackingService
      */
-    public function setLocale($countryCode) 
+    public function setLocale($countryCode)
     {
         
         $this->locale = $countryCode;
         return $this;
-        
     }
     
     /**
      * Set level of details returned
-     * 
+     *
      * @return LevelOfDetails
      */
     public function setLevelOfDetails()
     {
         
-        if($this->lod instanceof LevelOfDetails) {
-            
+        if ($this->lod instanceof LevelOfDetails) {
             return $this->lod;
-            
         } else {
-            
-            $this->lod = new LevelOfDetails( $this );
+            $this->lod = new LevelOfDetails($this);
             
             return $this->lod;
-            
         }
-        
     }
 
     /**
      * Start document
-     * 
+     *
      * @return void
      */
     protected function startDocument()
@@ -242,28 +228,26 @@ class TrackingService extends AbstractService {
         $this->xml->writeAttribute('version', self::VERSION);
         $this->xml->startElement("SearchCriteria");
         $this->setMarketTypeAttributes();
-                    
     }
     
     /**
      * End document
-     * 
+     *
      * @return void
      */
     protected function endDocument()
     {
         
         $this->xml->endElement();
-        $this->xml->writeRaw( $this->setLevelOfDetails()->getXml() );
+        $this->xml->writeRaw($this->setLevelOfDetails()->getXml());
         $this->xml->endElement();
         
         parent::endDocument();
-        
     }
     
     /**
      * Send request
-     * 
+     *
      * @return string Returns TNT Response string as XML
      */
     protected function sendRequest()
@@ -272,13 +256,12 @@ class TrackingService extends AbstractService {
         $this->setResponse();
         
         return XMLTools::mergeXml($this->outputs);
-        
     }
     
     /**
      * Send request.
      * Note, parent method return string, this one an array.
-     * 
+     *
      * @return array Returns TNT Responses string as XML
      */
     protected function setResponse()
@@ -291,25 +274,21 @@ class TrackingService extends AbstractService {
            
         $this->outputs[] = $response;
         
-        if($this->continueRequest($response) === true) {
-
+        if ($this->continueRequest($response) === true) {
             $this->setResponse();
-
-        } 
-        
+        }
     }
     
     /**
      * Set search by account criteria
-     * 
+     *
      * @return void
      * @throws TNTException
      */
     private function setSearchByDateCriteria()
     {
         
-        if(empty($this->dateFrom) === false) {
-            
+        if (empty($this->dateFrom) === false) {
             $this->xml->startElement('Account');
                 $this->xml->writeElement('Number', $this->account);
                 $this->xml->writeElement('CountryCode', $this->accountCountryCode);
@@ -320,55 +299,44 @@ class TrackingService extends AbstractService {
                 $this->xml->writeElement('DateTo', $this->dateTo);
                 $this->xml->writeElement('NumberOfDays', $this->days);
             $this->xml->endElement();
-            
         }
-        
     }
     
     /**
      * Set market type attributes for search criteria
-     * 
+     *
      * @return void
      */
     private function setMarketTypeAttributes()
     {
         
-        if(empty($this->marketType) === false) {
-            
+        if (empty($this->marketType) === false) {
             $this->xml->writeAttribute('marketType', $this->marketType);
             $this->xml->writeAttribute('originCountry', $this->originCountryCode);
-                        
         }
-        
     }
  
     /**
      * Continue requesting TNT for more consignment - pagination
-     * 
+     *
      * @param string $output XML output
      * @return bool True if requesting must be continued, otherwise false.
      */
     private function continueRequest($output)
     {
         
-        if(empty($output) === true) {
-            
+        if (empty($output) === true) {
             return false;
-            
         }
         
         $xml = new \SimpleXMLElement($output);
             
-        if(isset($xml->ContinuationKey) === true) {
-                
+        if (isset($xml->ContinuationKey) === true) {
             $this->xml->writeElement('ContinuationKey', $xml->ContinuationKey);
 
             return true;
-            
         }
         
         return false;
-        
     }
-    
 }

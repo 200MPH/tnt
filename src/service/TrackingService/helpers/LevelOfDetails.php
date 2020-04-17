@@ -2,7 +2,7 @@
 
 /**
  * Level Of Details
- * 
+ *
  * @author Wojciech Brozyna <http://vobro.systems>
  */
 
@@ -10,7 +10,8 @@ namespace thm\tnt_ec\service\TrackingService\helpers;
 
 use thm\tnt_ec\service\TrackingService\TrackingService;
 
-class LevelOfDetails {
+class LevelOfDetails
+{
     
     /**
      * @var TrackingService
@@ -29,36 +30,33 @@ class LevelOfDetails {
     {
         
         $this->ts = $ts;
-        
     }
     
     /**
      * Get XML
-     * 
+     *
      * @return string
      */
     public function getXml()
     {
         
         return $this->xml;
-        
     }
     
     /**
      * Set XML
-     * 
+     *
      * @param string $xml
      */
     public function setXML($xml)
     {
         
         $this->xml = $xml;
-        
     }
     
     /**
      * Set summary
-     * 
+     *
      * @return TrackingService
      */
     public function setSummary()
@@ -69,12 +67,11 @@ class LevelOfDetails {
         $this->xml .= "</LevelOfDetail>\n";
         
         return $this->ts;
-        
     }
     
     /**
      * Set complete
-     * 
+     *
      * @return LevelOfDetailsDecorator
      */
     public function setComplete()
@@ -87,8 +84,6 @@ class LevelOfDetails {
         
         $decorator = new LevelOfDetailsDecorator($this);
         
-        return $decorator;        
-        
+        return $decorator;
     }
-    
 }

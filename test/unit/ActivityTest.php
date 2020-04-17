@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * TNT Activity Tests
@@ -11,10 +11,11 @@ namespace thm\tnt_ec\test\unit;
 use thm\tnt_ec\service\ShippingService\Activity;
 use thm\tnt_ec\service\ShippingService\ActivityResponse;
 
-class ActivityTest extends \PHPUnit_Framework_TestCase {
+class ActivityTest extends \PHPUnit_Framework_TestCase
+{
     
     /**
-     * Test run time error
+     * Test runtime error
      */
     public function testRuntimeError()
     {
@@ -28,13 +29,13 @@ class ActivityTest extends \PHPUnit_Framework_TestCase {
         $err = $sr->getErrors();
         $this->assertEquals('The request to ExpressConnect Shipping has failed. Please contact your local service centre for further assistance', $err[0]);
         $this->assertEquals('Error persisting the shipping request and response to the database.', $err[1]);
-                
     }
     
     /*
      * Single consignment
      */
-    public function testBasicRequest() {
+    public function testBasicRequest()
+    {
         
         $consignment = '123456789';
         $activity = new Activity('test', 'test');
@@ -62,13 +63,13 @@ class ActivityTest extends \PHPUnit_Framework_TestCase {
         $xml2 = new \SimpleXMLElement($activity->getXmlContent());
         
         $this->assertEquals($xml1, $xml2);
-        
     }
     
     /*
      * Single consignment
      */
-    public function testBasicMultiRequest() {
+    public function testBasicMultiRequest()
+    {
         
         $consignment = array('123456789', '12323342324');
         $activity = new Activity('test', 'test');
@@ -100,13 +101,13 @@ class ActivityTest extends \PHPUnit_Framework_TestCase {
         $xml2 = new \SimpleXMLElement($activity->getXmlContent());
         
         $this->assertEquals($xml1, $xml2);
-        
     }
     
     /*
      * Single consignment
      */
-    public function testPrintAllRequest() {
+    public function testPrintAllRequest()
+    {
         
         $consignment = '123456789';
         $activity = new Activity('test', 'test');
@@ -139,13 +140,13 @@ class ActivityTest extends \PHPUnit_Framework_TestCase {
         $xml2 = new \SimpleXMLElement($activity->getXmlContent());
         
         $this->assertEquals($xml1, $xml2);
-        
     }
     
     /*
      * Single consignment
      */
-    public function testAdvancedRequest() {
+    public function testAdvancedRequest()
+    {
         
         $consignment = '123456789';
         $activity = new Activity('test', 'test');
@@ -193,13 +194,13 @@ class ActivityTest extends \PHPUnit_Framework_TestCase {
         $xml2 = new \SimpleXMLElement($activity->getXmlContent());
         
         $this->assertEquals($xml1, $xml2);
-        
     }
     
     /*
      * Single consignment
      */
-    public function testGroupCodeRequest() {
+    public function testGroupCodeRequest()
+    {
         
         $consignment = '123456789';
         $activity = new Activity('test', 'test');
@@ -250,7 +251,6 @@ class ActivityTest extends \PHPUnit_Framework_TestCase {
         $xml2 = new \SimpleXMLElement($activity->getXmlContent());
         
         $this->assertEquals($xml1, $xml2);
-        
     }
     
     public function testReturnsObject()
@@ -264,7 +264,5 @@ class ActivityTest extends \PHPUnit_Framework_TestCase {
                  ->ship($consignment);
         
         $this->assertTrue($activity->send() instanceof ActivityResponse);
-        
     }
-    
 }

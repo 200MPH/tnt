@@ -12,7 +12,8 @@ use thm\tnt_ec\Service\TrackingService\TrackingResponse;
 use thm\tnt_ec\service\TrackingService\entity\Consignment;
 use thm\tnt_ec\service\TrackingService\entity\StatusData;
 
-class TrackingResponseTest extends \PHPUnit_Framework_TestCase {
+class TrackingResponseTest extends \PHPUnit_Framework_TestCase
+{
     
     /**
      *
@@ -208,7 +209,6 @@ class TrackingResponseTest extends \PHPUnit_Framework_TestCase {
                 </TrackResponse>';
         
         $this->response = new TrackingResponse($this->xml, null);
-        
     }
     
     /**
@@ -220,7 +220,6 @@ class TrackingResponseTest extends \PHPUnit_Framework_TestCase {
         $state = is_array($this->response->getConsignments());
         
         $this->assertTrue($state);
-        
     }
  
     /**
@@ -231,20 +230,15 @@ class TrackingResponseTest extends \PHPUnit_Framework_TestCase {
         
         $c = $this->response->getConsignments();
         
-        if(empty($c) === false) {
-            
-            foreach($c as $obj) {
-                
+        if (empty($c) === false) {
+            foreach ($c as $obj) {
                 $state = $obj instanceof Consignment;
             
                 $this->assertTrue($state);
-                
             }
-            
         }
         
         $this->assertTrue(true);
-        
     }
     
     /**
@@ -256,7 +250,6 @@ class TrackingResponseTest extends \PHPUnit_Framework_TestCase {
         $c = new Consignment(new \SimpleXMLElement('<root></root>'));
         
         $this->assertEquals('CNF', $c->getSummaryCode());
-                
     }
     
     /**
@@ -284,7 +277,6 @@ class TrackingResponseTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($stat2);
         
         $this->assertEquals(0, $int2);
-        
     }
     
     /**
@@ -298,7 +290,6 @@ class TrackingResponseTest extends \PHPUnit_Framework_TestCase {
         $state = is_array($c->getStatuses());
         
         $this->assertTrue($state);
-        
     }
     
     /**
@@ -312,7 +303,6 @@ class TrackingResponseTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('20161114', $sd->getLocalEventDate());
         
         $this->assertEquals('2016-11-14', $sd->getLocalEventDate('Y-m-d'));
-        
     }
     
     /**
@@ -326,7 +316,6 @@ class TrackingResponseTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('1011', $sd->getLocalEventTime());
         
         $this->assertEquals('10:11', $sd->getLocalEventTime('H:i'));
-        
     }
     
     /**
@@ -340,7 +329,6 @@ class TrackingResponseTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('20161114', $c->getDeliveredDate());
         
         $this->assertEquals('2016-11-14', $c->getDeliveredDate('Y-m-d'));
-        
     }
     
     /**
@@ -354,7 +342,6 @@ class TrackingResponseTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('1011', $c->getDeliveredTime());
         
         $this->assertEquals('10:11', $c->getDeliveredTime('H:i'));
-        
     }
     
     /**
@@ -367,18 +354,15 @@ class TrackingResponseTest extends \PHPUnit_Framework_TestCase {
         
         $c = new Consignment($xml->Consignment[1]);
         
-        foreach($c->getStatuses() as $status) {
-            
+        foreach ($c->getStatuses() as $status) {
             $state = $status instanceof StatusData;
             
             $this->assertTrue($state);
-        
         }
-        
     }
     
     /*
-     * Test all functions output. 
+     * Test all functions output.
      */
     public function testOutput()
     {
@@ -466,7 +450,5 @@ class TrackingResponseTest extends \PHPUnit_Framework_TestCase {
         $pod = $consignment->getPod();
         
         $this->assertFalse(empty($pod));
-        
     }
-    
 }

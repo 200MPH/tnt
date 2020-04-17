@@ -12,7 +12,8 @@ namespace thm\tnt_ec;
 
 use SimpleXMLElement;
 
-class XmlConverter {
+class XmlConverter
+{
     
     /**
      * @var string
@@ -21,47 +22,43 @@ class XmlConverter {
     
     /**
      * Construct object
-     * 
+     *
      * @param string $xml
      */
-    public function __construct(string $xml) 
+    public function __construct(string $xml)
     {
             
         $this->xml = $xml;
-        
     }
     
     /**
      * If treated as object return given XML string.
      */
-    public function __toString() {
+    public function __toString()
+    {
         
         return $this->toString();
-        
     }
     
     /**
      * Get as string
-     * 
+     *
      * @return string
      */
     public function toString()
     {
         
         return $this->xml;
-        
     }
     
     /**
      * Get as XML object
-     * 
+     *
      * @return SimpleXMLElement
      */
     public function toXml()
     {
         
         return new SimpleXMLElement($this->xml);
-                
     }
-    
 }
