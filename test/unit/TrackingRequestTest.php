@@ -11,7 +11,8 @@ namespace thm\tnt_ec\test\unit;
 use thm\tnt_ec\service\TrackingService\TrackingService;
 use thm\tnt_ec\Service\TrackingService\TrackingResponse;
 
-class TrackingRequestTest extends \PHPUnit_Framework_TestCase {
+class TrackingRequestTest extends \PHPUnit_Framework_TestCase
+{
     
     private $ts;
         
@@ -21,14 +22,12 @@ class TrackingRequestTest extends \PHPUnit_Framework_TestCase {
         parent::setUp();
         
         $this->ts = new TrackingService('user', 'password');
-                
     }
     
-    public function testOK() 
+    public function testOK()
     {
     
         $this->assertTrue(true);
-        
     }
         
     /**
@@ -42,7 +41,6 @@ class TrackingRequestTest extends \PHPUnit_Framework_TestCase {
         $state = $response instanceof TrackingResponse;
         
         $this->assertTrue($state);
-        
     }
     
     /**
@@ -65,8 +63,6 @@ class TrackingRequestTest extends \PHPUnit_Framework_TestCase {
            
         $assert = ($state === false) ? false : true;
         
-        $this->assertTrue( $assert );
-        
+        $this->assertTrue($assert);
     }
-    
 }

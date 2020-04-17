@@ -11,7 +11,8 @@ namespace thm\tnt_ec\service\ShippingService\entity;
 
 use thm\tnt_ec\MyXMLWriter;
 
-class Package extends AbstractXml {
+class Package extends AbstractXml
+{
     
     /**
      * @var int
@@ -50,39 +51,34 @@ class Package extends AbstractXml {
     
     /**
      * Get entire XML as a string
-     * 
+     *
      * @return string
      */
     public function getAsXml()
     {
         
-        if(empty($this->articles) === true) {
-         
+        if (empty($this->articles) === true) {
             return parent::getAsXml();
-            
         }
             
         $parentXml = parent::getAsXml();
         
         $this->xml->flush();
-        $this->xml->writeRaw( $parentXml );
+        $this->xml->writeRaw($parentXml);
 
-        foreach($this->articles as $article) {
-
+        foreach ($this->articles as $article) {
             $this->xml->startElement('ARTICLE');
-                $this->xml->writeRaw( $article->getAsXml() );
+                $this->xml->writeRaw($article->getAsXml());
             $this->xml->endElement();
-
         }
         
         return $this->xml->outputMemory(false);
-        
     }
     
     /**
      * Add article.
      * Optional. This is required for customs only.
-     * 
+     *
      * @return Article
      */
     public function addArticle()
@@ -91,12 +87,11 @@ class Package extends AbstractXml {
         $this->articles[] = new Article();
         
         return end($this->articles);
-        
     }
     
     /**
      * Set items QTY
-     * 
+     *
      * @param int $items
      * @return Package
      */
@@ -107,12 +102,11 @@ class Package extends AbstractXml {
         $this->xml->writeElementCData('ITEMS', $items);
         
         return $this;
-        
     }
 
     /**
      * Set description
-     * 
+     *
      * @param string $description
      * @return Package
      */
@@ -123,12 +117,11 @@ class Package extends AbstractXml {
         $this->xml->writeElementCData('DESCRIPTION', $description);
         
         return $this;
-        
     }
 
     /**
      * Set length
-     * 
+     *
      * @param float $length Meters unit
      * @return Package
      */
@@ -139,12 +132,11 @@ class Package extends AbstractXml {
         $this->xml->writeElementCData('LENGTH', $length);
         
         return $this;
-        
     }
 
     /**
      * Set height
-     * 
+     *
      * @param float $height Meters unit
      * @return Package
      */
@@ -155,12 +147,11 @@ class Package extends AbstractXml {
         $this->xml->writeElementCData('HEIGHT', $height);
         
         return $this;
-        
     }
 
     /**
-     * Set 
-     * 
+     * Set
+     *
      * @param float $width Meters unit
      * @return Package
      */
@@ -171,12 +162,11 @@ class Package extends AbstractXml {
         $this->xml->writeElementCData('WIDTH', $width);
         
         return $this;
-        
     }
 
     /**
      * Set weight
-     * 
+     *
      * @param float $weight Kilos unit
      */
     public function setWeight($weight)
@@ -186,7 +176,5 @@ class Package extends AbstractXml {
         $this->xml->writeElementCData('WEIGHT', $weight);
         
         return $this;
-        
     }
-
 }

@@ -11,7 +11,8 @@ namespace thm\tnt_ec;
 
 use Exception;
 
-class TNTException extends Exception {
+class TNTException extends Exception
+{
     
     /* Username is empty */
     const USERNAME_EMPTY = 'Username cannot be empty when creating service object';
@@ -21,5 +22,4 @@ class TNTException extends Exception {
     
     /* Attempt to search by multiple types */
     const SEARCH_MULTI_TYPES = 'You cannot search by account and reference number at the same time';
-    
 }

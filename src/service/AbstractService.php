@@ -12,67 +12,68 @@ namespace thm\tnt_ec\service;
 use thm\tnt_ec\MyXMLWriter;
 use thm\tnt_ec\TNTException;
 
-abstract class AbstractService {
+abstract class AbstractService
+{
     
     /**
      * XML Request
-     * 
+     *
      * @var MyXMLWriter
      */
     protected $xml;
     
     /**
      * Account number
-     * 
+     *
      * @var int
      */
     protected $account = 0;
     
     /**
      * Account country code
-     * 
+     *
      * @var string
      */
     protected $accountCountryCode = 'GB';
     
     /**
      * Origin (destination) country code
-     * 
+     *
      * @var string
      */
     protected $originCountryCode = 'GB';
             
     /**
      * User ID
-     * 
+     *
      * @var string
      */
     protected $userId;
     
     /**
      * Password
-     * 
+     *
      * @var string
      */
     protected $password;
     
     /**
      * Disable SSL verification
-     * 
+     *
      * @var bool
      */
     private $verifySSL = true;
     
     /**
      * Get TNT service URL
-     * 
+     *
      * @var string
      */
     abstract public function getServiceUrl();
     
     /**
      * Initialise service
-     * 
+     *
      * @param string $userId
      * @param string $password
      * @throw TNTException
@@ -80,27 +81,22 @@ abstract class AbstractService {
     public function __construct($userId, $password)
     {
         
-        if(empty($userId) === true) {
-            
+        if (empty($userId) === true) {
             throw new TNTException(TNTException::USERNAME_EMPTY);
-            
         }
         
-        if(empty($password) === true) {
-            
+        if (empty($password) === true) {
             throw new TNTException(TNTException::PASS_EMPTY);
-            
         }
         
         $this->userId = $userId;
         $this->password = $password;
         $this->initXml();
-                
     }
     
     /**
      * Initialize XML object
-     * 
+     *
      * @return void
      */
     public function initXml()
@@ -109,13 +105,12 @@ abstract class AbstractService {
         $this->xml = new MyXMLWriter();
         $this->xml->openMemory();
         $this->xml->setIndent(true);
-        
     }
            
     /**
      * Set account number.
      * Will be provided by your TNT representative.
-     * 
+     *
      * @param int $accountNumber
      * @return AbstractService
      */
@@ -125,12 +120,11 @@ abstract class AbstractService {
         $this->account = $accountNumber;
         
         return $this;
-        
     }
     
     /**
      * Set account country code
-     * 
+     *
      * @param string $countryCode
      * @return AbstractService
      */
@@ -139,12 +133,11 @@ abstract class AbstractService {
         
         $this->accountCountryCode = $countryCode;
         return $this;
-        
     }
     
     /**
      * Set origin (destination) country code
-     * 
+     *
      * @param string $countryCode
      * @return AbstractService
      */
@@ -153,12 +146,11 @@ abstract class AbstractService {
         
         $this->originCountryCode = $countryCode;
         return $this;
-        
     }
     
     /**
      * Disable SSL verification
-     * 
+     *
      * @return AbstractService
      */
     public function disableSSLVerify()
@@ -166,63 +158,58 @@ abstract class AbstractService {
         
         $this->verifySSL = false;
         return $this;
-        
     }
     
     /**
      * Build/start document
-     * 
+     *
      * @return void
      */
     protected function startDocument()
     {
         
         $this->xml->startDocument('1.0', 'UTF-8', 'no');
-        
     }
     
     /**
      * Build/end document
-     * 
+     *
      * @return void
      */
     protected function endDocument()
     {
         
         $this->xml->endDocument();
-        
     }
     
     /**
      * Set XML content.
      * This is useful when you want to send your own prepared XML document.
-     * 
+     *
      * @param string $xml
      * @return bool
      */
     public function setXmlContent($xml)
     {
         
-        $this->xml->flush();       
+        $this->xml->flush();
         return $this->xml->writeRaw($xml);
-        
     }
     
     /**
      * Get XML content
-     * 
+     *
      * @return string
      */
     protected function getXmlContent()
     {
         
         return $this->xml->flush(false);
-        
     }
     
     /**
      * Send request
-     * 
+     *
      * @return string Returns TNT Response string as XML
      */
     protected function sendRequest()
@@ -240,25 +227,23 @@ abstract class AbstractService {
                 'ssl' => array(
                      'verify_peer' => $this->verifySSL,
                      'verify_peer_name' => $this->verifySSL)
-                )
-        );
+                ));
         
         $output = @file_get_contents($this->getServiceUrl(), false, $context);
         
-        // $http_response_header comes from PHP engine, 
+        // $http_response_header comes from PHP engine,
         // it's not a part of this code
         // http://php.net/manual/en/reserved.variables.httpresponseheader.php
-        if(empty($http_response_header) === false) {
+        if (empty($http_response_header) === false) {
             HTTPHeaders::$headers = $http_response_header;
         }
         
         return $output;
-        
     }
  
     /**
      * Build HTTP Post data
-     * 
+     *
      * @return string
      */
     private function buildHttpPostData()
@@ -266,7 +251,5 @@ abstract class AbstractService {
         
         $post = http_build_query(array('xml_in' => $this->getXmlContent()));
         return $post;
-        
     }
-    
 }

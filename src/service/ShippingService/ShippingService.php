@@ -14,7 +14,8 @@ use thm\tnt_ec\service\ShippingService\entity\Address;
 use thm\tnt_ec\service\ShippingService\entity\Collection;
 use thm\tnt_ec\service\ShippingService\entity\Consignment;
 
-class ShippingService extends AbstractService {
+class ShippingService extends AbstractService
+{
     
     /* Version */
     const VERSION = '3.0';
@@ -50,7 +51,7 @@ class ShippingService extends AbstractService {
     
     /**
      * Group code
-     * 
+     *
      * @var int
      */
     private $groupCode = 0;
@@ -67,7 +68,7 @@ class ShippingService extends AbstractService {
     
     /**
      * Initialise service
-     * 
+     *
      * @param string $userId
      * @param string $password
      * @param string $appid [optional] Default "IN"
@@ -78,7 +79,6 @@ class ShippingService extends AbstractService {
         
         parent::__construct($userId, $password);
         $this->appid = $appid;
-        
     }
     
     /**
@@ -89,53 +89,46 @@ class ShippingService extends AbstractService {
     {
     
         return self::URL;
-        
     }
     
     /**
      * Set sender address
-     * 
+     *
      * @return Address
      */
     public function setSender()
     {
         
-        if(!$this->sender instanceof Address) {
-            
+        if (!$this->sender instanceof Address) {
             $this->sender = new Address();
             $this->sender->setAccountNumber($this->account);
-            
         }
         
         return $this->sender;
-        
     }
     
     /**
      * Set collection.
-     *  
+     *
      * @return Collection
      */
     public function setCollection()
     {
         
-        if(!$this->collection instanceof Collection) {
-            
-            // initialise object just in case when collection object 
+        if (!$this->collection instanceof Collection) {
+            // initialise object just in case when collection object
             // is set before $sender object - reverted sequence
             $this->setSender();
-            $this->collection = new Collection( $this->sender );
-            
+            $this->collection = new Collection($this->sender);
         }
         
         return $this->collection;
-        
     }
     
     /**
      * Add consignment.
-     * TNT allow to add up to 50 consignment, but they recommend add 3 per request. 
-     * 
+     * TNT allow to add up to 50 consignment, but they recommend add 3 per request.
+     *
      * @return Consignment
      */
     public function addConsignment()
@@ -146,16 +139,15 @@ class ShippingService extends AbstractService {
         $this->consignments[] = $con;
         
         return end($this->consignments);
-        
     }
     
     /**
      * Create optional activity elements.
      * Although <ACTIVITY><CREATE> element is mandatory and created automatically for each shipment request,
-     * you may want to add other <ACTIVITY> elements.   
+     * you may want to add other <ACTIVITY> elements.
      * Calling this method will create following activities: BOOK, SHIP, PRINT (all available documents).
      * Anything else has to be created manually (RATE, EMAILTO, EMAILFROM)
-     * 
+     *
      * @return ShippingService
      */
     public function createOptionalActivities()
@@ -163,27 +155,25 @@ class ShippingService extends AbstractService {
         
         $this->auto_activity = true;
         return $this;
-        
     }
     
     /**
      * Set group code
-     * 
+     *
      * @param int $groupCode
-     * @return ShippingService 
+     * @return ShippingService
      */
     public function setGroupCode(int $groupCode)
     {
         
         $this->groupCode = (int) $groupCode;
         return $this;
-        
     }
             
     
     /**
      * Send request to TNT
-     * 
+     *
      * @return ActivityResponse
      */
     public function send()
@@ -195,13 +185,12 @@ class ShippingService extends AbstractService {
         $p = $this->password;
                 
         return new ActivityResponse($r, $x, $u, $p);
-        
     }
     
     /**
      * Set XML content.
      * This is useful when you want to send your own prepared XML document.
-     * 
+     *
      * @param string $xml
      * @return bool
      */
@@ -210,51 +199,46 @@ class ShippingService extends AbstractService {
         
         $this->userXml = true;
         return parent::setXmlContent($xml);
-        
     }
     
     /**
      * Get XML content
-     * 
+     *
      * @return string
      */
     public function getXmlContent()
     {
         
-        if($this->userXml === true) {
-            
+        if ($this->userXml === true) {
             // return user defined content without modifications
             return parent::getXmlContent();
-            
         }
         
         $this->initXml();
-        $this->startDocument();     
+        $this->startDocument();
         $this->buildSenderSection();
         $this->buildConsignmentSection();
         $this->endDocument();
         
         return parent::getXmlContent();
-        
     }
     
     /**
      * Set Activity object
-     * 
+     *
      * @param Activity $activity
      * @return ShippingService
      */
-    public function setActivity(Activity $activity) 
+    public function setActivity(Activity $activity)
     {
         
         $this->activity = $activity;
         return $this;
-        
     }
     
     /**
      * Build/start document
-     * 
+     *
      * @return void
      */
     protected function startDocument()
@@ -271,17 +255,14 @@ class ShippingService extends AbstractService {
         $this->xml->endElement();
         $this->xml->startElement('CONSIGNMENTBATCH');
         
-        if($this->groupCode > 0) {
-            
+        if ($this->groupCode > 0) {
             $this->xml->writeElement('GROUPCODE', $this->groupCode);
-            
         }
-    
     }
     
     /**
      * Build/end document
-     * 
+     *
      * @return void
      */
     protected function endDocument()
@@ -292,100 +273,83 @@ class ShippingService extends AbstractService {
         $this->xml->endElement();
         
         parent::endDocument();
-        
     }
     
     /**
      * Build sender section
-     * 
+     *
      * @return void
      */
     private function buildSenderSection()
     {
         
-        if($this->sender instanceof Address) {
-        
+        if ($this->sender instanceof Address) {
             $this->xml->startElement('SENDER');
-                $this->xml->writeRaw( $this->sender->getAsXml() );
+                $this->xml->writeRaw($this->sender->getAsXml());
                 $this->buildCollectionSection();
             $this->xml->endElement();
-        
         }
-        
     }
     
     /**
      * Build collection section
-     * 
+     *
      * @return void
      */
     private function buildCollectionSection()
     {
         
-        if($this->collection instanceof Collection) {
-        
+        if ($this->collection instanceof Collection) {
             $this->xml->startElement('COLLECTION');
-                $this->xml->writeRaw( $this->collection->getAsXml() );
+                $this->xml->writeRaw($this->collection->getAsXml());
             $this->xml->endElement();
-        
         }
-        
     }
     
     /**
      * Build consignment section
-     * 
+     *
      * @return void
      */
     private function buildConsignmentSection()
     {
         
-        if(empty($this->consignments) === false) {
-        
-            foreach($this->consignments as $consignment) {
-
+        if (empty($this->consignments) === false) {
+            foreach ($this->consignments as $consignment) {
                 $this->xml->startElement('CONSIGNMENT');
-                    $this->xml->writeRaw( $consignment->getAsXml() );
+                    $this->xml->writeRaw($consignment->getAsXml());
                 $this->xml->endElement();
-
             }
-        
         }
-        
     }
     
     /**
      * Build activity section
-     * 
+     *
      * @return void
      */
     private function buildActivitySection()
     {
            
-        $this->xml->writeRaw( $this->getActivity()->getXmlContent(false) );
-        
+        $this->xml->writeRaw($this->getActivity()->getXmlContent(false));
     }
     
     /**
      * Get activity
-     * 
+     *
      * @return Activity
      */
     final private function getActivity()
     {
         
-        if($this->activity instanceof Activity) {
-            
+        if ($this->activity instanceof Activity) {
             return $this->activity;
-            
-        } 
+        }
         
         $conRefs = [];
 
-        foreach($this->consignments as $consignment) {
-
+        foreach ($this->consignments as $consignment) {
             $conRefs[] = $consignment->getConReference();
-
         }
      
         // CREATE activity is mandatory for every request
@@ -393,16 +357,12 @@ class ShippingService extends AbstractService {
         $this->activity->showGroupCode()
                        ->create($conRefs);
         
-        if($this->auto_activity === true) {
-        
+        if ($this->auto_activity === true) {
             $this->activity->book($conRefs)
                            ->ship($conRefs)
                            ->printAll($conRefs);
-                     
         }
         
         return $this->activity;
-        
     }
-    
 }

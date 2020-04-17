@@ -11,7 +11,8 @@ namespace thm\tnt_ec\service;
 
 use SimpleXMLElement;
 
-abstract class AbstractResponse {
+abstract class AbstractResponse
+{
     
     /**
      * @var SimpleXMLElement
@@ -20,14 +21,14 @@ abstract class AbstractResponse {
     
     /**
      * Has error flag
-     * 
+     *
      * @var bool
      */
     protected $hasError = false;
     
     /**
      * Errors
-     * 
+     *
      * @var array
      */
     protected $errors = [];
@@ -39,7 +40,7 @@ abstract class AbstractResponse {
     
     /**
      * Request XML
-     * 
+     *
      * @var string
      */
     private $requestXml;
@@ -47,101 +48,92 @@ abstract class AbstractResponse {
     /**
      * Catch concrete response error
      * Useful when error handling has to be customized for specific response type.
-     * 
+     *
      * @return void
      */
     abstract protected function catchConcreteResponseError();
     
     /**
      * Initialize object
-     * 
+     *
      * @param string $response
      * @param string $requestXml
      */
     public function __construct($response, $requestXml)
     {
         
-        $this->response = $response;     
+        $this->response = $response;
         $this->requestXml = $requestXml;
         $this->catchErrors();
-        
     }
     
     /**
      * Get RAW response
-     * 
+     *
      * @return string
      */
     public function getResponse()
     {
         
         return $this->response;
-        
     }
     
     /**
      * Get XML response
-     * 
+     *
      * @return SimpleXMLElement
      */
     public function getResponseXml()
     {
         
         return $this->simpleXml;
-        
     }
     
     /**
      * Get request XML
-     * 
+     *
      * @return string
      */
     public function getRequestXml()
     {
         
         return $this->requestXml;
-        
     }
     
     /**
      * Has error
-     * 
+     *
      * @return bool
      */
     public function hasError()
     {
         
         return $this->hasError;
-        
     }
 
     /**
      * Get errors
-     * 
+     *
      * @return array
      */
     public function getErrors()
     {
         
         // remove empty lines
-        array_walk($this->errors, function($val, $key) {
+        array_walk($this->errors, function ($val, $key) {
             
-            if(empty($val) === true) {
-                
+            if (empty($val) === true) {
                 unset($this->errors[$key]);
-                
             }
-            
         });
         
         return $this->errors;
-        
     }
     
     /**
      * Check if XML document is valid, if not set errors.
      * This function also create SimpleXMLElement object on success.
-     * 
+     *
      * @return void
      */
     protected function validateXml()
@@ -149,22 +141,17 @@ abstract class AbstractResponse {
         
         $doc = simplexml_load_string($this->response);
         
-        if($doc === false) {
-            
+        if ($doc === false) {
             $this->hasError = true;
             $this->errors[] = "Response XML document is not valid or empty";
-                        
         } else {
-            
             $this->simpleXml = $doc;
-                        
         }
-        
     }
     
     /**
      * Catch errors
-     * 
+     *
      * @return void
      */
     private function catchErrors()
@@ -172,42 +159,31 @@ abstract class AbstractResponse {
         
         $this->catchErrorsFromHttpResponseHeader();
         
-        if($this->hasError() === false) {
-            
+        if ($this->hasError() === false) {
             $this->catchConcreteResponseError();
-            
         }
-                
     }
     
     /**
      * Check response from HTTP response header
-     * 
+     *
      * @return void
      */
     private function catchErrorsFromHttpResponseHeader()
     {
             
-        if(empty(HTTPHeaders::$headers) === false) {
-            
-            switch(HTTPHeaders::$headers[0]) {
-                
+        if (empty(HTTPHeaders::$headers) === false) {
+            switch (HTTPHeaders::$headers[0]) {
                 case 'HTTP/1.1 401 Unauthorized':
-                    
                     $this->hasError = true;
                     $this->errors[] = "TNT API: 401 Unauthorized connection. Please check your credentials.";
                     break;
                 
                 case 'HTTP/1.1 500 Internal Server Error':
-                    
                     $this->hasError = true;
                     $this->errors[] = "TNT API: 500 Internal server error.";
                     break;
-                
             }
-            
         }
-        
     }
-    
 }

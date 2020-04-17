@@ -12,30 +12,27 @@ namespace thm\tnt_ec;
 
 use XMLWriter;
 
-class MyXMLWriter extends XMLWriter {
+class MyXMLWriter extends XMLWriter
+{
     
     /**
      * Write element and wrap it in <[CDATA]> tag.
-     
+
      * @param string $name
      * @param string $content
      * @param bool $wrap [optional] Set FALSE to omit <[CDATA]> wrapping - disable
      */
-    public function writeElementCData($name, $content = null, $wrap = true) 
+    public function writeElementCData($name, $content = null, $wrap = true)
     {
                 
-        if($wrap === false) {
-            
-           return $this->writeElement($name, $content);
-            
-        } 
+        if ($wrap === false) {
+            return $this->writeElement($name, $content);
+        }
         
         $this->startElement($name);
             $state = $this->writeCdata($content);
         $this->endElement();
                 
         return $state;
-        
     }
-    
 }

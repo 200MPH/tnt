@@ -2,8 +2,8 @@
 
 /**
  * It's a "sub service" for Shipping.
- * This class generate <ACTIVITY> section and is able to send it to TNT as a 
- * separate request if necessary. 
+ * This class generate <ACTIVITY> section and is able to send it to TNT as a
+ * separate request if necessary.
  *
  * @author Wojciech Brozyna <http://vobro.systems>
  * @license https://github.com/200MPH/tnt/blob/master/LICENCE MIT
@@ -14,7 +14,8 @@ namespace thm\tnt_ec\service\ShippingService;
 use thm\tnt_ec\MyXMLWriter;
 use thm\tnt_ec\service\AbstractService;
 
-class Activity extends AbstractService {
+class Activity extends AbstractService
+{
     
     /**
      * @var int
@@ -58,16 +59,16 @@ class Activity extends AbstractService {
     
     /**
      * Activity constructor
-     * 
+     *
      * @var string $userId
      * @var string $passowrd
      * @var int $key
      */
-    public function __construct(string $userId, string $password, int $key = 0) {
+    public function __construct(string $userId, string $password, int $key = 0)
+    {
         
         $this->key = $key;
         parent::__construct($userId, $password);
-        
     }
     
     /**
@@ -78,28 +79,28 @@ class Activity extends AbstractService {
     {
         
         return ShippingService::URL;
-        
     }
 
     /**
      * Send request
-     * 
+     *
      * @return ActivityResponse
      */
     public function send()
     {
                         
-        return new ActivityResponse($this->sendRequest(), 
-                                    $this->getXmlContent(), 
-                                    $this->userId, 
-                                    $this->password, 
-                                    $this->key);
-        
+        return new ActivityResponse(
+            $this->sendRequest(),
+            $this->getXmlContent(),
+            $this->userId,
+            $this->password,
+            $this->key
+        );
     }
     
     /**
      * Add <CREATE> activity
-     * 
+     *
      * @param array|string $consignment Consignment references or single reference
      * @return Activity
      */
@@ -109,12 +110,11 @@ class Activity extends AbstractService {
         $this->buildActivityElement('ACTIVITY', 'CREATE', $consignment);
         
         return $this;
-        
     }
     
     /**
      * Add <RATE> activity
-     * 
+     *
      * @param array|string $consignment Consignment references or single reference
      * @return Activity
      */
@@ -124,12 +124,11 @@ class Activity extends AbstractService {
         $this->buildActivityElement('ACTIVITY', 'RATE', $consignment);
         
         return $this;
-        
     }
     
     /**
      * Add <BOOK> activity
-     * 
+     *
      * @param array|string $consignment Consignment references or single reference
      * @param bool $confirmation [optional] Send booking confirmation email to sender.
      * @return Activity
@@ -141,12 +140,11 @@ class Activity extends AbstractService {
         $this->buildActivityElement('ACTIVITY', 'BOOK', $consignment);
         
         return $this;
-        
     }
     
     /**
      * Add <SHIP> activity
-     * 
+     *
      * @param array|string $consignment Consignment references or single reference
      * @return Activity
      */
@@ -156,12 +154,11 @@ class Activity extends AbstractService {
         $this->buildActivityElement('ACTIVITY', 'SHIP', $consignment);
         
         return $this;
-        
     }
     
     /**
      * Print all possible shipment documents.
-     * 
+     *
      * @param array|string $consignment Consignment references or single reference
      * @return Activity
      */
@@ -174,12 +171,11 @@ class Activity extends AbstractService {
         $this->printAll = true;
         
         return $this;
-        
     }
     
-    /** 
+    /**
      * Add <PRINT><CONNOTE> activity - print consignment note request
-     * 
+     *
      * @param array|string $consignment Consignment references or single reference
      * @return Activity
      */
@@ -189,12 +185,11 @@ class Activity extends AbstractService {
         $this->buildActivityElement('PRINT', 'CONNOTE', $consignment);
         
         return $this;
-        
     }
     
-    /** 
+    /**
      * Add <PRINT><LABEL> activity - print label request
-     * 
+     *
      * @param array|string $consignment Consignment references or single reference
      * @return Activity
      */
@@ -204,12 +199,11 @@ class Activity extends AbstractService {
         $this->buildActivityElement('PRINT', 'LABEL', $consignment);
         
         return $this;
-        
     }
     
-    /** 
+    /**
      * Add <PRINT><MANIFEST> activity - print manifest request
-     * 
+     *
      * @param array|string $consignment Consignment references or single reference
      * @return Activity
      */
@@ -219,27 +213,25 @@ class Activity extends AbstractService {
         $this->buildActivityElement('PRINT', 'MANIFEST', $consignment);
         
         return $this;
-        
     }
     
-    /** 
+    /**
      * Add <PRINT><INVOICE> activity - print invoice request
-     * 
+     *
      * @param array|string $consignment Consignment references or single reference
      * @return Activity
      */
     public function printInvoice($consignment)
     {
         
-       $this->buildActivityElement('PRINT', 'INVOICE', $consignment);
+        $this->buildActivityElement('PRINT', 'INVOICE', $consignment);
         
-       return $this;
-        
+        return $this;
     }
     
     /**
      * Add <PRINT><EMAIL> activity
-     * 
+     *
      * @param string $emailTo
      * @param string $emailFrom
      * @return Activity
@@ -257,13 +249,12 @@ class Activity extends AbstractService {
         $this->xmls['PRINT']['EMAIL'] = $xml;
         
         return $this;
-        
     }
     
     /**
      * Add <SHOW_GROUPCODE/> tag.
-     * 
-     * @param bool $flag [optional] 
+     *
+     * @param bool $flag [optional]
      * @return Activity
      */
     public function showGroupCode($flag = true)
@@ -271,12 +262,11 @@ class Activity extends AbstractService {
         
         $this->showGroupCode = $flag;
         return $this;
-        
     }
     
     /**
      * Set group code
-     * 
+     *
      * @param int $code
      * @return Activity
      */
@@ -285,12 +275,11 @@ class Activity extends AbstractService {
         
         $this->groupCode = $code;
         return $this;
-        
     }
     
     /**
      * Send booking confirmation
-     * 
+     *
      * @param bool $flag [optional] True default
      * @return Activity
      */
@@ -298,12 +287,11 @@ class Activity extends AbstractService {
     {
         
         $this->bookingConf = $flag;
-        
     }
     
     /**
      * Get XML content
-     * 
+     *
      * @param bool $xmlHeaderIncluded Include XML header (document start). Default TRUE
      * @return string
      */
@@ -311,44 +299,47 @@ class Activity extends AbstractService {
     {
         
         // return activity request immediate if set
-        if(empty($this->activityReqStr) === false) { return $this->activityReqStr; }
+        if (empty($this->activityReqStr) === false) {
+            return $this->activityReqStr;
+        }
         
         $this->initXml();
         
-        if($xmlHeaderIncluded === true) { $this->startDocument(); }
+        if ($xmlHeaderIncluded === true) {
+            $this->startDocument();
+        }
         
         $this->xml->startElement('ACTIVITY');
         $this->mergeActivities('ACTIVITY');
         
-        if(isset($this->xmls['PRINT']) === true) {
-            
+        if (isset($this->xmls['PRINT']) === true) {
             $this->xml->startElement('PRINT');
             $this->mergeActivities('PRINT');
             $this->xml->endElement();
-            
         }
         
-        if($this->showGroupCode === true) {
+        if ($this->showGroupCode === true) {
             $this->xml->writeElement('SHOW_GROUPCODE');
         }
         
         $this->xml->endElement();
-        if($xmlHeaderIncluded === true) { $this->endDocument(); }
+        if ($xmlHeaderIncluded === true) {
+            $this->endDocument();
+        }
         
         return parent::getXmlContent();
-        
     }
     
     /**
      * Get activity results.<br>
      * Useful to check what documents are available for printing.
-     *  
+     *
      * @return ActivityResponse
      */
     public function getResults()
     {
         
-        if($this->results instanceof ActivityResponse) {
+        if ($this->results instanceof ActivityResponse) {
             return $this->results;
         }
         
@@ -358,17 +349,17 @@ class Activity extends AbstractService {
     
     /**
      * Get consignment note
-     * 
+     *
      * @return ActivityResponse
      */
     public function getConsignmentNote()
     {
-        /* 
+        /*
          * TNT API may throw 500 error when calling this function and there is a error in XML request.
          * However getResults() returns an error list, therefore we call getResults()
          * to get a clear errors.
          */
-        if($this->getResults()->hasError() === true) {
+        if ($this->getResults()->hasError() === true) {
             return $this->getResults();
         }
         
@@ -377,17 +368,17 @@ class Activity extends AbstractService {
     
     /**
      * Get label
-     * 
+     *
      * @return ActivityResponse
      */
     public function getLabel()
     {
-        /* 
+        /*
          * TNT API may throw 500 error when calling this function and there is a error in XML request.
          * However getResults() returns an error list, therefore we call getResults()
          * to get a clear errors.
          */
-        if($this->getResults()->hasError() === true) {
+        if ($this->getResults()->hasError() === true) {
             return $this->getResults();
         }
         
@@ -396,45 +387,45 @@ class Activity extends AbstractService {
     
     /**
      * Get manifest
-     * 
+     *
      * @return ActivityResponse
      */
     public function getManifest()
     {
-        /* 
+        /*
          * TNT API may throw 500 error when calling this function and there is a error in XML request.
          * However getResults() returns an error list, therefore we call getResults()
          * to get a clear errors.
          */
-        if($this->getResults()->hasError() === true) {
+        if ($this->getResults()->hasError() === true) {
             return $this->getResults();
         }
         
-        return $this->callActivityFunction('GET_MANIFEST');        
+        return $this->callActivityFunction('GET_MANIFEST');
     }
     
     /**
      * Get invoice
-     * 
+     *
      * @return ActivityResponse
      */
     public function getInvoice()
     {
-        /* 
+        /*
          * TNT API may throw 500 error when calling this function and there is a error in XML request.
          * However getResults() returns an error list, therefore we call getResults()
          * to get a clear errors.
          */
-        if($this->getResults()->hasError() === true) {
+        if ($this->getResults()->hasError() === true) {
             return $this->getResults();
         }
         
-        return $this->callActivityFunction('GET_INVOICE');        
+        return $this->callActivityFunction('GET_INVOICE');
     }
         
     /**
      * Build activity element
-     * 
+     *
      * @param string $root
      * @param string $element Example: CREATE, RATE, SHIP
      * @param array|string $consignment Consignment references or single reference
@@ -443,7 +434,9 @@ class Activity extends AbstractService {
     private function buildActivityElement($root, $element, $consignment)
     {
         
-        if($this->printAll === true) { return null; }
+        if ($this->printAll === true) {
+            return null;
+        }
         
         $xml = new MyXMLWriter();
         $xml->openMemory();
@@ -451,73 +444,53 @@ class Activity extends AbstractService {
         
         $xml->startElement($element);
                         
-        if($element == 'BOOK') {
-            
-            if($this->bookingConf === true) {
-                
+        if ($element == 'BOOK') {
+            if ($this->bookingConf === true) {
                 $xml->writeAttribute('EMAILREQD', 'Y');
-                
             }
             
             $xml->writeAttribute('ShowBookingRef', 'Y');
-            
         }
             
-        if($this->groupCode > 0 && $root != 'PRINT') {
-            
+        if ($this->groupCode > 0 && $root != 'PRINT') {
             $xml->writeElementCData('GROUPCODE', $this->groupCode, false);
-            
         } else {
-            
             // transform consignment to array
-            if(is_array($consignment) === false) {
-                
+            if (is_array($consignment) === false) {
                 $consignments[] = $consignment;
-                
             } else {
-                
                 $consignments = $consignment;
-                
             }
             
-            foreach($consignments as $number) {
-
+            foreach ($consignments as $number) {
                 $xml->writeElementCData('CONREF', $number);
-
             }
-            
         }
         
-        $xml->endElement(); 
+        $xml->endElement();
         $this->xmls[$root][$element] = $xml;
-        
     }
     
     /**
      * Merge activity elements
-     * 
+     *
      * @param string $name
      * @return void
      */
     private function mergeActivities($name)
     {
-        
-        if(isset($this->xmls[$name]) === true) {
-            
-            foreach($this->xmls[$name] as $xml) {
-                
+        if (isset($this->xmls[$name]) === true) {
+            foreach ($this->xmls[$name] as $xml) {
                 $this->xml->writeRaw($xml->outputMemory(false));
-                
             }
-        
         }
-        
     }
     
-    /* 
+    /*
      * Call activity function
-     * 
-     * @param string $function [optional] Function name: GET_RESULT (default), GET_CONNOTE, GET_LABEL, GET_MANIFEST, GET_INVOICE
+     *
+     * @param string $function [optional]
+     * Function name: GET_RESULT (default), GET_CONNOTE, GET_LABEL, GET_MANIFEST, GET_INVOICE
      * @return ActivityResponse
      */
     private function callActivityFunction(string $function = 'GET_RESULT')
@@ -525,7 +498,5 @@ class Activity extends AbstractService {
         
         $this->activityReqStr = "{$function}:{$this->key}";
         return $this->send();
-                
     }
-    
 }

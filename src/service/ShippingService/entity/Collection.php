@@ -11,19 +11,20 @@ namespace thm\tnt_ec\service\ShippingService\entity;
 
 use thm\tnt_ec\MyXMLWriter;
 
-class Collection extends AbstractXml {
+class Collection extends AbstractXml
+{
     
     /**
      * Sender address.
      * We will use it when collection address is same as sender address.
-     * 
+     *
      * @var Address
      */
     private $sender;
     
     /**
      * Collection address
-     * 
+     *
      * @var Address
      */
     private $collection;
@@ -50,20 +51,19 @@ class Collection extends AbstractXml {
     
     /**
      * Constructor
-     * 
+     *
      * @param Address & $senderAddress
      */
-    public function __construct(Address & $senderAddress)
+    public function __construct(Address &$senderAddress)
     {
         
         parent::__construct();
         $this->sender = $senderAddress;
-        
     }
     
     /**
      * Get entire XML as a string
-     * 
+     *
      * @return string
      */
     public function getAsXml()
@@ -75,93 +75,86 @@ class Collection extends AbstractXml {
         $xml->setIndent(true);
         
         $xml->startElement('COLLECTIONADDRESS');
-        $xml->writeRaw( $this->collection->getAsXml() );
+        $xml->writeRaw($this->collection->getAsXml());
         $xml->endElement();
         
-        $xml->writeRaw( parent::getAsXml() );
+        $xml->writeRaw(parent::getAsXml());
                 
         //re-assign object
         $this->xml = $xml;
         
         return parent::getAsXml();
-        
     }
     
     /**
      * Get ship date.
-     *  
+     *
      * @return string Date in format DD/MM/YYYY - TNT specified
      */
     public function getShipDate()
     {
         
         return $this->shipDate;
-        
     }
 
     /**
      * Get preferred collection time - from
-     * 
+     *
      * @return string
      */
     public function getPrefCollectTimeFrom()
     {
         
         return $this->prefCollectTime['from'];
-        
     }
 
     /**
      * Get preferred collection time - to
-     * 
+     *
      * @return string
      */
     public function getPrefCollectTimeTo()
     {
         
         return $this->prefCollectTime['to'];
-        
     }
     
     /**
-     * Get alternative collection time - from 
-     * 
+     * Get alternative collection time - from
+     *
      * @return string
      */
     public function getAltCollectTimeFrom()
     {
         
         return $this->altCollectTime['from'];
-        
     }
 
     /**
      * Get alternative collection time - to
-     * 
+     *
      * @return string
      */
     public function getAltCollectTimeTo()
     {
         
         return $this->altCollectTime['to'];
-        
     }
     
     /**
      * Get collect instructions
-     * 
+     *
      * @return string
      */
     public function getCollectInstruction()
     {
         
         return $this->collectInstruction;
-        
     }
 
     /**
      * Set collection address
-     * 
+     *
      * @return Address
      */
     public function setAddress()
@@ -169,12 +162,11 @@ class Collection extends AbstractXml {
         
         $this->collection = new Address();
         return $this->collection;
-        
     }
     
     /**
      * Set ship date
-     * 
+     *
      * @param string $shipDate Date in format DD/MM/YYYY - TNT specified
      * @return Collection
      */
@@ -185,12 +177,11 @@ class Collection extends AbstractXml {
         $this->xml->writeElementCData('SHIPDATE', $shipDate);
         
         return $this;
-        
     }
 
     /**
      * Set preferred collection time
-     * 
+     *
      * @param string $timeFrom
      * @param string $timeTo
      * @return Collection
@@ -207,12 +198,11 @@ class Collection extends AbstractXml {
         $this->xml->endElement();
         
         return $this;
-        
     }
 
     /**
      * Set alternative collection time
-     * 
+     *
      * @param string $timeFrom
      * @param string $timeTo
      * @return Collection
@@ -229,12 +219,11 @@ class Collection extends AbstractXml {
         $this->xml->endElement();
         
         return $this;
-        
     }
 
     /**
      * Set collection instructions
-     * 
+     *
      * @param string $collectInstruction
      * @return Collection
      */
@@ -245,13 +234,12 @@ class Collection extends AbstractXml {
         $this->xml->writeElementCData('COLLINSTRUCTIONS', $collectInstruction);
         
         return $this;
-        
     }
 
     /**
      * Use sender address.
      * Use it when sender and collection address are the same.
-     * 
+     *
      * @return Collection
      */
     public function useSenderAddress()
@@ -268,7 +256,5 @@ class Collection extends AbstractXml {
         $this->collection->xml->writeRaw($newXml);
         
         return $this;
-        
     }
-    
 }

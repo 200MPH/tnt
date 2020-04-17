@@ -10,14 +10,16 @@ namespace thm\tnt_ec\test\unit;
 
 use thm\tnt_ec\service\ShippingService\ShippingService;
 
-class ShippingRequestTest extends \PHPUnit_Framework_TestCase {
+class ShippingRequestTest extends \PHPUnit_Framework_TestCase
+{
 
     /**
      * @var ShippingService
      */
     protected $shipping;
 
-    public function setUp() {
+    public function setUp()
+    {
 
         parent::setUp();
 
@@ -236,7 +238,5 @@ class ShippingRequestTest extends \PHPUnit_Framework_TestCase {
         $xml2 = new \SimpleXMLElement($this->shipping->getXmlContent());
        
         $this->assertEquals($xml1->asXML(), $xml2->asXML());
-                        
     }
-            
 }

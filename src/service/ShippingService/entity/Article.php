@@ -9,7 +9,8 @@
 
 namespace thm\tnt_ec\service\ShippingService\entity;
 
-class Article extends AbstractXml {
+class Article extends AbstractXml
+{
     
     /**
      * @var int
@@ -53,10 +54,10 @@ class Article extends AbstractXml {
     
     /**
      * Set items
-     * 
+     *
      * @param int $items
      * @return Article
-     */    
+     */
     public function setItems($items)
     {
         
@@ -64,12 +65,11 @@ class Article extends AbstractXml {
         $this->xml->writeElementCData('ITEMS', $items);
         
         return $this;
-        
     }
 
     /**
      * Set description
-     * 
+     *
      * @param string $description
      * @return Article
      */
@@ -80,12 +80,11 @@ class Article extends AbstractXml {
         $this->xml->writeElementCData('DESCRIPTION', $description);
         
         return $this;
-        
     }
 
     /**
      * Set weight
-     * 
+     *
      * @param float $weight
      * @return Article
      */
@@ -96,12 +95,11 @@ class Article extends AbstractXml {
         $this->xml->writeElementCData('WEIGHT', $weight);
         
         return $this;
-        
     }
 
     /**
      * Set invoice value
-     * 
+     *
      * @param float $invoiceValue
      * @return Article
      */
@@ -112,12 +110,11 @@ class Article extends AbstractXml {
         $this->xml->writeElementCData('INVOICEVALUE', $invoiceValue);
         
         return $this;
-        
     }
 
     /**
      * Set invoice description
-     * 
+     *
      * @param string $invoiceDescription
      * @return Article
      */
@@ -128,12 +125,11 @@ class Article extends AbstractXml {
         $this->xml->writeElementCData('INVOICEDESC', $invoiceDescription);
         
         return $this;
-        
     }
     
     /**
      * Set HTS code
-     * 
+     *
      * @param int $hts
      * @return Article
      */
@@ -144,12 +140,11 @@ class Article extends AbstractXml {
         $this->xml->writeElementCData('HTS', $hts);
         
         return $this;
-        
     }
 
     /**
      * Set country code
-     * 
+     *
      * @param string $country ISO2
      * @return Article
      */
@@ -160,12 +155,11 @@ class Article extends AbstractXml {
         $this->xml->writeElementCData('COUNTRY', $country);
         
         return $this;
-        
     }
     
     /**
      * Set EMRN
-     * 
+     *
      * @param string $emrn
      * @return Aticle
      */
@@ -176,7 +170,5 @@ class Article extends AbstractXml {
         $this->xml->writeElementCData('EMRN', $emrn);
 
         return $this;
-        
     }
-    
 }
