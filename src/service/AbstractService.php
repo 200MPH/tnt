@@ -99,18 +99,6 @@ abstract class AbstractService {
     }
     
     /**
-     * Clean up memory
-     */
-    public function __destruct()
-    {
-        
-        // clean up output buffer
-        $this->xml->flush();
-        
-        
-    }
-    
-    /**
      * Initialize XML object
      * 
      * @return void
