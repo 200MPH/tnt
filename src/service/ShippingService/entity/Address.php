@@ -418,6 +418,7 @@ class Address extends AbstractXml
     {
         
             $this->account = $accountNumber;
+            $this->xml->writeElementCData('ACCOUNT', $this->account);
             return $this;
     }
     
@@ -431,6 +432,7 @@ class Address extends AbstractXml
     {
         
         $this->accountCountry = $accountCountry;
+        $this->xml->writeElementCData('ACCOUNTCOUNTRY', $this->accountCountry);
         return $this;
     }
     

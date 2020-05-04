@@ -79,7 +79,9 @@ class ShippingRequestTest extends \PHPUnit_Framework_TestCase
                 ->setContactName('Name')
                 ->setContactDialCode('+48')
                 ->setContactPhone('123456789')
-                ->setContactEmail('email@email');
+                ->setContactEmail('email@email')
+                ->setAccountNumber('ACC123')
+                ->setAcountCountry('PL');
 
         $c1->setReceiverAsDelivery();
 
@@ -112,7 +114,8 @@ class ShippingRequestTest extends \PHPUnit_Framework_TestCase
  </LOGIN>
  <CONSIGNMENTBATCH>
   <GROUPCODE>123456789</GROUPCODE>
-  <SENDER><COMPANYNAME><![CDATA[Test Company]]></COMPANYNAME>
+  <SENDER><ACCOUNT><![CDATA[A1234]]></ACCOUNT>
+<COMPANYNAME><![CDATA[Test Company]]></COMPANYNAME>
 <STREETADDRESS1><![CDATA[Address line 1]]></STREETADDRESS1>
 <STREETADDRESS2><![CDATA[Address line 2]]></STREETADDRESS2>
 <STREETADDRESS3><![CDATA[Address line 3]]></STREETADDRESS3>
@@ -125,7 +128,8 @@ class ShippingRequestTest extends \PHPUnit_Framework_TestCase
 <CONTACTDIALCODE><![CDATA[Dial code]]></CONTACTDIALCODE>
 <CONTACTTELEPHONE><![CDATA[Contact phone]]></CONTACTTELEPHONE>
 <CONTACTEMAIL><![CDATA[Email]]></CONTACTEMAIL>
-   <COLLECTION><COLLECTIONADDRESS><COMPANYNAME><![CDATA[Test Company]]></COMPANYNAME>
+   <COLLECTION><COLLECTIONADDRESS>
+<COMPANYNAME><![CDATA[Test Company]]></COMPANYNAME>
 <STREETADDRESS1><![CDATA[Address line 1]]></STREETADDRESS1>
 <STREETADDRESS2><![CDATA[Address line 2]]></STREETADDRESS2>
 <STREETADDRESS3><![CDATA[Address line 3]]></STREETADDRESS3>
@@ -166,6 +170,8 @@ class ShippingRequestTest extends \PHPUnit_Framework_TestCase
 <CONTACTDIALCODE><![CDATA[+48]]></CONTACTDIALCODE>
 <CONTACTTELEPHONE><![CDATA[123456789]]></CONTACTTELEPHONE>
 <CONTACTEMAIL><![CDATA[email@email]]></CONTACTEMAIL>
+<ACCOUNT><![CDATA[ACC123]]></ACCOUNT>
+<ACCOUNTCOUNTRY><![CDATA[PL]]></ACCOUNTCOUNTRY>
 </RECEIVER>
  <DELIVERY><COMPANYNAME><![CDATA[Company name]]></COMPANYNAME>
 <STREETADDRESS1><![CDATA[Address 1]]></STREETADDRESS1>
@@ -180,6 +186,8 @@ class ShippingRequestTest extends \PHPUnit_Framework_TestCase
 <CONTACTDIALCODE><![CDATA[+48]]></CONTACTDIALCODE>
 <CONTACTTELEPHONE><![CDATA[123456789]]></CONTACTTELEPHONE>
 <CONTACTEMAIL><![CDATA[email@email]]></CONTACTEMAIL>
+<ACCOUNT><![CDATA[ACC123]]></ACCOUNT>
+<ACCOUNTCOUNTRY><![CDATA[PL]]></ACCOUNTCOUNTRY>
 </DELIVERY>
 <CUSTOMERREF><![CDATA[123456789]]></CUSTOMERREF>
 <CONTYPE><![CDATA[N]]></CONTYPE>
