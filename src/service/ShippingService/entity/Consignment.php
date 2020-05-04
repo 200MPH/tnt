@@ -283,7 +283,6 @@ class Consignment extends AbstractXml
            
         $this->setReceiver();
         $this->setDelivery();
-        
         $this->delivery =& $this->receiver;
         
         return $this;
