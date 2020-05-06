@@ -258,6 +258,38 @@ class Consignment extends AbstractXml
     }
 
     /**
+     * Make delivery address same as receiver.
+     * Useful when receiver and delivery addresses are the same.
+     *
+     * @return Consignment
+     */
+    public function setReceiverAsDelivery()
+    {
+       
+        /*
+         * To make a clone we need to re-set delivery address 
+         * except ACCOUNT & ACCOUNTCOUNTRY. Otherwise TNT return an error.
+         */
+        
+        $this->setReceiver();
+        $this->setDelivery();
+        $this->delivery->setCompanyName($this->receiver->getCompanyName());
+        $this->delivery->setAddressLine($this->receiver->getAddressLine(1));
+        $this->delivery->setAddressLine($this->receiver->getAddressLine(2));
+        $this->delivery->setAddressLine($this->receiver->getAddressLine(3));
+        $this->delivery->setCity($this->receiver->getCity());
+        $this->delivery->setProvince($this->receiver->getProvince());
+        $this->delivery->setPostcode($this->receiver->getPostcode());
+        $this->delivery->setCountry($this->receiver->getCountryCode());
+        $this->delivery->setContactName($this->receiver->getContactName());
+        $this->delivery->setContactDialCode($this->receiver->getContactDialCode());
+        $this->delivery->setContactPhone($this->receiver->getContactPhoneNumber());
+        $this->delivery->setContactEmail($this->receiver->getContactEmail());
+        
+        return $this;
+    }
+    
+    /**
      * Set receiver address - NOT DELIVERY ADDRESS
      *
      * @return Address
@@ -270,22 +302,6 @@ class Consignment extends AbstractXml
         }
 
         return $this->receiver;
-    }
-    
-    /**
-     * Make delivery address same as receiver.
-     * Useful when receiver and delivery addresses are the same.
-     *
-     * @return Consignment
-     */
-    public function setReceiverAsDelivery()
-    {
-           
-        $this->setReceiver();
-        $this->setDelivery();
-        $this->delivery =& $this->receiver;
-        
-        return $this;
     }
     
     /**
