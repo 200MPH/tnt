@@ -49,7 +49,7 @@ Read the comments in the below code and PHP documentor. Each method functionalit
                       ->setContactPhone('')
                       ->setContactEmail('');
     
-    $c1->setReceiverAsDelivery(); // make delivery address same as receiver
+    $c1->useReceiverAddressForDelivery(); // make delivery address same as receiver
 
 You can add multiple consignments to the request
 
@@ -176,7 +176,7 @@ You can also send raw XML, without using object setters.
                       ->setContactPhone('')
                       ->setContactEmail('');
     
-    /* If delivery address is the same as receiver, simply use $c1->setReceiverAsDelivery() instead */
+    /* If delivery address is the same as receiver, simply use $c1->useReceiverAddressForDelivery() instead */
     
     $c1->addPackage()->setItems(0)
                      ->setDescription('')

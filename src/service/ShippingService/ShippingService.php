@@ -101,6 +101,7 @@ class ShippingService extends AbstractService
         
         if (!$this->sender instanceof Address) {
             $this->sender = new Address();
+            $this->sender->allowEmptyAccount = true;
             $this->sender->setAccountNumber($this->account, false);
         }
         

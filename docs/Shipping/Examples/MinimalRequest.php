@@ -45,7 +45,7 @@ $c1->setReceiver()->setCompanyName('')
                   ->setContactPhone('')
                   ->setContactEmail('');
 
-$c1->setReceiverAsDelivery(); // make delivery address same as receiver
+$c1->useReceiverAddressForDelivery(); // make delivery address same as receiver
 
 print_r($shipping);
 print_r($shipping->getXmlContent());
