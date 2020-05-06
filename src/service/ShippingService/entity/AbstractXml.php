@@ -47,6 +47,6 @@ abstract class AbstractXml
     public function getAsXml()
     {
         
-        return $this->xml->flush(false);
-    }
+        return trim($this->xml->flush(false));
+    }    
 }

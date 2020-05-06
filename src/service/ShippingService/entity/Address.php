@@ -316,7 +316,7 @@ class Address extends AbstractXml
             // automatically add account number
             // it has to be exactly in this place
             if ($this->account != 0) {
-                $this->xml->writeElementCData('ACCOUNT', $this->account);
+                $this->setAccountNumber($this->account);
             }
         }
         
@@ -411,14 +411,19 @@ class Address extends AbstractXml
     /**
      * Set account
      *
-     * @param int $accountNumber
+     * @param string $accountNumber
+     * @param bool $writeElement [optional] Write XML element instantly. Default true.
      * @return Address
      */
-    public function setAccountNumber($accountNumber)
+    public function setAccountNumber(string $accountNumber, $writeElement = true)
     {
         
             $this->account = $accountNumber;
-            $this->xml->writeElementCData('ACCOUNT', $this->account);
+            
+            if($writeElement === true) {
+                $this->xml->writeElementCData('ACCOUNT', $this->account);
+            }
+            
             return $this;
     }
     
@@ -428,11 +433,12 @@ class Address extends AbstractXml
      * @param string $accountCountry ISO2 country code
      * @return Address
      */
-    public function setAcountCountry($accountCountry)
+    public function setAcountCountry(string $accountCountry)
     {
         
         $this->accountCountry = $accountCountry;
         $this->xml->writeElementCData('ACCOUNTCOUNTRY', $this->accountCountry);
+                
         return $this;
     }
     
