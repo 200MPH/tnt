@@ -17,6 +17,11 @@ class Address extends AbstractXml
 {
     
     /**
+     * @var bool
+     */
+    public $allowEmptyAccount = false;
+    
+    /**
      * @var string
      */
     private $company;
@@ -315,7 +320,7 @@ class Address extends AbstractXml
             
             // automatically add account number
             // it has to be exactly in this place
-            if ($this->account != 0) {
+            if (empty($this->account) === false || $this->allowEmptyAccount === true) {
                 $this->setAccountNumber($this->account);
             }
         }

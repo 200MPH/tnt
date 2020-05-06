@@ -258,6 +258,16 @@ class Consignment extends AbstractXml
     }
 
     /**
+     * Alias for setReceiverAsDelivery()
+     * @return Consignment
+     * @see Consignment::setReceiverAsDelivery()
+     */
+    public function useReceiverAddressForDelivery()
+    {
+        return $this->setReceiverAsDelivery();
+    }
+    
+    /**
      * Make delivery address same as receiver.
      * Useful when receiver and delivery addresses are the same.
      *

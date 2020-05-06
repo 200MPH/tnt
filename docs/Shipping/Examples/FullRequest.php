@@ -73,7 +73,7 @@ $c1->setDelivery()->setCompanyName('')
                   ->setContactPhone('')
                   ->setContactEmail('');
 
-/* If delivery address is the same as receiver, simply use $c1->setReceiverAsDelivery() instead $c1->setDelivery()*/
+/* If delivery address is the same as receiver, simply use $c1->useReceiverAddressForDelivery() instead $c1->setDelivery()*/
 
 $c1->addPackage()->setItems(0)
                  ->setDescription('')

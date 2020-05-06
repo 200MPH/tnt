@@ -61,7 +61,7 @@ $c1->setReceiver()->setCompanyName('')
                   ->setContactPhone('')
                   ->setContactEmail('');
 
-$c1->setReceiverAsDelivery();
+$c1->useReceiverAddressForDelivery();
 
 $c1->addPackage()->setItems(0)
                  ->setDescription('')
