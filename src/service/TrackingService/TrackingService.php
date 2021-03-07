@@ -329,9 +329,9 @@ class TrackingService extends AbstractService
             return false;
         }
         
-        $xml = new \SimpleXMLElement($output);
-            
-        if (isset($xml->ContinuationKey) === true) {
+        $xml = simplexml_load_string($output);
+                    
+        if ($xml !== false && isset($xml->ContinuationKey) === true) {
             $this->xml->writeElement('ContinuationKey', $xml->ContinuationKey);
 
             return true;
