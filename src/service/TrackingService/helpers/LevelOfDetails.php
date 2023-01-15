@@ -79,7 +79,8 @@ class LevelOfDetails
         
         /* Create default XML string if not decorate by decorator */
         $this->xml = "<LevelOfDetail>\n";
-        $this->xml .= " <Complete />\n";
+        $this->xml .= " <Complete destinationAddress=\"true\" originAddress=\"true\" package=\"true\" shipment=\"true\" />\n";
+        $this->xml .= " <POD format=\"URL\"/>\n";
         $this->xml .= "</LevelOfDetail>\n";
         
         $decorator = new LevelOfDetailsDecorator($this);
