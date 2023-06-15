@@ -101,7 +101,6 @@ abstract class AbstractService
      */
     public function initXml()
     {
-        
         $this->xml = new MyXMLWriter();
         $this->xml->openMemory();
         $this->xml->setIndent(true);
