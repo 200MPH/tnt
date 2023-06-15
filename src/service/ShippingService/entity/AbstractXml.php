@@ -36,7 +36,9 @@ abstract class AbstractXml
     public function __destruct()
     {
     
-        $this->xml->flush();
+        if($this->xml instanceof MyXMLWriter) {
+            $this->xml->flush();
+        }
     }
     
     /**
