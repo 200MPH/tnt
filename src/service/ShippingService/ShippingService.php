@@ -340,7 +340,7 @@ class ShippingService extends AbstractService
      *
      * @return Activity
      */
-    final private function getActivity()
+    private function getActivity()
     {
         
         if ($this->activity instanceof Activity) {
